@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">微智生活</string>
+    <string name="action_settings">设置</string>
+    <string name="title_activity_main">微智生活</string>
+    <string name="title_activity_login">登录</string>
+    <string name="title_activity_register">注册</string>
+    <string name="describ">description</string>
+    <string name="pw">密码</string>
+    <string name="mail">邮箱</string>
+    <string name="remember">记住密码</string>
+    <string name="auto_login">自动登录</string>
+    <string name="login">登录</string>
+    <string name="new_usr">新用户？</string>
+    <string name="wx_usr">微信登录</string>
+    <string name="name">用户名</string>
+    <string name="pw2">确认密码</string>
+    <string name="title_activity_device">设备</string>
+</resources>
