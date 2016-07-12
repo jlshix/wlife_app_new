@@ -28,4 +28,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:24.0.0'
     compile 'com.android.support:recyclerview-v7:24.0.0'
     compile 'com.wrapp.floatlabelededittext:library:0.0.6'
+
+    compile 'com.journeyapps:zxing-android-embedded:3.3.0@aar'
+    compile 'com.google.zxing:core:3.2.1'
 }
