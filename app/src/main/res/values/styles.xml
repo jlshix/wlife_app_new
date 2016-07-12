@@ -29,4 +29,27 @@
         <item name="android:layout_marginBottom">32dp</item>
     </style>
 
+
+    <style name="CardStyle">
+        <item name="android:layout_marginTop">@dimen/card_padding</item>
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="ActivityCardStyle">
+        <item name="android:layout_marginTop">@dimen/card_padding</item>
+        <item name="android:clickable">false</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+
+    <style name="ListCardStyle">
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+
+    <dimen name="card_padding">7dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+
 </resources>

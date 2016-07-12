@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.jlshix.zigsys.MainActivity">
+    <item
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_add_white_48dp"
+        android:orderInCategory="100"
+        android:title="@string/add_dev"
+        app:showAsAction="ifRoom" />
+</menu>

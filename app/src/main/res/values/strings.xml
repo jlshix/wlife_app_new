@@ -15,4 +15,33 @@
     <string name="name">用户名</string>
     <string name="pw2">确认密码</string>
     <string name="title_activity_device">设备</string>
+    <string name="temp">15°</string>
+    <string name="state">状态</string>
+    <string name="place">地点</string>
+    <string name="add_dev">添加设备</string>
+    <string name="online">在线</string>
+    <string name="offline">已离线</string>
+
+    <string name="gate_imei_text">网关的序列号: (可扫描二维码获取)</string>
+    <string name="gate_name_text">请给您的网关起个名字:</string>
+    <string name="device_name_text">请给您的设备起个名字:</string>
+    <string name="gate_name_1">我的设备</string>
+    <string name="gate_name_2">我家主控</string>
+    <string name="gate_name_3">客厅网关</string>
+
+
+    <string-array name="mode">
+        <item>日常模式</item>
+        <item>观影模式</item>
+        <item>睡眠模式</item>
+        <item>外出模式</item>
+        <item>夜间模式</item>
+    </string-array>
+    <string name="title_activity_gate_bind">GateBindActivity</string>
+    <string name="add">添加</string>
+    <string name="no_gate">您还没有绑定网关，请点击 “+” 绑定网关</string>
+    <string name="no_device">您还没有此类设备，请点击 “+” 添加</string>
+    <string name="title">title</string>
+    <string name="summary">summary</string>
+    <string name="line">is online ?</string>
 </resources>
