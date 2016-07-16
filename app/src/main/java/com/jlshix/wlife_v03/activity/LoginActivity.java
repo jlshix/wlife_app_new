@@ -78,7 +78,7 @@ public class LoginActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case DIALOG:
-                    dialog = ProgressDialog.show(context,null, "正在登录", true, true);
+                    dialog = ProgressDialog.show(context, null, "正在登录", true, true);
                     break;
             }
         }
@@ -90,10 +90,14 @@ public class LoginActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         initView();
 
+        // avoid null
+        dialog = new ProgressDialog(this);
+
         // 若设为自动登录则直接登录
         if (L.isAutoLogin()) {
             login(L.getPhone(), L.getPw());
         }
+
     }
 
     /**
@@ -152,23 +156,19 @@ public class LoginActivity extends BaseActivity {
         if (L.isRemember()) {
             L.setPw(pw);
         }
-        /*
-        //登录
-        login(name, pw);
-*/
+
+        // 显示正在登录
         handler.sendEmptyMessage(DIALOG);
-        gateImei = "4718";
+        // 新线程,为了dialog
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
-                    dialog.dismiss();
-                    jump();
+                    Thread.sleep(500);
+                    login(name, pw);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
             }
         }).start();
     }
@@ -179,9 +179,6 @@ public class LoginActivity extends BaseActivity {
      * @param pw 密码
      */
     private void login(final String name, final String pw) {
-        // 显示正在登录
-        handler.sendEmptyMessage(DIALOG);
-
         // 生成参数
         RequestParams params = new RequestParams(L.URL_LOGIN);
         params.addParameter("mail", name);
@@ -191,6 +188,9 @@ public class LoginActivity extends BaseActivity {
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 String code = result.optString("code", "x");
                 if (code.equals("1")) {
                     JSONObject content = result.optJSONObject("info");
@@ -199,8 +199,7 @@ public class LoginActivity extends BaseActivity {
                     gateImei = content.optString("gate_imei", null);
                     Log.e(TAG, "onSuccess: " + userMail + "--" + userName + "--" + gateImei);
                 }
-                // dismiss dialog
-                dialog.dismiss();
+
                 switch (code) {
                     case "1":
                         jump();
@@ -220,6 +219,9 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 L.toast(LoginActivity.this, ex.getMessage());
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
             }
 
             @Override
@@ -244,7 +246,6 @@ public class LoginActivity extends BaseActivity {
         L.setPhone(userMail);
         L.setPw(secret.getText().toString().trim());
         L.setGateImei(gateImei);
-
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
