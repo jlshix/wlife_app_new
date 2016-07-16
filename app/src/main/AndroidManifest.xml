@@ -64,6 +64,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jlshix.wlife_v03.activity.DeviceActivity" />
         </activity>
+        <activity
+            android:name=".activity.MsgActivity"
+            android:label="@string/title_activity_msg"
+            android:parentActivityName=".activity.DeviceActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jlshix.wlife_v03.activity.DeviceActivity" />
+        </activity>
     </application>
 
 </manifest>

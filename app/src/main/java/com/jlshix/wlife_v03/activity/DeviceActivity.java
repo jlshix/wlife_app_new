@@ -15,7 +15,6 @@ import android.view.View;
 import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.fragment.Envir;
 import com.jlshix.wlife_v03.fragment.Light;
-import com.jlshix.wlife_v03.fragment.Msg;
 import com.jlshix.wlife_v03.fragment.Others;
 import com.jlshix.wlife_v03.fragment.Plug;
 import com.jlshix.wlife_v03.tool.BaseActivity;
@@ -45,7 +44,6 @@ public class DeviceActivity extends BaseActivity {
     private Plug plug;
     private Light light;
     private Others others;
-    private Msg msg;
 
 
     @Override
@@ -77,7 +75,6 @@ public class DeviceActivity extends BaseActivity {
         plug = new Plug();
         light = new Light();
         others = new Others();
-        msg = new Msg();
         vp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -90,15 +87,13 @@ public class DeviceActivity extends BaseActivity {
                         return light;
                     case 3:
                         return others;
-                    case 4:
-                        return msg;
                 }
                 return null;
             }
 
             @Override
             public int getCount() {
-                return 5;
+                return 4;
             }
 
             @Override
@@ -123,7 +118,7 @@ public class DeviceActivity extends BaseActivity {
 
             }
         });
-        vp.setOffscreenPageLimit(4);
+        vp.setOffscreenPageLimit(3);
         tabs.setupWithViewPager(vp);
     }
 
@@ -147,6 +142,12 @@ public class DeviceActivity extends BaseActivity {
             startActivityForResult(intent, L.ADD_REQUEST);
             return true;
         }
+        if (id == R.id.action_msg) {
+            Intent intent = new Intent(getApplicationContext(), MsgActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

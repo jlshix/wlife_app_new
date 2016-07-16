@@ -43,7 +43,6 @@
         <item>插座</item>
         <item>灯光</item>
         <item>其它</item>
-        <item>消息</item>
     </array>
 
     <string name="title_activity_gate_bind">GateBindActivity</string>
@@ -89,4 +88,9 @@
     <string name="action_position">更改位置</string>
     <string name="camera">查看监控</string>
     <string name="gate">网关</string>
+    <string name="title_activity_msg">消息</string>
+    <string name="action_all">全部</string>
+    <string name="action_sys">系统</string>
+    <string name="action_envir">环境</string>
+    <string name="action_security">防盗</string>
 </resources>

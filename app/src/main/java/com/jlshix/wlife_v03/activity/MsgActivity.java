@@ -1,15 +1,15 @@
-package com.jlshix.wlife_v03.fragment;
+package com.jlshix.wlife_v03.activity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.View;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.jlshix.wlife_v03.R;
-import com.jlshix.wlife_v03.tool.BaseFragment;
+import com.jlshix.wlife_v03.tool.BaseActivity;
 import com.jlshix.wlife_v03.tool.L;
 
 import org.json.JSONArray;
@@ -26,14 +26,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Leo on 2016/6/14.
- * 消息 Fragment
- */
+@ContentView(R.layout.activity_msg)
+public class MsgActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
 
-//设定布局文件
-@ContentView(R.layout.fragment_msg)
-public class Msg extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
+    @ViewInject(R.id.toolbar)
+    Toolbar toolbar;
 
     @ViewInject(R.id.msg_list)
     private ListView list;
@@ -41,35 +38,26 @@ public class Msg extends BaseFragment implements SwipeRefreshLayout.OnRefreshLis
     @ViewInject(R.id.swipe)
     private SwipeRefreshLayout swipe;
 
-    private static final int REFRESH = 0x01;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case REFRESH:
-                    getMsg();
-                    swipe.setRefreshing(false);
-                    break;
-            }
-        }
-    };
-
-
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         swipe.setOnRefreshListener(this);
-        getMsg();
-
+        getMsg(0);
     }
 
     /**
      * 获取消息列表
+     * 0 all, 1 sys, 3 envir, 2 security
      */
-    private void getMsg() {
-        RequestParams params = new RequestParams(L.URL_GET_MSG + "?gate="+ L.getGateImei() + "&type=0");
+    private void getMsg(int type) {
+        // 开始刷新
+        swipe.setRefreshing(true);
+
+        RequestParams params = new RequestParams(L.URL_GET_MSG);
         params.addParameter("gate", L.getGateImei());
-        params.addParameter("type", "0");
+        params.addParameter("type", String.valueOf(type));
         x.http().post(params,
                 new Callback.CommonCallback<String>() {
                     @Override
@@ -81,7 +69,7 @@ public class Msg extends BaseFragment implements SwipeRefreshLayout.OnRefreshLis
                                 JSONArray info = object.optJSONArray("info");
                                 setList(info, list);
                             } else {
-                                L.toast(getContext(), "CODE_ERROR");
+                                L.toast(MsgActivity.this, "CODE_ERROR");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -102,7 +90,7 @@ public class Msg extends BaseFragment implements SwipeRefreshLayout.OnRefreshLis
                             item.put("dt", object.optString("dt"));
                             items.add(item);
                         }
-                        SimpleAdapter adapter = new SimpleAdapter(getContext(), items,
+                        SimpleAdapter adapter = new SimpleAdapter(MsgActivity.this, items,
                                 R.layout.msg_list_item, new String[] {"msg", "dt"},
                                 new int[] {R.id.msg, R.id.dt});
                         list.setAdapter(adapter);
@@ -110,7 +98,7 @@ public class Msg extends BaseFragment implements SwipeRefreshLayout.OnRefreshLis
 
                     @Override
                     public void onError(Throwable ex, boolean isOnCallback) {
-                        L.toast(getContext(), ex.getMessage());
+                        L.toast(MsgActivity.this, ex.getMessage());
                     }
 
                     @Override
@@ -123,6 +111,37 @@ public class Msg extends BaseFragment implements SwipeRefreshLayout.OnRefreshLis
 
                     }
                 });
+        // 结束
+        swipe.setRefreshing(false);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_msg, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_all:
+                L.log("action_all");
+                getMsg(0);
+                break;
+            case R.id.action_sys:
+                L.log("action_sys");
+                getMsg(1);
+                break;
+            case R.id.action_envir:
+                L.log("action_envir");
+                getMsg(3);
+                break;
+            case R.id.action_security:
+                L.log("action_security");
+                getMsg(2);
+                break;
+        }
+        return true;
     }
 
     /**
@@ -130,7 +149,7 @@ public class Msg extends BaseFragment implements SwipeRefreshLayout.OnRefreshLis
      */
     @Override
     public void onRefresh() {
-        swipe.setRefreshing(true);
-        handler.sendEmptyMessage(REFRESH);
+        getMsg(0);
     }
+
 }

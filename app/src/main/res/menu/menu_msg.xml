@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.jlshix.zigsys.MainActivity">
+    <item
+        android:id="@+id/action_all"
+        android:title="@string/action_all"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sys"
+        android:title="@string/action_sys"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_envir"
+        android:title="@string/action_envir"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_security"
+        android:title="@string/action_security"
+        app:showAsAction="never"/>
+</menu>
