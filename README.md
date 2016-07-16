@@ -41,4 +41,6 @@ WLife_v02 项目重构
 
 - Fragment Item 新增上下文菜单,操作逻辑更明显
 
+- Msg 由 Fragment 更改为 Activity 并增加筛选功能
 
+- 设置页面使用 PreferenceScreen 原生设计
