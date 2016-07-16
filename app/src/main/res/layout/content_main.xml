@@ -28,7 +28,7 @@
                 style="@style/CardStyle"
                 app:cardElevation="@dimen/card_elevation"
                 android:layout_width="match_parent"
-                android:layout_height="166dp">
+                android:layout_height="126dp">
 
                 <include layout="@layout/weather_card"/>
 

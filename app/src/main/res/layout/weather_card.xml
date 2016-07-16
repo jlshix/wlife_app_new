@@ -22,7 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="36dp" />
         <Button
-            android:layout_marginEnd="@dimen/sub_margin"
             android:id="@+id/menu_weather"
             android:layout_alignParentEnd="true"
             android:drawableStart="@drawable/ic_more_horiz_grey_500_24dp"
@@ -33,7 +32,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="70dp">
         <TextView
             android:id="@+id/temp"
             android:text="@string/temp"

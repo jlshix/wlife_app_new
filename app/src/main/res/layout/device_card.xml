@@ -21,7 +21,6 @@
             android:layout_width="wrap_content"
             android:layout_height="36dp" />
         <Button
-            android:layout_marginEnd="@dimen/sub_margin"
             android:id="@+id/menu_gate"
             android:layout_alignParentEnd="true"
             android:drawableStart="@drawable/ic_more_horiz_grey_500_24dp"
