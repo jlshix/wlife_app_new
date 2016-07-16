@@ -72,7 +72,7 @@
         android:layout_below="@id/number"
         style="@style/margin_s_e_t"
         android:id="@+id/reg"
-        android:text="@string/login"
+        android:text="@string/register"
         android:textColor="@color/white"
         android:background="@drawable/btn_selector"
         android:layout_width="match_parent"

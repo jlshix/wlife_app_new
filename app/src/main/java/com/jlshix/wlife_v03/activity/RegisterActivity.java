@@ -1,6 +1,5 @@
 package com.jlshix.wlife_v03.activity;
 
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -15,9 +15,13 @@ import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.tool.BaseActivity;
 import com.jlshix.wlife_v03.tool.L;
 
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 @ContentView(R.layout.activity_register)
 public class RegisterActivity extends BaseActivity {
@@ -62,7 +66,6 @@ public class RegisterActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
-        ActionBar bar = getActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -105,20 +108,11 @@ public class RegisterActivity extends BaseActivity {
             }
         }).start();
 
-/*      调试期间暂时跳过
-//TODO post
-
         // 发起请求
         RequestParams params = new RequestParams(L.URL_REG);
         params.addParameter("mail", et_mail);
         params.addParameter("name", et_name);
         params.addParameter("pw", et_pw);
-//        params.addHeader("mail", et_mail);
-//        params.addHeader("name", et_name);
-//        params.addHeader("pw", et_pw);
-//        params.addBodyParameter("mail", et_mail);
-//        params.addBodyParameter("name", et_name);
-//        params.addBodyParameter("pw", et_pw);
         Log.i(TAG, "doReg: " + params.toString());
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
@@ -143,7 +137,7 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 dialog.dismiss();
-//                L.toast(RegisterActivity.this, ex.getMessage());
+                L.toast(RegisterActivity.this, ex.getMessage());
                 L.log(ex.getMessage());
                 ex.printStackTrace();
             }
@@ -158,7 +152,6 @@ public class RegisterActivity extends BaseActivity {
 
             }
         });
-*/
 
 
     }
@@ -169,6 +162,9 @@ public class RegisterActivity extends BaseActivity {
         back.putExtra("mail", mail);
         back.putExtra("pw", pw);
         setResult(2000, back);
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         finish();
     }
 
