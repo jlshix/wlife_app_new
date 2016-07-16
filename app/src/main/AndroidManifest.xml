@@ -73,6 +73,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jlshix.wlife_v03.activity.DeviceActivity" />
         </activity>
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jlshix.wlife_v03.activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/settings_account">
+
+        <EditTextPreference
+            android:key="name"
+            android:title="@string/usr_name"
+            android:summary="@string/usr_name_summary"/>
+        <EditTextPreference
+            android:key="mail"
+            android:title="@string/usr_mail"
+            android:summary="@string/usr_mail_summary"/>
+        <Preference
+            android:key="pw"
+            android:title="@string/usr_pw"
+            android:summary="@string/usr_pw_summary"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_general">
+        <CheckBoxPreference
+            android:key="auto_login"
+            android:title="@string/auto_login"
+            android:summary="@string/auto_login_sum" />
+        <CheckBoxPreference
+            android:key="clear"
+            android:title="@string/clear_pw"
+            android:summary="@string/clear_pw_summary"/>
+        <Preference
+            android:key="wx"
+            android:title="@string/settings_wx"/>
+        <Preference
+            android:key="share"
+            android:title="@string/share"/>
+        <Preference
+            android:key="help"
+            android:title="@string/help"/>
+        <Preference
+            android:key="about"
+            android:title="@string/about"/>
+        <Preference
+            android:key="update"
+            android:title="@string/update"/>
+        <Preference
+            android:key="quit"
+            android:title="@string/quit"/>
+
+
+
+    </PreferenceCategory>
+
+
+
+</PreferenceScreen>

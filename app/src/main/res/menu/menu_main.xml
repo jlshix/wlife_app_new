@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.jlshix.zigsys.MainActivity">
     <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings_white_36dp"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/action_add"
         android:icon="@drawable/ic_add_white_36dp"
         android:orderInCategory="100"

@@ -7,4 +7,6 @@
     <dimen name="sub_margin">6dp</dimen>
     <dimen name="item_padding">5dp</dimen>
     <dimen name="space_dimen">64dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

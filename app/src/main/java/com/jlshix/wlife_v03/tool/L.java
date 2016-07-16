@@ -22,6 +22,9 @@ public class L {
     private static final String TAG = "TOOL_L";
     public static final int ADD_REQUEST = 1000;
     public static final int ADD_RETURN = 2000;
+    public static final int SETTINGS_REQUEST = 3000;
+    public static final int SETTINGS_RETURN = 4000;
+
 
     /**
      * debug模式
