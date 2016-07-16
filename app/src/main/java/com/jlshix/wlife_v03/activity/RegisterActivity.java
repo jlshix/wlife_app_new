@@ -94,19 +94,6 @@ public class RegisterActivity extends BaseActivity {
 
         // 显示dialog
         handler.sendEmptyMessage(DIALOG);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                    dialog.dismiss();
-                    success("jlshix@163.com", "wlife");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
 
         // 发起请求
         RequestParams params = new RequestParams(L.URL_REG);
