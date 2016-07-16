@@ -177,7 +177,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      * 网关菜单
      * @param view menu btn
      */
-    @Event(R.id.menu_weather)
+    @Event(R.id.menu_gate)
     private void gateMenu(View view) {
         PopupMenu menu = new PopupMenu(MainActivity.this, view);
         menu.getMenuInflater().inflate(R.menu.menu_gate, menu.getMenu());
