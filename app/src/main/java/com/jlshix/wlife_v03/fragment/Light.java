@@ -55,6 +55,7 @@ public class Light extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case REFRESH:
+                    swipe.setRefreshing(true);
                     getData();
                     swipe.setRefreshing(false);
                     break;
@@ -144,7 +145,6 @@ public class Light extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
 
     @Override
     public void onRefresh() {
-        swipe.setRefreshing(true);
         handler.sendEmptyMessage(REFRESH);
     }
 

@@ -54,6 +54,7 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case REFRESH:
+                    swipe.setRefreshing(true);
                     getData();
                     swipe.setRefreshing(false);
                     break;

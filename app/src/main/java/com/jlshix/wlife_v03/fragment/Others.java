@@ -56,6 +56,7 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case REFRESH:
+                    swipe.setRefreshing(true);
                     getData();
                     swipe.setRefreshing(false);
                     break;
@@ -144,7 +145,6 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
 
     @Override
     public void onRefresh() {
-        swipe.setRefreshing(true);
         handler.sendEmptyMessage(REFRESH);
     }
 }
