@@ -9,7 +9,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -148,6 +150,56 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     }
 
     /**
+     * 天气菜单
+     * @param view menu btn
+     */
+    @Event(R.id.menu_weather)
+    private void weatherMenu(View view) {
+        PopupMenu menu = new PopupMenu(MainActivity.this, view);
+        menu.getMenuInflater().inflate(R.menu.menu_weather, menu.getMenu());
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Log.i(TAG, "onMenuItemClick: " + item.getTitle());
+                return false;
+            }
+        });
+        menu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+            @Override
+            public void onDismiss(PopupMenu menu) {
+                Log.i(TAG, "onDismiss: ");
+            }
+        });
+        menu.show();
+    }
+
+    /**
+     * 网关菜单
+     * @param view menu btn
+     */
+    @Event(R.id.menu_weather)
+    private void gateMenu(View view) {
+        PopupMenu menu = new PopupMenu(MainActivity.this, view);
+        menu.getMenuInflater().inflate(R.menu.menu_gate, menu.getMenu());
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Log.i(TAG, "onMenuItemClick: " + item.getTitle());
+                return false;
+            }
+        });
+        menu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+            @Override
+            public void onDismiss(PopupMenu menu) {
+                Log.i(TAG, "onDismiss: ");
+            }
+        });
+        menu.show();
+    }
+
+
+
+    /**
      * 更改模式
      * @param position 模式编号
      */
@@ -195,6 +247,11 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         startActivity(intent);
     }
 
+    /**
+     * 解绑设备
+     * @param v view
+     * @return boolean
+     */
     @Event(value = R.id.device, type = View.OnLongClickListener.class)
     private boolean ubindGate(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -211,6 +268,16 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             }
         }).create().show();
         return true;
+    }
+
+    /**
+     * 查看监控
+     * @param view view
+     */
+    @Event(R.id.camera)
+    private void camera(View view) {
+        // TODO: 2016/7/16 环信
+        L.snack(view, "开发中...");
     }
 
 

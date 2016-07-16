@@ -87,4 +87,6 @@
     <string name="action_rename">重命名</string>
     <string name="action_delete">删除</string>
     <string name="action_position">更改位置</string>
+    <string name="camera">查看监控</string>
+    <string name="gate">网关</string>
 </resources>
