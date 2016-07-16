@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -100,7 +99,7 @@ public class RegisterActivity extends BaseActivity {
         params.addParameter("mail", et_mail);
         params.addParameter("name", et_name);
         params.addParameter("pw", et_pw);
-        Log.i(TAG, "doReg: " + params.toString());
+
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
