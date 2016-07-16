@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">微智生活</string>
+    <string name="app_name">微生活</string>
     <string name="action_settings">设置</string>
-    <string name="title_activity_main">微智生活</string>
+    <string name="title_activity_main">微生活</string>
     <string name="title_activity_login">登录</string>
     <string name="title_activity_register">注册</string>
     <string name="describ">description</string>
@@ -37,6 +37,15 @@
         <item>外出模式</item>
         <item>夜间模式</item>
     </string-array>
+
+    <array name="frag_title">
+        <item>环境</item>
+        <item>插座</item>
+        <item>灯光</item>
+        <item>其它</item>
+        <item>消息</item>
+    </array>
+
     <string name="title_activity_gate_bind">GateBindActivity</string>
     <string name="add">添加</string>
     <string name="no_gate">您还没有绑定网关，请点击 “+” 绑定网关</string>
@@ -44,4 +53,38 @@
     <string name="title">title</string>
     <string name="summary">summary</string>
     <string name="line">is online ?</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="envir_frag">环境 Fragment</string>
+    <string name="plug_frag">插座 fragment</string>
+    <string name="light_frag">光照 Fragment</string>
+    <string name="msg_frag">消息 Fragment</string>
+    <string name="weather">天气</string>
+    <string name="device">设备</string>
+
+    <string name="bind_gate">绑定网关</string>
+    <string name="about">关于</string>
+    <string name="about_sum">关于</string>
+    <string name="statistics">查看统计</string>
+    <string name="temp_sub">温度</string>
+    <string name="humi_sub">湿度</string>
+    <string name="light_sub">光照</string>
+    <string name="zero">0</string>
+    <string name="device_imei_text">设备的序列号: (可扫描二维码获取)</string>
+    <string name="device_name_1">客厅-</string>
+    <string name="device_name_2">卧室-</string>
+    <string name="device_name_3">书房-</string>
+    <string name="device_type">设备类型: </string>
+    <string name="welcome">欢迎</string>
+
+    <string name="error">错误</string>
+    <string name="success">成功</string>
+    <string name="reg_error">注册失败</string>
+    <string name="register">注册</string>
+    <string name="my_device">设备控制</string>
+    <string name="title_activity_add_device">添加设备</string>
+    <string name="action_rename">重命名</string>
+    <string name="action_delete">删除</string>
+    <string name="action_position">更改位置</string>
 </resources>
