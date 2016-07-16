@@ -109,8 +109,11 @@ public class GateBindActivity extends BaseActivity {
             return;
         }
         // TODO: 2016/7/12 post
-        RequestParams params = new RequestParams(L.URL_GATE_BIND + "?mail=" + L.getPhone() + "&gate=" + gateImei1 + "&name=" + name1);
-        x.http().get(params, new Callback.CommonCallback<JSONObject>() {
+        RequestParams params = new RequestParams(L.URL_GATE_BIND);
+        params.addParameter("mail", L.getPhone());
+        params.addParameter("gate", gateImei1);
+        params.addParameter("name", name1);
+        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
                 try {
