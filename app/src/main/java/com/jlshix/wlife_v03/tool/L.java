@@ -340,13 +340,15 @@ public class L {
      */
     public static void unbindGate(final Context c) {
         RequestParams params = new RequestParams(URL_UNBIND);
-        x.http().get(params, new Callback.CommonCallback<JSONObject>() {
+        params.addParameter("mail", getPhone());
+        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
                 if (result.optString("code").equals("1")) {
                     L.toast(c, "已解除网关绑定， 请点击 + 按钮添加新设备");
                     // 清除本地数据
                     setGateImei("x");
+                    setBIND(false);
                 } else {
                     L.toast(c, "UNBIND_CODE_ERR");
                 }

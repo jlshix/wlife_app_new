@@ -81,6 +81,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jlshix.wlife_v03.activity.MainActivity" />
         </activity>
+
+
+
+        <activity
+            android:name=".tool.CaptureActivityAnyOrientation"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
     </application>
 
 </manifest>
