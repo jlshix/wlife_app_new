@@ -37,7 +37,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     private static final String TAG = "MAIN_ACTIVITY";
 
-    // toolbar
     @ViewInject(R.id.toolbar)
     Toolbar toolbar;
 
@@ -115,13 +114,11 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setSupportActionBar(toolbar);
         showCard();
 
         line.setEnabled(false);
         swipe.setOnRefreshListener(this);
-
         spinner.setAdapter(new ArrayAdapter<>(this, R.layout.spinner,
                 getResources().getStringArray(R.array.mode)));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -137,15 +134,10 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
             }
         });
-
         handler.sendEmptyMessage(REFRESH);
     }
 
-    /**
-     * 界面显示
-     */
     private void showCard() {
-        // TODO: 2016/7/12 weather Card 显示设置
         if (!L.isBIND()) {
             noDevice.setVisibility(View.VISIBLE);
             device.setVisibility(View.GONE);
@@ -164,12 +156,13 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             isFirst = false;
             return;
         }
-        // TODO: 2016/7/12 post
         // 推送 模式标志为1 始于1 (1 日常) (2 观影) (3 睡眠) (4 外出) (5 夜间)
         L.send2Gate(L.getGateImei(), "1" + (position + 1) + "0000");
         // 数据库
-        RequestParams params = new RequestParams(L.URL_SET_GATE + "?imei=" + L.getGateImei() +"&mode=" + (position+1));
-        x.http().get(params, new Callback.CommonCallback<JSONObject>() {
+        RequestParams params = new RequestParams(L.URL_SET_GATE);
+        params.addParameter("imei", L.getGateImei());
+        params.addParameter("mode", String.valueOf(position + 1));
+        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
                 Snackbar.make(spinner, "模式已更改", Snackbar.LENGTH_LONG).show();
@@ -202,7 +195,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         startActivity(intent);
     }
 
-    // device OnLongClickListener
     @Event(value = R.id.device, type = View.OnLongClickListener.class)
     private boolean ubindGate(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -222,11 +214,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     }
 
 
-    /**
-     * 生成菜单
-     * @param menu menu
-     * @return boolean
-     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -234,11 +222,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         return true;
     }
 
-    /**
-     * 菜单处理
-     * @param item item
-     * @return boolean
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -260,12 +243,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * after add a gate
-     * @param requestCode requestCode
-     * @param resultCode result Code
-     * @param data info
-     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -275,9 +252,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         }
     }
 
-    /**
-     * 刷新
-     */
     @Override
     public void onRefresh() {
         swipe.setRefreshing(true);
@@ -323,8 +297,9 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      * 更新网关数据
      */
     private void updateGate() {
-        RequestParams params = new RequestParams(L.URL_GATE + "?mail=" + L.getPhone());
-        x.http().get(params, new Callback.CommonCallback<JSONObject>() {
+        RequestParams params = new RequestParams(L.URL_GATE);
+        params.addParameter("mail", L.getPhone());
+        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
                 if (!result.optString("code").equals("1")) {
@@ -367,10 +342,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 //        spinner.setSelection(index - 1);
     }
 
-    /**
-     * 更新天气数据
-     * @param object json
-     */
     private void setWeatherCard(JSONObject object) {
         String temp = String.valueOf((int) object.optDouble("temperature")) + "°";
         String skycon = object.optString("skycon");
