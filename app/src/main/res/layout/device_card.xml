@@ -19,7 +19,7 @@
             android:layout_weight="3"
             android:gravity="center"
             android:layout_height="wrap_content">
-            <com.jlshix.zigsys.utils.RoundImageView
+            <com.jlshix.wlife_v03.tool.RoundImageView
                 android:contentDescription="@string/app_name"
                 android:id="@+id/icon"
                 android:src="@drawable/avatar"
@@ -77,5 +77,6 @@
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
 
 </LinearLayout>
