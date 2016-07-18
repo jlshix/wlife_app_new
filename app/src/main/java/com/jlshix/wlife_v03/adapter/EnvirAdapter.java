@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.data.EnvirData;
+import com.jlshix.wlife_v03.tool.L;
 
 import java.util.List;
 
@@ -78,10 +79,12 @@ public class EnvirAdapter extends RecyclerView.Adapter<EnvirAdapter.EnvirViewHol
      */
     @Override
     public void onBindViewHolder(EnvirAdapter.EnvirViewHolder holder, int position) {
-        holder.place.setText(datas.get(position).getPlace());
-        holder.temp.setText(datas.get(position).getTemp());
-        holder.humi.setText(datas.get(position).getHumi());
-        holder.light.setText(datas.get(position).getLight());
+        EnvirData data = datas.get(position);
+        String name = L.nameText(data.getPlaceNo(), data.getPlace());
+        holder.place.setText(name);
+        holder.temp.setText(data.getTemp());
+        holder.humi.setText(data.getHumi());
+        holder.light.setText(data.getLight());
         // 上下文菜单
         holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override

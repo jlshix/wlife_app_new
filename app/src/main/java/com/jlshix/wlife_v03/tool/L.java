@@ -1,6 +1,7 @@
 package com.jlshix.wlife_v03.tool;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,25 @@ public class L {
     public static final int SETTINGS_REQUEST = 3000;
     public static final int SETTINGS_RETURN = 4000;
 
+
+    /**
+     * 地点与标志常量
+     */
+    public static final String[] rooms = {
+            "我家", "客厅", "卧室", "餐厅", "书房", "卫生间"
+    };
+    public static final int LIVING_ROOM = 1;
+    public static final int BEDROOM = 2;
+    public static final int DINING_ROOM = 3;
+    public static final int BOOK_ROOM = 4;
+    public static final int RESTROOM = 5;
+
+    public static final int[] signs = {
+            Color.RED, Color.GREEN, Color.BLUE
+    };
+    public static final int RED = 1;
+    public static final int GREEN = 2;
+    public static final int BLUE = 3;
 
     /**
      * debug模式
@@ -369,5 +389,15 @@ public class L {
 
             }
         });
+    }
+
+    /**
+     * 生成地点+名称
+     * @param placeNo placeNo
+     * @param name place in db, name in fact
+     * @return String
+     */
+    public static String nameText(int placeNo, String name) {
+        return rooms[placeNo] + "-" + name;
     }
 }

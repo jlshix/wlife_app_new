@@ -114,7 +114,9 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                             JSONObject object = info.optJSONObject(i);
                             String name = object.optString("name");
                             String state = object.optString("state");
-                            list.add(new EnvirData(name, state));
+                            int sign = object.optInt("sign");
+                            int placeNo = object.optInt("place");
+                            list.add(new EnvirData(name, state, sign, placeNo));
                         }
                     }
 
