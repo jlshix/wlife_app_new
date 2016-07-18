@@ -97,7 +97,7 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                         try {
                             JSONObject object = new JSONObject(result);
                             if (!object.optString("code").equals("1")) {
-                                L.toast(getContext(), "PLUG_CODE_ERR");
+                                L.toast(getContext(), "ENVIR_CODE_ERR");
                                 return;
                             }
                             json2List(object.optJSONArray("info"));

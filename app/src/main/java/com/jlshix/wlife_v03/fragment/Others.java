@@ -122,7 +122,9 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
                             String no = object.optString("no");
                             String name = object.optString("name");
                             String state = object.optString("state");
-                            list.add(new OthersData(type, no, name, state));
+                            int sign = object.optInt("sign");
+                            int placeNo = object.optInt("place");
+                            list.add(new OthersData(type, no, name, state, sign, placeNo));
                         }
                     }
 

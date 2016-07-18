@@ -40,7 +40,7 @@ public class L {
     public static final int RESTROOM = 5;
 
     public static final int[] signs = {
-            Color.RED, Color.GREEN, Color.BLUE
+            Color.TRANSPARENT, Color.RED, Color.GREEN, Color.BLUE
     };
     public static final int RED = 1;
     public static final int GREEN = 2;
@@ -399,5 +399,21 @@ public class L {
      */
     public static String nameText(int placeNo, String name) {
         return rooms[placeNo] + "-" + name;
+    }
+
+    /**
+     * type 代码转 名称
+     * @param type typeNo
+     * @return typeText
+     */
+    public static String typeText(String type) {
+        switch (type) {
+            case "04":
+                return "烟雾监测器";
+            case "06":
+                return "窗帘控制器";
+            default:
+                return "暂不支持";
+        }
     }
 }

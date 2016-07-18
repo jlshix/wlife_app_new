@@ -1,6 +1,8 @@
 package com.jlshix.wlife_v03.data;
 
 
+import com.jlshix.wlife_v03.tool.L;
+
 /**
  * Created by Leo on 2016/6/16.
  * 其它传感器数据 Recycler 调用进行初始化
@@ -11,21 +13,26 @@ public class OthersData {
     private String no;
     private String place;
     private String state;
+    private int sign;
+    private int placeNo;
 
     public OthersData() {
         this.type = "04";
         this.no = "01";
         this.place = "客厅-烟雾";
         this.state = "0";
+        this.sign = L.RED;
+        this.placeNo = L.LIVING_ROOM;
     }
 
 
-    public OthersData(String type, String no, String place, String state) {
-
+    public OthersData(String type, String no, String place, String state, int sign, int placeNo) {
         this.type = type;
         this.no = no;
         this.place = place;
         this.state = state;
+        this.sign = sign;
+        this.placeNo = placeNo;
     }
 
     public String getType() {
@@ -58,5 +65,21 @@ public class OthersData {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public int getSign() {
+        return sign;
+    }
+
+    public void setSign(int sign) {
+        this.sign = sign;
+    }
+
+    public int getPlaceNo() {
+        return placeNo;
+    }
+
+    public void setPlaceNo(int placeNo) {
+        this.placeNo = placeNo;
     }
 }

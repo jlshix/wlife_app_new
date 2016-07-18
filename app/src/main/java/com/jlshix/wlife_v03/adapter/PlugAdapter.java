@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -58,6 +59,7 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
         Switch[] mSwitch;
         TextView place;
         Button menu;
+        ImageView img;
 
         public PlugViewHolder(View itemView) {
             super(itemView);
@@ -69,6 +71,7 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
             mSwitch[2] = (Switch) itemView.findViewById(R.id.s2);
             mSwitch[3] = (Switch) itemView.findViewById(R.id.s3);
             menu = (Button) itemView.findViewById(R.id.menu);
+            img = (ImageView) itemView.findViewById(R.id.img);
         }
     }
 
@@ -93,11 +96,17 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
      */
     @Override
     public void onBindViewHolder(final PlugAdapter.PlugViewHolder holder, int position) {
+
+        PlugData data = datas.get(position);
+        holder.img.setColorFilter(L.signs[data.getSign()]);
+
         // 每个单元是一个开关组 0123
         for (int i = 0; i < holder.mSwitch.length; i++) {
             // 从获取的数据初始化状态
-            holder.mSwitch[i].setChecked(datas.get(position).getState(i));
-            holder.place.setText(datas.get(position).getName());
+            holder.mSwitch[i].setChecked(data.getState(i));
+
+            String name = L.nameText(data.getPlaceNo(), data.getName());
+            holder.place.setText(name);
             // I为单元内计数
             final int finalI = i;
             // Position为第几单元计数
@@ -204,9 +213,4 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
     public int getItemCount() {
         return datas.size();
     }
-
-
-
-
-
 }

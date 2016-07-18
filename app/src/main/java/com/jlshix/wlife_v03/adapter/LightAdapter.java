@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -52,9 +53,13 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
 
     @Override
     public void onBindViewHolder(final LightViewHolder holder, final int position) {
-        holder.place.setText(datas.get(position).getName());
-        holder.value.setText(String.valueOf(datas.get(position).getState()));
-        holder.seek.setProgress(datas.get(position).getState());
+        LightData data = datas.get(position);
+        String name = L.nameText(data.getPlaceNo(), data.getName());
+        holder.place.setText(name);
+        holder.value.setText(String.valueOf(data.getState()));
+        holder.seek.setProgress(data.getState());
+
+        holder.img.setColorFilter(L.signs[data.getSign()]);
 
         holder.seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -138,6 +143,7 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
         TextView value;
         SeekBar seek;
         Button menu;
+        ImageView img;
 
         public LightViewHolder(View itemView) {
             super(itemView);
@@ -146,6 +152,7 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
             value = (TextView) itemView.findViewById(R.id.value);
             seek = (SeekBar) itemView.findViewById(R.id.seek);
             menu = (Button) itemView.findViewById(R.id.menu);
+            img = (ImageView) itemView.findViewById(R.id.img);
         }
     }
 }

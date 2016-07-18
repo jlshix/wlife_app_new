@@ -74,10 +74,11 @@ public class OthersAdapter extends RecyclerView.Adapter<OthersAdapter.OthersView
             }
         });
 
-        // TODO: 2016/7/16 数据库位置与名称分开存储
-        holder.place.setText(data.getPlace());
-        holder.type.setText(data.getPlace());
-        holder.imei.setText(data.getType() + "-" + data.getNo());
+        String name = L.nameText(data.getPlaceNo(), data.getPlace());
+        holder.place.setText(name);
+        holder.type.setText(L.typeText(data.getType()));
+        String imei = data.getType() + "-" + data.getNo();
+        holder.imei.setText(imei);
         if (data.getState().equals("1")) {
             holder.power.setChecked(true);
         }
@@ -95,6 +96,8 @@ public class OthersAdapter extends RecyclerView.Adapter<OthersAdapter.OthersView
                 holder.img.setImageResource(R.drawable.ic_settings_input_hdmi_blue_500_48dp);
                 break;
         }
+        holder.img.setColorFilter(L.signs[data.getSign()]);
+
         holder.power.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

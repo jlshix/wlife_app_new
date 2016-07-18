@@ -120,7 +120,9 @@ public class Plug extends BaseFragment implements SwipeRefreshLayout.OnRefreshLi
                             JSONObject object = info.optJSONObject(i);
                             String name = object.optString("name");
                             String state = object.optString("state");
-                            list.add(new PlugData(name, state));
+                            int sign = object.optInt("sign");
+                            int placeNo = object.optInt("place");
+                            list.add(new PlugData(name, state, sign, placeNo));
                         }
                     }
 
