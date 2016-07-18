@@ -44,3 +44,11 @@ WLife_v02 项目重构
 - Msg 由 Fragment 更改为 Activity 并增加筛选功能
 
 - 设置页面使用 PreferenceScreen 原生设计
+
+## 2016-7-18
+
+- 二维码绑定网关功能已完成 绑定设备待定
+
+- 更改数据库 新增sign 与 place字段
+
+- 设备icon可根据数据库更改颜色 待完成分布图
