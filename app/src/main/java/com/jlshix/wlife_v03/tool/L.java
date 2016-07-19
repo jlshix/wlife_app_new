@@ -5,6 +5,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -462,5 +464,48 @@ public class L {
         layouts[5] = (LinearLayout) layouts[0].findViewById(R.id.restroom_layout);
 
         return layouts;
+    }
+
+    /**
+     * 右滑返回Listener
+     * @param activity activity
+     * @return listener
+     */
+    public static GestureDetector.OnGestureListener getSwipeBackListener(final Activity activity) {
+        return new GestureDetector.OnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent motionEvent) {
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent motionEvent) {
+
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent motionEvent) {
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent motionEvent) {
+
+            }
+
+            @Override
+            public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+                // 右滑返回
+                if (motionEvent1.getX() - motionEvent.getX() > 200) {
+                    activity.onBackPressed();
+                }
+                return false;
+            }
+        };
     }
 }
