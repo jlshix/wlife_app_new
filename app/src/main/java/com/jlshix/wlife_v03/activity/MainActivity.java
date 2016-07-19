@@ -323,6 +323,9 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             showCard();
             handler.sendEmptyMessage(REFRESH);
         }
+        if (requestCode == L.SETTINGS_REQUEST && resultCode == L.SETTINGS_RETURN) {
+            finish();
+        }
     }
 
     @Override
