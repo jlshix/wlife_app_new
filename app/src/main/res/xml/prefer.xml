@@ -25,7 +25,7 @@
             android:key="auto_login"
             android:title="@string/auto_login"
             android:summary="@string/auto_login_sum" />
-        <CheckBoxPreference
+        <Preference
             android:key="clear"
             android:title="@string/clear_pw"
             android:summary="@string/clear_pw_summary"/>
