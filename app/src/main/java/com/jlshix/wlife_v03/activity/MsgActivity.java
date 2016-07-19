@@ -2,7 +2,6 @@ package com.jlshix.wlife_v03.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -26,11 +25,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@ContentView(R.layout.activity_msg)
+@ContentView(R.layout.content_msg)
 public class MsgActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
 
-    @ViewInject(R.id.toolbar)
-    Toolbar toolbar;
+//    @ViewInject(R.id.toolbar)
+//    Toolbar toolbar;
 
     @ViewInject(R.id.msg_list)
     private ListView list;
@@ -41,8 +40,8 @@ public class MsgActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         swipe.setOnRefreshListener(this);
         getMsg(0);
     }
