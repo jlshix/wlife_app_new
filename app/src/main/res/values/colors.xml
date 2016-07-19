@@ -6,4 +6,7 @@
     <color name="white">#ffffff</color>
     <color name="gray_de">#666666</color>
     <color name="sub_title">#AAAAAA</color>
+    <color name="gray_card">#EEEEEE</color>
+    <color name="blue_d">#0000FF</color>
+    <color name="blue_e">#0000DD</color>
 </resources>

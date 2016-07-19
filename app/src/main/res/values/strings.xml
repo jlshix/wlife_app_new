@@ -173,6 +173,13 @@
     <string name="update">检查更新</string>
     <string name="quit">退出登录</string>
 
+    <string name="dining_room">餐厅</string>
+    <string name="living_room">客厅</string>
+    <string name="restroom">卫生间</string>
+    <string name="book_room">书房</string>
+    <string name="bedroom">卧室</string>
+    <string name="graph_txt">分布图</string>
+
     <array name="rooms">
         <item>我家</item>
         <item>客厅</item>
