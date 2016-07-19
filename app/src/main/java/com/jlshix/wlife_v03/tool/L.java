@@ -1,13 +1,17 @@
 package com.jlshix.wlife_v03.tool;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.jlshix.wlife_v03.App;
+import com.jlshix.wlife_v03.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -192,7 +196,25 @@ public class L {
         App.sp.edit().putString("gateImei", s).apply();
     }
 
+    /**
+     * 获取保存的layout
+     * @return layout
+     */
+    public static int getLayout() {
+        return App.sp.getInt("layout", 1);
+    }
 
+
+    /**
+     * 设置保存的layout
+     * @param s layout
+     */
+    public static void setLayout(int s) {
+        App.sp.edit().putInt("layout", s).apply();
+    }
+
+
+    
     /**
      * 是否绑定
      * @return boolean
@@ -210,6 +232,7 @@ public class L {
         L.BIND = BIND;
         App.sp.edit().putBoolean("bind", BIND).apply();
     }
+    
 
 
 
@@ -415,5 +438,29 @@ public class L {
             default:
                 return "暂不支持";
         }
+    }
+
+
+    /**
+     * 设定布局图
+     * @param activity activity
+     * @param i layout xml No
+     * @param root container
+     * @return layouts
+     */
+    public static LinearLayout[] initGraph(Activity activity, int i, ViewGroup root) {
+        LinearLayout[] layouts = new LinearLayout[6];
+        if (i == 1) {
+            layouts[0] = (LinearLayout) activity.getLayoutInflater()
+                    .inflate(R.layout.graph_layout_1, null);
+        }
+        root.addView(layouts[0]);
+        layouts[1] = (LinearLayout) layouts[0].findViewById(R.id.living_room_layout);
+        layouts[2] = (LinearLayout) layouts[0].findViewById(R.id.bedroom_layout);
+        layouts[3] = (LinearLayout) layouts[0].findViewById(R.id.dining_room_layout);
+        layouts[4] = (LinearLayout) layouts[0].findViewById(R.id.book_room_layout);
+        layouts[5] = (LinearLayout) layouts[0].findViewById(R.id.restroom_layout);
+
+        return layouts;
     }
 }

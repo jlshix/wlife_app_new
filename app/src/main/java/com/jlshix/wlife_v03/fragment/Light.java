@@ -3,11 +3,15 @@ package com.jlshix.wlife_v03.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.adapter.LightAdapter;
@@ -32,9 +36,13 @@ import java.util.List;
  * 灯光 Fragment
  */
 //设定布局文件
-@ContentView(R.layout.fragment_light)
+@ContentView(R.layout.fragment_device)
 public class Light extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
-    private static final String TAG = "Light_FRAGMENT";
+    private static final String TAG = "LIGHT_FRAGMENT";
+
+    @ViewInject(R.id.scroll)
+    NestedScrollView scroll;
+
     @ViewInject(R.id.swipe)
     SwipeRefreshLayout swipe;
 
@@ -47,9 +55,17 @@ public class Light extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
     // 准备的Adapter（重点）
     private LightAdapter adapter;
 
+    // 分布图部分
+    @ViewInject(R.id.container)
+    CardView container;
+
+    CardView layout;
+    LinearLayout[] layouts;
+
     public static final int REFRESH = 0x01;
     public static final int CODE_ERR = 0x02;
     public static final int HTTP_ERR = 0x03;
+    public static final int FOCUS_UP = 0x04;
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -57,10 +73,16 @@ public class Light extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                 case REFRESH:
                     swipe.setRefreshing(true);
                     getData();
+                    scroll.fullScroll(View.FOCUS_UP);
                     swipe.setRefreshing(false);
                     break;
                 case CODE_ERR:
                     L.toast(getContext(), "CODE_ERR");
+                    break;
+                case FOCUS_UP:
+                    scroll.fullScroll(View.FOCUS_UP);
+                    break;
+
             }
         }
     };
@@ -78,12 +100,22 @@ public class Light extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
     }
 
     private void initView() {
+        scroll.setNestedScrollingEnabled(true);
+        scroll.setSmoothScrollingEnabled(true);
         adapter = new LightAdapter(getContext(), handler, list);
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
         recycler.setItemAnimator(new DefaultItemAnimator());
         adapter.notifyItemRangeChanged(0, list.size());
+        scroll.fullScroll(View.FOCUS_UP);
+
+        //分布图初始化
+        switch (L.getLayout()) {
+            case 1:
+                layouts = L.initGraph(getActivity(), 1, container);
+                break;
+        }
         handler.sendEmptyMessage(REFRESH);
     }
 
@@ -106,6 +138,7 @@ public class Light extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                                 return;
                             }
                             json2List(object.optJSONArray("info"));
+                            setGraph();
                             adapter.notifyDataSetChanged();
                             adapter.notifyItemRangeChanged(0, list.size());
                         } catch (JSONException e) {
@@ -123,6 +156,27 @@ public class Light extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                             int sign = object.optInt("sign");
                             int placeNo = object.optInt("place");
                             list.add(new LightData(name, Integer.parseInt(state), sign, placeNo));
+                        }
+                    }
+
+                    // 刷新数据时用于更新分布图
+                    private void setGraph() {
+                        for (LinearLayout layout :
+                                layouts) {
+                            int count = layout.getChildCount();
+                            if (count > 1) {
+                                layout.removeViews(1, count - 1);
+                            }
+                        }
+                        for (LightData data :
+                                list) {
+                            int place = data.getPlaceNo();
+                            int sign = data.getSign();
+                            ImageView img = new ImageView(getContext());
+                            img.setImageResource(R.drawable.blue_selector);
+                            img.setPadding(5, 5, 5, 5);
+                            img.setColorFilter(L.signs[sign]);
+                            layouts[place].addView(img);
                         }
                     }
 
@@ -148,6 +202,10 @@ public class Light extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
     @Override
     public void onRefresh() {
         handler.sendEmptyMessage(REFRESH);
+    }
+
+    public Handler getHandler() {
+        return handler;
     }
 
 }

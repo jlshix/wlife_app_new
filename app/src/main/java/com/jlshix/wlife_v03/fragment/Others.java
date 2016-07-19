@@ -3,11 +3,15 @@ package com.jlshix.wlife_v03.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.adapter.OthersAdapter;
@@ -32,10 +36,14 @@ import java.util.List;
  * 环境 Fragment
  */
 
-@ContentView(R.layout.fragment_others)
+@ContentView(R.layout.fragment_device)
 public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private static final String TAG = "OTHERS_FRAG";
+
+    @ViewInject(R.id.scroll)
+    NestedScrollView scroll;
+
     @ViewInject(R.id.recycler)
     private RecyclerView recycler;
 
@@ -47,10 +55,18 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
 
     // Adapter
     private OthersAdapter adapter;
-//    private int listSize;
+
+    // 分布图部分
+    @ViewInject(R.id.container)
+    CardView container;
+
+    CardView layout;
+    LinearLayout[] layouts;
+
     public static final int REFRESH = 0x01;
     public static final int CODE_ERR = 0x02;
     public static final int HTTP_ERR = 0x03;
+    public static final int FOCUS_UP = 0x04;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -58,7 +74,11 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
                 case REFRESH:
                     swipe.setRefreshing(true);
                     getData();
+                    scroll.fullScroll(View.FOCUS_UP);
                     swipe.setRefreshing(false);
+                    break;
+                case FOCUS_UP:
+                    scroll.fullScroll(View.FOCUS_UP);
                     break;
             }
         }
@@ -76,12 +96,22 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
     }
 
     private void initView() {
+        scroll.setNestedScrollingEnabled(true);
+        scroll.setSmoothScrollingEnabled(true);
         adapter = new OthersAdapter(getContext(), handler, list);
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
         recycler.setItemAnimator(new DefaultItemAnimator());
         adapter.notifyDataSetChanged();
+        scroll.fullScroll(View.FOCUS_UP);
+
+        //分布图初始化
+        switch (L.getLayout()) {
+            case 1:
+                layouts = L.initGraph(getActivity(), 1, container);
+                break;
+        }
         handler.sendEmptyMessage(REFRESH);
     }
 
@@ -104,10 +134,8 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
                                 return;
                             }
                             json2List(object.optJSONArray("info"));
-//                            listSize = list.size();
-//                            adapter.notifyItemRangeInserted(0, listSize);
+                            setGraph();
                             adapter.notifyDataSetChanged();
-//                            adapter.notifyItemRangeChanged(0, listSize);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -125,6 +153,27 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
                             int sign = object.optInt("sign");
                             int placeNo = object.optInt("place");
                             list.add(new OthersData(type, no, name, state, sign, placeNo));
+                        }
+                    }
+
+                    // 刷新数据时用于更新分布图
+                    private void setGraph() {
+                        for (LinearLayout layout :
+                                layouts) {
+                            int count = layout.getChildCount();
+                            if (count > 1) {
+                                layout.removeViews(1, count - 1);
+                            }
+                        }
+                        for (OthersData data :
+                                list) {
+                            int place = data.getPlaceNo();
+                            int sign = data.getSign();
+                            ImageView img = new ImageView(getContext());
+                            img.setImageResource(R.drawable.blue_selector);
+                            img.setPadding(5, 5, 5, 5);
+                            img.setColorFilter(L.signs[sign]);
+                            layouts[place].addView(img);
                         }
                     }
 
@@ -149,4 +198,9 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
     public void onRefresh() {
         handler.sendEmptyMessage(REFRESH);
     }
+
+    public Handler getHandler() {
+        return handler;
+    }
+
 }

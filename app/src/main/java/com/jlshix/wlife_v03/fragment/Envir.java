@@ -3,11 +3,15 @@ package com.jlshix.wlife_v03.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.adapter.EnvirAdapter;
@@ -32,10 +36,14 @@ import java.util.List;
  * 环境 Fragment
  */
 
-@ContentView(R.layout.fragment_envir)
+@ContentView(R.layout.fragment_device)
 public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private static final String TAG = "ENVIR_FRAG";
+
+    @ViewInject(R.id.scroll)
+    NestedScrollView scroll;
+
     @ViewInject(R.id.recycler)
     private RecyclerView recycler;
 
@@ -48,7 +56,16 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
     // Adapter
     private EnvirAdapter adapter;
 
+    // 分布图部分
+    @ViewInject(R.id.container)
+    CardView container;
+
+    CardView layout;
+    LinearLayout[] layouts;
+
+
     private static final int REFRESH = 0x01;
+    public static final int FOCUS_UP = 0x03;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -56,7 +73,11 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                 case REFRESH:
                     swipe.setRefreshing(true);
                     getData();
+                    scroll.fullScroll(View.FOCUS_UP);
                     swipe.setRefreshing(false);
+                    break;
+                case FOCUS_UP:
+                    scroll.fullScroll(View.FOCUS_UP);
                     break;
             }
         }
@@ -73,12 +94,23 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
     }
 
     private void initView() {
+        // TODO: 2016/7/19 滑动不流畅的问题
+        scroll.setNestedScrollingEnabled(true);
+        scroll.setSmoothScrollingEnabled(true);
         adapter = new EnvirAdapter(getContext(), list);
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
         recycler.setItemAnimator(new DefaultItemAnimator());
         adapter.notifyItemRangeChanged(0, list.size());
+        scroll.fullScroll(View.FOCUS_UP);
+
+        //分布图初始化
+        switch (L.getLayout()) {
+            case 1:
+                layouts = L.initGraph(getActivity(), 1, container);
+                break;
+        }
         handler.sendEmptyMessage(REFRESH);
     }
 
@@ -101,6 +133,7 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                                 return;
                             }
                             json2List(object.optJSONArray("info"));
+                            setGraph();
                             adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -117,6 +150,27 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                             int sign = object.optInt("sign");
                             int placeNo = object.optInt("place");
                             list.add(new EnvirData(name, state, sign, placeNo));
+                        }
+                    }
+
+                    // 刷新数据时用于更新分布图
+                    private void setGraph() {
+                        for (LinearLayout layout :
+                                layouts) {
+                            int count = layout.getChildCount();
+                            if (count > 1) {
+                                layout.removeViews(1, count - 1);
+                            }
+                        }
+                        for (EnvirData data :
+                                list) {
+                            int place = data.getPlaceNo();
+                            int sign = data.getSign();
+                            ImageView img = new ImageView(getContext());
+                            img.setImageResource(R.drawable.blue_selector);
+                            img.setPadding(5, 5, 5, 5);
+                            img.setColorFilter(L.signs[sign]);
+                            layouts[place].addView(img);
                         }
                     }
 
@@ -142,8 +196,8 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
         handler.sendEmptyMessage(REFRESH);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public Handler getHandler() {
+        return handler;
     }
+
 }

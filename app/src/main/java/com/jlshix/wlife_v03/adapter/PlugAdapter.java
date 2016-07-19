@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.data.PlugData;
-import com.jlshix.wlife_v03.fragment.Light;
 import com.jlshix.wlife_v03.fragment.Plug;
 import com.jlshix.wlife_v03.tool.L;
 
@@ -177,7 +176,7 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                handler.sendEmptyMessage(Light.HTTP_ERR);
+                handler.sendEmptyMessage(Plug.HTTP_ERR);
             }
 
             @Override

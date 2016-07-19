@@ -110,7 +110,22 @@ public class DeviceActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
+                // 滚动至顶部
+                switch (position) {
+                    case 0:
+                        envir.getHandler().sendEmptyMessage(Envir.FOCUS_UP);
+                        break;
+                    case 1:
+                        plug.getHandler().sendEmptyMessage(Plug.FOCUS_UP);
+                        break;
+                    case 2:
+                        light.getHandler().sendEmptyMessage(Light.FOCUS_UP);
+                        break;
+                    case 3:
+                        others.getHandler().sendEmptyMessage(Others.FOCUS_UP);
+                        break;
 
+                }
             }
 
             @Override
