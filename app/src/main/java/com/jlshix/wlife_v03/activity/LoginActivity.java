@@ -33,6 +33,7 @@ public class LoginActivity extends BaseActivity {
      * 将要写入sp的内容
      */
     private String userMail,userName, gateImei;
+    private int layout;
 
     /**
      * 无阴影标题栏
@@ -191,13 +192,15 @@ public class LoginActivity extends BaseActivity {
                 if (dialog.isShowing()) {
                     dialog.dismiss();
                 }
+                Log.i(TAG, "onSuccess: " + result.toString());
                 String code = result.optString("code", "x");
                 if (code.equals("1")) {
                     JSONObject content = result.optJSONObject("info");
                     userMail = content.optString("mail", null);
                     userName = content.optString("name", null);
                     gateImei = content.optString("gate_imei", null);
-                    Log.e(TAG, "onSuccess: " + userMail + "--" + userName + "--" + gateImei);
+                    layout = content.optInt("layout");
+                    Log.e(TAG, "onSuccess: " + userMail + "--" + userName + "--" + gateImei + "--" + layout);
                 }
 
                 switch (code) {
@@ -246,6 +249,7 @@ public class LoginActivity extends BaseActivity {
         L.setPhone(userMail);
         L.setPw(secret.getText().toString().trim());
         L.setGateImei(gateImei);
+        L.setLayout(layout);
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
