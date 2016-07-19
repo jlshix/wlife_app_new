@@ -11,7 +11,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -100,6 +99,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case REFRESH:
+                    swipe.setRefreshing(true);
                     showCard();
                     updateWeather();
                     if (L.isBIND()) {
@@ -160,14 +160,12 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Log.i(TAG, "onMenuItemClick: " + item.getTitle());
+                switch (item.getItemId()) {
+                    case R.id.action_position:
+                        L.snack(toolbar, "开发中");
+                        break;
+                }
                 return false;
-            }
-        });
-        menu.setOnDismissListener(new PopupMenu.OnDismissListener() {
-            @Override
-            public void onDismiss(PopupMenu menu) {
-                Log.i(TAG, "onDismiss: ");
             }
         });
         menu.show();
@@ -184,14 +182,15 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Log.i(TAG, "onMenuItemClick: " + item.getTitle());
+                switch (item.getItemId()) {
+                    case R.id.action_delete:
+                        unbindGate(toolbar);
+                        break;
+                    case R.id.action_rename:
+                        L.snack(toolbar, "开发中");
+                        break;
+                }
                 return false;
-            }
-        });
-        menu.setOnDismissListener(new PopupMenu.OnDismissListener() {
-            @Override
-            public void onDismiss(PopupMenu menu) {
-                Log.i(TAG, "onDismiss: ");
             }
         });
         menu.show();
@@ -253,13 +252,25 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      * @return boolean
      */
     @Event(value = R.id.device, type = View.OnLongClickListener.class)
-    private boolean ubindGate(View v) {
+    private boolean unbindGate(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setMessage("确认解绑网关？").setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 L.unbindGate(MainActivity.this);
-                showCard();
+                handler.sendEmptyMessage(REFRESH);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(500);
+                            // 再刷新一次
+                            handler.sendEmptyMessage(REFRESH);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
@@ -330,7 +341,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        swipe.setRefreshing(true);
         handler.sendEmptyMessage(REFRESH);
     }
 

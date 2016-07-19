@@ -96,6 +96,7 @@ public class LoginActivity extends BaseActivity {
 
         // 若设为自动登录则直接登录
         if (L.isAutoLogin()) {
+            handler.sendEmptyMessage(DIALOG);
             login(L.getPhone(), L.getPw());
         }
 
