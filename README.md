@@ -24,14 +24,14 @@ WLife_v02 项目重构
 
 - RegisterActivity 去除Card
 
-## 2016-7-12
+## 2016-07-12
 
 - MainActivity参考ZigSys的设计
 
 - bindGateActivity 参考ZigSys的设计
     - todo 添加按照房间选择
 
-## 2016-7-16
+## 2016-07-16
 
 - addDeviceActivity 建成,需要重新设计
 
@@ -45,10 +45,14 @@ WLife_v02 项目重构
 
 - 设置页面使用 PreferenceScreen 原生设计
 
-## 2016-7-18
+## 2016-07-18
 
 - 二维码绑定网关功能已完成 绑定设备待定
 
 - 更改数据库 新增sign 与 place字段
 
 - 设备icon可根据数据库更改颜色 待完成分布图
+
+## 2016-07-19
+
+- 实现布局的动态加载与分布图的设备位置显示
