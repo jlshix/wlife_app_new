@@ -60,3 +60,9 @@ WLife_v02 项目重构
 - 设置页面完成大半 新增右滑返回
 
 - 优化登录和解绑流程
+
+
+## TODO
+
+- 空调 frag && item
+- addDeviceActivity
