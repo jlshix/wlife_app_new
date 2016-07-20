@@ -154,6 +154,12 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         }
     }
 
+    @Event(R.id.weather)
+    private void refreshWeather(View view) {
+        updateWeather();
+        Snackbar.make(view, "实时天气已更新", Snackbar.LENGTH_SHORT).show();
+    }
+
     /**
      * 天气菜单
      * @param view menu btn
