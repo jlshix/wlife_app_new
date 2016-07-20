@@ -95,17 +95,17 @@ public class SettingsFrag extends PreferenceFragment {
             }
         });
 
-        // 帮助
-        help = findPreference("help");
-        help.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(R.string.help).setMessage(R.string.large_text)
-                        .setPositiveButton("确认", null).create().show();
-                return false;
-            }
-        });
+//        // 帮助
+//        help = findPreference("help");
+//        help.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//            @Override
+//            public boolean onPreferenceClick(Preference preference) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                builder.setTitle(R.string.help).setMessage(R.string.large_text)
+//                        .setPositiveButton("确认", null).create().show();
+//                return false;
+//            }
+//        });
 
         // 关于
         about = findPreference("about");
@@ -129,15 +129,15 @@ public class SettingsFrag extends PreferenceFragment {
             }
         });
 
-        // update
-        update = findPreference("update");
-        update.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                L.toast(getActivity(), "开发中...");
-                return false;
-            }
-        });
+//        // update
+//        update = findPreference("update");
+//        update.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//            @Override
+//            public boolean onPreferenceClick(Preference preference) {
+//                L.toast(getActivity(), "开发中...");
+//                return false;
+//            }
+//        });
 
 
     }

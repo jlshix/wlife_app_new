@@ -163,7 +163,7 @@
     <string name="usr_pw_key">settings_pw</string>
     <string name="usr_pw">更改密码</string>
     <string name="usr_pw_summary">更改您的密码</string>
-    <string name="settings_account">账号设置</string>
+    <string name="settings_account">账户管理</string>
     <string name="settings_general">通用设置</string>
     <string name="clear_pw">清除密码</string>
     <string name="clear_pw_summary">清除保存的密码</string>
@@ -285,5 +285,13 @@
     </string>
     <string name="action_unbind">解除绑定</string>
     <string name="check_place">查看位置</string>
+    <string name="settings_sys">系统设置</string>
+    <string name="settings_voice">语音命令</string>
+    <string name="settings_voice_summary">语音命令列表与自定义</string>
+    <string name="settings_schedule">计划任务</string>
+    <string name="settings_schedule_summary">查看或编辑您的计划任务</string>
+    <string name="settings_member">家庭组管理</string>
+    <string name="settings_member_summary">管理家庭成员(管理员功能)</string>
+    <string name="settings_account_summary">更改邮箱 用户名 密码</string>
 
 </resources>

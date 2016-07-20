@@ -3,20 +3,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="@string/settings_account">
+        android:title="@string/settings_sys">
 
-        <EditTextPreference
-            android:key="name"
-            android:title="@string/usr_name"
-            android:summary="@string/usr_name_summary"/>
-        <EditTextPreference
-            android:key="mail"
-            android:title="@string/usr_mail"
-            android:summary="@string/usr_mail_summary"/>
         <Preference
-            android:key="pw"
-            android:title="@string/usr_pw"
-            android:summary="@string/usr_pw_summary"/>
+            android:key="voice"
+            android:title="@string/settings_voice"
+            android:summary="@string/settings_voice_summary"/>
+        <Preference
+            android:key="schedule"
+            android:title="@string/settings_schedule"
+            android:summary="@string/settings_schedule_summary"/>
+        <Preference
+            android:key="member"
+            android:title="@string/settings_member"
+            android:summary="@string/settings_member_summary"/>
+        <Preference
+            android:key="account"
+            android:title="@string/settings_account"
+            android:summary="@string/settings_account_summary"/>
+
+
+        <!--<EditTextPreference-->
+            <!--android:key="name"-->
+            <!--android:title="@string/usr_name"-->
+            <!--android:summary="@string/usr_name_summary"/>-->
+        <!--<EditTextPreference-->
+            <!--android:key="mail"-->
+            <!--android:title="@string/usr_mail"-->
+            <!--android:summary="@string/usr_mail_summary"/>-->
+        <!--<Preference-->
+            <!--android:key="pw"-->
+            <!--android:title="@string/usr_pw"-->
+            <!--android:summary="@string/usr_pw_summary"/>-->
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -35,15 +53,15 @@
         <Preference
             android:key="share"
             android:title="@string/share"/>
-        <Preference
-            android:key="help"
-            android:title="@string/help"/>
+        <!--<Preference-->
+            <!--android:key="help"-->
+            <!--android:title="@string/help"/>-->
         <Preference
             android:key="about"
             android:title="@string/about"/>
-        <Preference
-            android:key="update"
-            android:title="@string/update"/>
+        <!--<Preference-->
+            <!--android:key="update"-->
+            <!--android:title="@string/update"/>-->
         <Preference
             android:key="quit"
             android:title="@string/quit"/>
