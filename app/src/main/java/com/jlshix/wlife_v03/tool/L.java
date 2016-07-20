@@ -65,6 +65,7 @@ public class L {
     public static String URL_LOGIN = "http://jlshix.com/wlife2/login.php/";
     public static String URL_REG = "http://jlshix.com/wlife2/register.php/";
     public static final String URL_WEATHER = "https://api.caiyunapp.com/v2/X6f3oc9bahTuV6Bv/";
+    public static final String URL_TO_GPS    = "http://api.map.baidu.com/geocoder/v2/";
     // TODO: 2016/7/12 check php
     private static final String URL_UNBIND = "http://jlshix.com/wlife2/unbind_gate.php/";
     public static String URL_PUSH = "http://jlshix.com/wlife2/togate.php/";
@@ -234,8 +235,34 @@ public class L {
         L.BIND = BIND;
         App.sp.edit().putBoolean("bind", BIND).apply();
     }
-    
 
+
+    /**
+     * 获取存储的当前位置
+     * @return place
+     */
+    public static String getCYLocation() {
+        return App.sp.getString("lng", "120.1227") + "," + App.sp.getString("lat", "36.0001");
+    }
+
+    public static String getBDLocation() {
+        return App.sp.getString("lat", "36.0001") + "," + App.sp.getString("lng", "120.1227");
+    }
+
+    /**
+     * 记录当前位置
+     * @param lat place
+     */
+    public static void setLat(String lat) {
+        App.sp.edit().putString("lat", lat).apply();
+    }
+
+    public static void setLng(String lng) {
+        App.sp.edit().putString("lng", lng).apply();
+    }
+
+
+    
 
 
 
@@ -312,72 +339,6 @@ public class L {
         });
     }
 
-    /**
-     * 获取GPS信息
-     * @param c context
-     * @return string
-     */
-    public static String getGPS(Context c) {
-        String mDefault = "120.1227,36.0001";
-        //
-//        LocationManager locationManager = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
-//
-//        LocationListener locationListener = new LocationListener() {
-//
-//            // Provider的状态在可用、暂时不可用和无服务三个状态直接切换时触发此函数
-//            @Override
-//            public void onStatusChanged(String provider, int status, Bundle extras) {
-//                Log.e("Map", "onStatusChanged");
-//            }
-//
-//            // Provider被enable时触发此函数，比如GPS被打开
-//            @Override
-//            public void onProviderEnabled(String provider) {
-//                Log.e("Map", "onProviderEnabled");
-//            }
-//
-//            // Provider被disable时触发此函数，比如GPS被关闭
-//
-//            @Override
-//            public void onProviderDisabled(String provider) {
-//                Log.e("Map", "onProviderDisabled");
-////                loc_flag = "" + 1;
-//            }
-//
-//            //当坐标改变时触发此函数，如果Provider传进相同的坐标，它就不会被触发
-//            @Override
-//            public void onLocationChanged(Location location) {
-//                if (location != null) {
-//                    Log.e("Map", "Location changed : Lat: " + location.getLatitude() + " Lng: " + location.getLongitude());
-//                }
-//            }
-//        };
-//        if (ActivityCompat.checkSelfPermission(c, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(c, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            L.toast(c, "LOCATION_PERMISSION_DENIED");
-//            return null;
-//        }
-//        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
-//        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//        if(location != null){
-////            loc_flag = ""+2;
-//            double longitude = location.getLongitude();
-//            double latitude = location.getLatitude();
-//            DecimalFormat df = new DecimalFormat("#.0000");
-//            df.format(longitude);
-//            df.format(latitude);
-//            Log.e(TAG, "getGPS: " + longitude + "---" + latitude);
-//            // TODO 使用 SharedPreferences 保存
-//            return longitude + "," + latitude;
-//        }
-        return mDefault;
-    }
 
     /**
      * 解绑网关

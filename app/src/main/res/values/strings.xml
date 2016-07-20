@@ -284,5 +284,6 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_unbind">解除绑定</string>
+    <string name="check_place">查看位置</string>
 
 </resources>

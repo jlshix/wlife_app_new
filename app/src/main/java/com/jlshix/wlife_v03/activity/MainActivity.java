@@ -11,12 +11,15 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -32,6 +35,8 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import java.text.DecimalFormat;
 
 @ContentView(R.layout.activity_main)
 public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
@@ -155,17 +160,140 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      */
     @Event(R.id.menu_weather)
     private void weatherMenu(View view) {
-        PopupMenu menu = new PopupMenu(MainActivity.this, view);
+        final PopupMenu menu = new PopupMenu(MainActivity.this, view);
         menu.getMenuInflater().inflate(R.menu.menu_weather, menu.getMenu());
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_position:
-                        L.snack(toolbar, "开发中");
+                        changePosition();
+                        break;
+                    case R.id.action_state:
+                        getState();
                         break;
                 }
                 return false;
+            }
+
+
+            /**
+             * 更改当前位置
+             */
+            private void changePosition() {
+                final LinearLayout layout = new LinearLayout(MainActivity.this);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.setPadding(16, 16, 16, 16);
+                final EditText city = new EditText(MainActivity.this);
+                city.setHint("城市名");
+                final EditText address = new EditText(MainActivity.this);
+                address.setHint("地址 越详细越准确");
+                layout.addView(city);
+                layout.addView(address);
+                new AlertDialog.Builder(MainActivity.this).setTitle("更改位置").setView(layout)
+                        .setPositiveButton("更改", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String cityText = city.getText().toString().trim();
+                                String addrText = address.getText().toString().trim();
+                                if (cityText.equals("") || addrText.equals("")) {
+                                    L.snack(layout, "信息不完整");
+                                    return;
+                                }
+                                RequestParams params = new RequestParams(L.URL_TO_GPS);
+                                params.addParameter("output", "json");
+                                params.addParameter("ak", "kBjrIu4NjUASe2BNU9DuxTHL");
+                                params.addParameter("city", cityText);
+                                params.addParameter("address", addrText);
+                                x.http().get(params, new Callback.CommonCallback<JSONObject>() {
+                                    @Override
+                                    public void onSuccess(JSONObject result) {
+                                        Log.i(TAG, "onSuccess: " + result.toString());
+                                        if (result.optInt("status") != 0) {
+                                            L.snack(layout, "WEATHER_CODE_ERR");
+                                            return;
+                                        }
+                                        JSONObject location = result.optJSONObject("result")
+                                                .optJSONObject("location");
+                                        double lng = location.optDouble("lng");
+                                        double lat = location.optDouble("lat");
+                                        DecimalFormat df =new DecimalFormat("0.0000");
+                                        df.format(lng);
+                                        df.format(lat);
+                                        Log.i(TAG, "onSuccess: "+ lng + "--" + lat);
+                                        L.setLng(String.valueOf(lng));
+                                        L.setLat(String.valueOf(lat));
+                                        handler.sendEmptyMessage(REFRESH);
+
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable ex, boolean isOnCallback) {
+                                        L.snack(toolbar, ex.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onCancelled(CancelledException cex) {
+
+                                    }
+
+                                    @Override
+                                    public void onFinished() {
+
+                                    }
+                                });
+
+                            }
+                        }).setNegativeButton("取消", null).create().show();
+            }
+
+            /**
+             * 获取当前的位置描述
+             */
+            private void getState() {
+                RequestParams params = new RequestParams(L.URL_TO_GPS);
+                params.addParameter("output", "json");
+                params.addParameter("ak", "kBjrIu4NjUASe2BNU9DuxTHL");
+                params.addParameter("location", L.getBDLocation());
+                x.http().get(params, new Callback.CommonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        Log.i(TAG, "onSuccess: " + result);
+                        if (result.optInt("status") != 0) {
+                            L.snack(toolbar, "STATE_CODE_ERR");
+                            return;
+                        }
+                        JSONObject res = result.optJSONObject("result");
+                        JSONObject location = res.optJSONObject("location");
+                        String addr = res.optString("formatted_address");
+                        String describ = res.optString("sematic_description");
+                        String msg = "坐标:\n" + "\t经度: " + location.optString("lng") +
+                                "\n" + "\t纬度: " + location.optString("lat") +
+                                "\n\n" + "位置描述:\n\t" + addr +
+                                "附近 " + describ;
+
+                        new AlertDialog.Builder(MainActivity.this).setTitle("当前位置")
+                                .setMessage(msg).setPositiveButton("确认", null)
+                                .create().show();
+
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+                        L.snack(toolbar, ex.getMessage());
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+
             }
         });
         menu.show();
@@ -341,6 +469,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
+
+
         handler.sendEmptyMessage(REFRESH);
     }
 
@@ -349,7 +479,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      * 更新天气数据
      */
     private void updateWeather() {
-        RequestParams params = new RequestParams(L.URL_WEATHER + L.getGPS(MainActivity.this) + "/realtime.json");
+        RequestParams params = new RequestParams(L.URL_WEATHER + L.getCYLocation() + "/realtime.json");
         x.http().get(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {

@@ -7,5 +7,9 @@
         android:id="@+id/action_position"
         android:title="@string/action_position"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_state"
+        android:title="@string/check_place"
+        app:showAsAction="never" />
 
 </menu>
