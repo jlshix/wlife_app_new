@@ -19,9 +19,24 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            android:background="@color/colorPrimary"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_msg" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
+        android:layout_below="@id/tabs"
+        android:padding="@dimen/frag_padding"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 
 </android.support.design.widget.CoordinatorLayout>

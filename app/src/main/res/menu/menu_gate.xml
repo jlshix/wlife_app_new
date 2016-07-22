@@ -4,6 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.jlshix.test.MainActivity">
     <item
+        android:id="@+id/action_mode"
+        android:title="@string/mode"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_camera"
+        android:title="@string/camera"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_rename"
         android:title="@string/action_rename"
         app:showAsAction="never" />
@@ -11,5 +20,6 @@
         android:id="@+id/action_delete"
         android:title="@string/action_unbind"
         app:showAsAction="never" />
+
 
 </menu>

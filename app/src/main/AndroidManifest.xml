@@ -67,6 +67,7 @@
         <activity
             android:name=".activity.MsgActivity"
             android:label="@string/title_activity_msg"
+            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".activity.DeviceActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -76,6 +76,8 @@ public class L {
     public static String URL_GET = "http://jlshix.com/wlife2/get.php/";
     public static String URL_SET = "http://jlshix.com/wlife2/set.php/";
     public static final String URL_ADD_DEV = "http://jlshix.com/wlife2/add_dev.php/";
+    public static String URL_GET_BOARD = "http://jlshix.com/wlife2/get_board.php";
+    public static String URL_ADD_BOARD = "http://jlshix.com/wlife2/add_board.php";
 
 
 

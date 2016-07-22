@@ -45,6 +45,20 @@
         <item>其它</item>
     </array>
 
+    <array name="msg_frag_title">
+        <item>网关</item>
+        <item>家庭</item>
+    </array>
+
+    <array name="gate_msg_types">
+        <item>全部</item>
+        <item>系统消息</item>
+        <item>安防消息</item>
+        <item>环境消息</item>
+    </array>
+
+
+
     <string name="title_activity_gate_bind">GateBindActivity</string>
     <string name="add">添加</string>
     <string name="no_gate">您还没有绑定网关，请点击 “+” 绑定网关</string>
@@ -293,5 +307,8 @@
     <string name="settings_member">家庭组管理</string>
     <string name="settings_member_summary">管理家庭成员(管理员功能)</string>
     <string name="settings_account_summary">更改邮箱 用户名 密码</string>
+    <string name="mode">更改模式</string>
+    <string name="send">发送</string>
+    <string name="msg_hint">例如: 周末一起出游吧</string>
 
 </resources>
