@@ -15,12 +15,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.jlshix.wlife_v03.R;
@@ -88,9 +85,9 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private ImageView line;
 
     // spinner for mode
-    @ViewInject(R.id.mode_spinner)
-    private Spinner spinner;
-    // 是否主动选定 暂时未实现主动被动的选定
+//    @ViewInject(R.id.mode_spinner)
+//    private Spinner spinner;
+//    // 是否主动选定 暂时未实现主动被动的选定
     private boolean positive = true;
     // 是否第一次启动 用于初始化spinner时不发命令
     private boolean isFirst = true;
@@ -126,21 +123,21 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
         line.setEnabled(false);
         swipe.setOnRefreshListener(this);
-        spinner.setAdapter(new ArrayAdapter<>(this, R.layout.spinner,
-                getResources().getStringArray(R.array.mode)));
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (positive) {
-                    changeMode(position);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        spinner.setAdapter(new ArrayAdapter<>(this, R.layout.spinner,
+//                getResources().getStringArray(R.array.mode)));
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (positive) {
+//                    changeMode(position);
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
         handler.sendEmptyMessage(REFRESH);
     }
 
@@ -317,6 +314,12 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.action_mode:
+                        // TODO: 2016/7/22 模式设置
+                        break;
+                    case R.id.action_camera:
+                        // TODO: 2016/7/22 环信监控
+                        break;
                     case R.id.action_delete:
                         unbindGate(toolbar);
                         break;
@@ -332,49 +335,48 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
 
 
-    /**
-     * 更改模式
-     * @param position 模式编号
-     */
-    private void changeMode(int position) {
-        if (isFirst) {
-            isFirst = false;
-            return;
-        }
-        // 推送 模式标志为1 始于1 (1 日常) (2 观影) (3 睡眠) (4 外出) (5 夜间)
-        L.send2Gate(L.getGateImei(), "1" + (position + 1) + "0000");
-        // 数据库
-        RequestParams params = new RequestParams(L.URL_SET_GATE);
-        params.addParameter("imei", L.getGateImei());
-        params.addParameter("mode", String.valueOf(position + 1));
-        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
-            @Override
-            public void onSuccess(JSONObject result) {
-                Snackbar.make(spinner, "模式已更改", Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Snackbar.make(spinner, "模式更改失败，请稍候重试", Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-        // 改回被动
-//        positive = false;
-    }
+//    /**
+//     * 更改模式
+//     * @param position 模式编号
+//     */
+//    private void changeMode(int position) {
+//        if (isFirst) {
+//            isFirst = false;
+//            return;
+//        }
+//        // 推送 模式标志为1 始于1 (1 日常) (2 观影) (3 睡眠) (4 外出) (5 夜间)
+//        L.send2Gate(L.getGateImei(), "1" + (position + 1) + "0000");
+//        // 数据库
+//        RequestParams params = new RequestParams(L.URL_SET_GATE);
+//        params.addParameter("imei", L.getGateImei());
+//        params.addParameter("mode", String.valueOf(position + 1));
+//        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+//            @Override
+//            public void onSuccess(JSONObject result) {
+//                Snackbar.make(spinner, "模式已更改", Snackbar.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//                Snackbar.make(spinner, "模式更改失败，请稍候重试", Snackbar.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//
+//            }
+//        });
+//        // 改回被动
+////        positive = false;
+//    }
 
     // device OnClickListener
-    @Event(value = R.id.device,
-            type = View.OnClickListener.class)
+    @Event(R.id.device)
     private void toDeviceActivity(View v) {
         Intent intent = new Intent(MainActivity.this, DeviceActivity.class);
         startActivity(intent);
@@ -415,15 +417,15 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         return true;
     }
 
-    /**
-     * 查看监控
-     * @param view view
-     */
-    @Event(R.id.camera)
-    private void camera(View view) {
-        // TODO: 2016/7/16 环信
-        L.snack(view, "开发中...");
-    }
+//    /**
+//     * 查看监控
+//     * @param view view
+//     */
+//    @Event(R.id.camera)
+//    private void camera(View view) {
+//        // TODO: 2016/7/16 环信
+//        L.snack(view, "开发中...");
+//    }
 
 
 

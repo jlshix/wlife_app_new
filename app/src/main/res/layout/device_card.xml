@@ -82,20 +82,20 @@
 
     </LinearLayout>
 
-    <Spinner
-        android:id="@+id/mode_spinner"
-        android:layout_marginTop="3dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <!--<Spinner-->
+        <!--android:id="@+id/mode_spinner"-->
+        <!--android:layout_marginTop="3dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"/>-->
 
-    <Button
-        android:id="@+id/camera"
-        android:layout_marginTop="@dimen/sub_margin"
-        android:text="@string/camera"
-        android:textColor="@color/white"
-        android:background="@drawable/btn_selector"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <!--<Button-->
+        <!--android:id="@+id/camera"-->
+        <!--android:layout_marginTop="@dimen/sub_margin"-->
+        <!--android:text="@string/camera"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:background="@drawable/btn_selector"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
 
 
 </LinearLayout>
