@@ -2,24 +2,40 @@ package com.jlshix.wlife_v03.tool;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatSeekBar;
+import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jlshix.wlife_v03.App;
 import com.jlshix.wlife_v03.R;
+import com.jlshix.wlife_v03.data.SimpleDeviceData;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Leo on 2016/7/11.
@@ -31,6 +47,8 @@ public class L {
     public static final int ADD_RETURN = 2000;
     public static final int SETTINGS_REQUEST = 3000;
     public static final int SETTINGS_RETURN = 4000;
+    public static final int DIALOG_REQUEST = 5000;
+    public static final int DIALOG_RETURN = 6000;
 
 
     /**
@@ -51,6 +69,9 @@ public class L {
     public static final int RED = 1;
     public static final int GREEN = 2;
     public static final int BLUE = 3;
+    public static final int DEV_IMEI_LENGTH = 12;
+
+
 
     /**
      * debug模式
@@ -78,6 +99,7 @@ public class L {
     public static final String URL_ADD_DEV = "http://jlshix.com/wlife2/add_dev.php/";
     public static String URL_GET_BOARD = "http://jlshix.com/wlife2/get_board.php";
     public static String URL_ADD_BOARD = "http://jlshix.com/wlife2/add_board.php";
+    public static final String URL_GET_NAME_LIST = "http://jlshix.com/wlife2/get_name_list.php";
 
 
 
@@ -471,4 +493,255 @@ public class L {
             }
         };
     }
+
+    // list 不得已放在外面...
+    private static List<SimpleDeviceData> list = new ArrayList<>();
+    private static SimpleDeviceData data = null;
+    /**
+     * 使用 Dialog 生成命令
+     * @return map 包括描述和命令
+     */
+    public static SimpleDeviceData getActionByDialog(final Activity activity) {
+        // 初始加个默认的
+        list.add(new SimpleDeviceData());
+
+        // 辅助map
+        Map<String, Integer> placeNo = new HashMap<>();
+        placeNo.put("客厅", 1);
+        placeNo.put("卧室", 2);
+        placeNo.put("餐厅", 3);
+        placeNo.put("厨房", 4);
+        placeNo.put("卫生间", 5);
+
+        Map<String, String> typeNo = new HashMap<>();
+//        typeNo.put("温湿度光照检测器", "02");
+        typeNo.put("烟雾监测器", "04");
+        typeNo.put("红外防盗器", "05");
+        typeNo.put("窗帘控制器", "06");
+        typeNo.put("多级调光灯", "09");
+        typeNo.put("智能插座", "0A");
+
+        // 获取布局
+        LinearLayout layout = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.dialog_add_action, null);
+        //spinner们
+        AppCompatSpinner placeSpinner = (AppCompatSpinner) layout.findViewById(R.id.spinner_place);
+        AppCompatSpinner typeSpinner = (AppCompatSpinner) layout.findViewById(R.id.spinner_type);
+        AppCompatSpinner nameSpinner = (AppCompatSpinner) layout.findViewById(R.id.spinner_name);
+        // 三类只显示一个
+        final SwitchCompat switchCompat = (SwitchCompat) layout.findViewById(R.id.on_off);
+        final LinearLayout plugLinear = (LinearLayout) layout.findViewById(R.id.plug_linear);
+        final LinearLayout lightLinear = (LinearLayout) layout.findViewById(R.id.light_linear);
+        final AppCompatSeekBar seekBar = (AppCompatSeekBar) layout.findViewById(R.id.light_seek_bar);
+        final TextView lightText = (TextView) layout.findViewById(R.id.light_text);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                switch (i) {
+                    case 0:
+                        lightText.setText("关");
+                        break;
+                    case 1:
+                        lightText.setText("暗");
+                        break;
+                    case 2:
+                        lightText.setText("亮");
+                        break;
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        // adapter们
+        ArrayAdapter<String> placeAdapter = new ArrayAdapter<>(activity,
+                android.R.layout.simple_spinner_item, activity.getResources().getStringArray(R.array.rooms_spinner));
+        placeSpinner.setAdapter(placeAdapter);
+
+        ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(activity,
+                android.R.layout.simple_spinner_item, activity.getResources().getStringArray(R.array.device_list));
+        typeSpinner.setAdapter(typeAdapter);
+
+        // 获取当前文字?
+        final String placeK = placeSpinner.getSelectedItem().toString();
+        final int place = placeNo.get(placeK);
+        final String typeK = typeSpinner.getSelectedItem().toString();
+        String type = typeNo.get(typeK);
+        // type 显示三类之一
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        switchCompat.setVisibility(View.VISIBLE);
+                        plugLinear.setVisibility(View.GONE);
+                        lightLinear.setVisibility(View.GONE);
+                        break;
+                    case 3:
+                        switchCompat.setVisibility(View.GONE);
+                        plugLinear.setVisibility(View.GONE);
+                        lightLinear.setVisibility(View.VISIBLE);
+                        break;
+                    case 4:
+                        switchCompat.setVisibility(View.GONE);
+                        plugLinear.setVisibility(View.VISIBLE);
+                        lightLinear.setVisibility(View.GONE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        RequestParams params = new RequestParams(L.URL_GET_NAME_LIST);
+        params.addParameter("gate", getGateImei());
+        params.addParameter("place", place);
+        params.addParameter("type", type);
+        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                if (!result.optString("code").equals("1")) {
+                    L.toast(activity, "DIALOG_CODE_ERR");
+                    return;
+                }
+
+                JSONArray info = result.optJSONArray("info");
+                list.clear();
+                for (int i = 0; i < info.length(); i++) {
+                    JSONObject obj = info.optJSONObject(i);
+                    list.add(new SimpleDeviceData(obj.optString("no"), obj.optString("name")));
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                L.toast(activity, ex.getMessage());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+
+        String [] names = list2Names(list);
+        ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(activity,
+                android.R.layout.simple_spinner_item, names);
+        nameSpinner.setAdapter(nameAdapter);
+
+        // TODO: 2016/7/23 通过网络进行初始化 选定后setVisibility 然后生成
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("请选择").setView(layout).setPositiveButton("确认", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String stateK = null;
+                String state = null;
+                if (switchCompat.getVisibility() == View.VISIBLE) {
+                    state = switchCompat.isChecked() ? "0001":"0000";
+                    stateK = switchCompat.isChecked() ? "开":"关";
+                } else if (plugLinear.getVisibility() == View.VISIBLE) {
+                    state = getPlugState(plugLinear);
+                    stateK = getPlugStateK(plugLinear);
+                } else if (lightLinear.getVisibility() == View.VISIBLE) {
+                    state = getLightState(lightLinear);
+                    stateK = getLightStateK(lightLinear);
+                }
+                String name = placeK + "-" + typeK + "-" + stateK ;
+                data = new SimpleDeviceData(state, name);
+            }
+
+            private String getLightStateK(LinearLayout lightLinear) {
+                AppCompatSeekBar seekBar = (AppCompatSeekBar) lightLinear.getChildAt(0);
+                int progress = seekBar.getProgress();
+                switch (progress) {
+                    case 0:
+                        return "关";
+                    case 1:
+                        return "暗";
+                    case 2:
+                        return "亮";
+
+                }
+                return "an";
+            }
+            private String getLightState(LinearLayout lightLinear) {
+                AppCompatSeekBar seekBar = (AppCompatSeekBar) lightLinear.getChildAt(0);
+                return "0000" + seekBar.getProgress();
+            }
+
+
+            private String getPlugStateK(LinearLayout plugLinear) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < plugLinear.getChildCount(); i++) {
+                    SwitchCompat compat = (SwitchCompat)plugLinear.getChildAt(i);
+                    sb.append(compat.isChecked() ? "开":"关");
+                }
+                return sb.toString();
+            }
+            private String getPlugState(LinearLayout plugLinear) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < plugLinear.getChildCount(); i++) {
+                    SwitchCompat compat = (SwitchCompat)plugLinear.getChildAt(i);
+                    sb.append(compat.isChecked() ? "1":"0");
+                }
+                return sb.toString();
+            }
+
+        }).setNegativeButton("取消", null).create().show();
+        return data;
+    }
+
+    private static String[] list2Names(List<SimpleDeviceData> list) {
+        String[] res = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i).getName();
+        }
+        return res;
+    }
+
+    private static String getTypeNoFromList(List<SimpleDeviceData> list, String name) {
+        for (SimpleDeviceData data : list) {
+            if (data.getName().equals(name)) {
+                return data.getNo();
+            }
+        }
+        return "00";
+    }
+
+    /**
+     * 命令列表转字符串 用逗号分隔
+     * @param list list
+     * @return string
+     */
+    public static String array2Actions(List<String> list) {
+        StringBuilder sb = new StringBuilder();
+        for (String item : list) {
+            sb.append(item);
+            sb.append(",");
+        }
+        return sb.toString();
+    }
+
+
 }

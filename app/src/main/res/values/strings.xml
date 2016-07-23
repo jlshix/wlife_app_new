@@ -58,7 +58,6 @@
     </array>
 
 
-
     <string name="title_activity_gate_bind">GateBindActivity</string>
     <string name="add">添加</string>
     <string name="no_gate">您还没有绑定网关，请点击 “+” 绑定网关</string>
@@ -211,6 +210,15 @@
         <item>卫生间</item>
     </array>
 
+    <array name="device_list">
+        <item>请选择...</item>
+        <item>烟雾监测器</item>
+        <item>红外防盗器</item>
+        <item>窗帘控制器</item>
+        <item>多级调光灯</item>
+        <item>智能插座</item>
+    </array>
+
 
 
     <string name="about_dialog">
@@ -324,5 +332,8 @@
     <string name="sign_pls">请选择标志颜色: </string>
     <string name="state_pls">请选择状态: </string>
     <string name="dark">暗</string>
+    <string name="test">测试</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="off">关</string>
 
 </resources>

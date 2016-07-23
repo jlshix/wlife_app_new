@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="@dimen/card_padding"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/spinner_place"
+        android:paddingBottom="@dimen/item_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/spinner_type"
+        android:paddingBottom="@dimen/item_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/spinner_name"
+        android:paddingBottom="@dimen/item_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/states"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="@string/state_pls"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/on_off"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/action_button_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/plug_linear"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/on_off_0"
+                android:layout_marginStart="@dimen/action_button_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/on_off_1"
+                android:layout_marginStart="@dimen/action_button_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/on_off_2"
+                android:layout_marginStart="@dimen/action_button_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/on_off_3"
+                android:layout_marginStart="@dimen/action_button_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/light_linear"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.AppCompatSeekBar
+                android:id="@+id/light_seek_bar"
+                android:layout_marginStart="@dimen/action_button_margin"
+                android:layout_width="150dp"
+                android:max="2"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/light_text"
+                android:text="@string/dark"
+                android:layout_marginStart="@dimen/action_button_margin"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
