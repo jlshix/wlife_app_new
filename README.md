@@ -69,8 +69,12 @@ WLife_v02 项目重构
 
 - 实现家庭留言板功能
 
+## 2016-07-23
+
+- addDeviceActivity 完善
+- 新增添加命令的Activity 待转成Dialog
+
 
 ## TODO
 
 - 空调 frag && item
-- addDeviceActivity
