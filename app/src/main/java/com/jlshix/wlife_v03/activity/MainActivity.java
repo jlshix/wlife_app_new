@@ -460,6 +460,14 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             return true;
         }
 
+        if (id == R.id.action_test) {
+            Intent intent = new Intent(getApplicationContext(), TestActivity.class);
+            startActivityForResult(intent, L.SETTINGS_REQUEST);
+            return true;
+        }
+
+
+
         return super.onOptionsItemSelected(item);
     }
 
