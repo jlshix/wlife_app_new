@@ -101,14 +101,13 @@ public class GateBindActivity extends BaseActivity {
     // 添加网关
     @Event(R.id.btn_add_gate)
     private void bindGate(View view) {
-        L.toast(GateBindActivity.this, "BIND_GATE");
         final String gateImei1 = gateImei.getText().toString();
         String name1 = gateName.getText().toString();
         if (gateImei1.length() == 0 || name1.length() == 0) {
             L.toast(GateBindActivity.this, "信息不完整");
             return;
         }
-        // TODO: 2016/7/12 post
+        // TODO: 2016/7/12 post 接口更改
         RequestParams params = new RequestParams(L.URL_GATE_BIND);
         params.addParameter("mail", L.getPhone());
         params.addParameter("gate", gateImei1);

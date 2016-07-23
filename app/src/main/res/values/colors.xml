@@ -9,4 +9,6 @@
     <color name="gray_card">#EEEEEE</color>
     <color name="blue_d">#0000FF</color>
     <color name="blue_e">#0000DD</color>
+    <color name="red">#ff0000</color>
+    <color name="green">#00ff00</color>
 </resources>

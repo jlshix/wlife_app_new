@@ -2,7 +2,6 @@ package com.jlshix.wlife_v03.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.fragment.Envir;
@@ -21,7 +19,6 @@ import com.jlshix.wlife_v03.tool.BaseActivity;
 import com.jlshix.wlife_v03.tool.L;
 
 import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 @ContentView(R.layout.activity_device)
@@ -56,16 +53,7 @@ public class DeviceActivity extends BaseActivity {
 
     }
 
-    /**
-     * 语音控制
-     * TODO 完善
-     * @param view
-     */
-    @Event(R.id.fab)
-    private void fabClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-    }
+// TODO: 2016/7/22 完善语音
 
     /**
      * 初始化界面

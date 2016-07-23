@@ -46,8 +46,8 @@
     </array>
 
     <array name="msg_frag_title">
-        <item>网关</item>
-        <item>家庭</item>
+        <item>网关消息</item>
+        <item>家庭留言板</item>
     </array>
 
     <array name="gate_msg_types">
@@ -203,6 +203,16 @@
         <item>卫生间</item>
     </array>
 
+    <array name="rooms_spinner">
+        <item>客厅</item>
+        <item>卧室</item>
+        <item>餐厅</item>
+        <item>书房</item>
+        <item>卫生间</item>
+    </array>
+
+
+
     <string name="about_dialog">
         "微生活 v2.0\n\n"
         "Copyright Interesting Team 2016"
@@ -310,5 +320,9 @@
     <string name="mode">更改模式</string>
     <string name="send">发送</string>
     <string name="msg_hint">例如: 周末一起出游吧</string>
+    <string name="place_pls">请选择位置: </string>
+    <string name="sign_pls">请选择标志颜色: </string>
+    <string name="state_pls">请选择状态: </string>
+    <string name="dark">暗</string>
 
 </resources>
