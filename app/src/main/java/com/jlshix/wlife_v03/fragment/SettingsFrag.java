@@ -1,7 +1,9 @@
 package com.jlshix.wlife_v03.fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -10,7 +12,14 @@ import android.widget.ImageView;
 
 import com.jlshix.wlife_v03.App;
 import com.jlshix.wlife_v03.R;
+import com.jlshix.wlife_v03.activity.MemberActivity;
+import com.jlshix.wlife_v03.activity.SettingsActivity;
 import com.jlshix.wlife_v03.tool.L;
+
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 /**
  * Created by Leo on 2016/7/11.
@@ -18,9 +27,14 @@ import com.jlshix.wlife_v03.tool.L;
  */
 public class SettingsFrag extends PreferenceFragment {
 
-    
+    private Handler handler;
     private CheckBoxPreference auto;
     private Preference clear, wx, share, help, about, update, quit;
+    private Preference member, account;
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,18 +109,6 @@ public class SettingsFrag extends PreferenceFragment {
             }
         });
 
-//        // 帮助
-//        help = findPreference("help");
-//        help.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-//            @Override
-//            public boolean onPreferenceClick(Preference preference) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//                builder.setTitle(R.string.help).setMessage(R.string.large_text)
-//                        .setPositiveButton("确认", null).create().show();
-//                return false;
-//            }
-//        });
-
         // 关于
         about = findPreference("about");
         about.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -129,16 +131,63 @@ public class SettingsFrag extends PreferenceFragment {
             }
         });
 
-//        // update
-//        update = findPreference("update");
-//        update.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-//            @Override
-//            public boolean onPreferenceClick(Preference preference) {
-//                L.toast(getActivity(), "开发中...");
-//                return false;
-//            }
-//        });
+        // 家庭组
+        member = findPreference("member");
+        member.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                memberManage();
+                return false;
+            }
+        });
+
+        // account
+        account = findPreference("account");
+        account.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                handler.sendEmptyMessage(SettingsActivity.ACCOUNT);
+                return false;
+            }
+        });
 
 
+
+    }
+
+    private void memberManage() {
+        RequestParams params = new RequestParams(L.URL_IS_MASTER);
+        params.addParameter("gate", L.getGateImei());
+        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+            boolean flag = false;
+            @Override
+            public void onSuccess(JSONObject result) {
+                if (result.optString("code").equals("1")) {
+                    String name = L.getName();
+                    String info = result.optString("info");
+                    flag = name.equals(info);
+                    if (flag) {
+                        startActivity(new Intent(getActivity(), MemberActivity.class));
+                    } else {
+                        L.snack(getView(), "此功能仅限家庭管理员使用");
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 }

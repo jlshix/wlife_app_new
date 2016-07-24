@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="mail"
+        android:title="@string/settings_mail"
+        android:summary="@string/settings_mail_summary"/>
+    <Preference
+        android:key="name"
+        android:title="@string/settings_name"
+        android:summary="@string/settings_name_summary"/>
+    <Preference
+        android:key="pw"
+        android:title="@string/settings_pw"
+        android:summary="@string/settings_pw_summary"/>
+    <Preference
+        android:key="qr"
+        android:title="@string/settings_qr"
+        android:summary="@string/settings_qr_summary"/>
+
+
+</PreferenceScreen>

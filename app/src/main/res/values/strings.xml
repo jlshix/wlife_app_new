@@ -322,7 +322,7 @@
     <string name="settings_voice_summary">语音命令列表与自定义</string>
     <string name="settings_schedule">计划任务</string>
     <string name="settings_schedule_summary">查看或编辑您的计划任务</string>
-    <string name="settings_member">家庭组管理</string>
+    <string name="settings_member">家庭成员</string>
     <string name="settings_member_summary">管理家庭成员(管理员功能)</string>
     <string name="settings_account_summary">更改邮箱 用户名 密码</string>
     <string name="mode">更改模式</string>
@@ -340,5 +340,15 @@
     <string name="type_pls">请选择类型:</string>
     <string name="device_pls">请选择设备名:</string>
     <string name="action_cancel">取消</string>
+    <string name="title_activity_member">家庭成员管理</string>
+    <string name="add_member">添加成员</string>
+    <string name="settings_mail">更改邮箱</string>
+    <string name="settings_mail_summary">更改您的验证邮箱</string>
+    <string name="settings_name">更改用户名</string>
+    <string name="settings_name_summary">更改您的用户名</string>
+    <string name="settings_pw_summary">更改您的登录密码</string>
+    <string name="settings_pw">更改密码</string>
+    <string name="settings_qr">账号二维码</string>
+    <string name="settings_qr_summary">管理员扫一扫 加入家庭</string>
 
 </resources>

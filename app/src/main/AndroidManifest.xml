@@ -87,10 +87,14 @@
             android:name=".activity.TestActivity"
             android:label="@string/title_activity_test"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".activity.DialogActivity"
+        <activity
+            android:name=".activity.DialogActivity"
             android:label="@string/choose_pls"
-            android:theme="@style/Base.V7.Theme.AppCompat.Light.Dialog"/>
+            android:theme="@style/Base.V7.Theme.AppCompat.Light.Dialog" />
+        <activity
+            android:name=".activity.MemberActivity"
+            android:label="@string/title_activity_member"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

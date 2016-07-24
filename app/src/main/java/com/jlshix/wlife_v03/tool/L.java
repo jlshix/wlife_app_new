@@ -100,7 +100,11 @@ public class L {
     public static String URL_GET_BOARD = "http://jlshix.com/wlife2/get_board.php";
     public static String URL_ADD_BOARD = "http://jlshix.com/wlife2/add_board.php";
     public static final String URL_GET_NAME_LIST = "http://jlshix.com/wlife2/get_name_list.php";
-
+    public static final String URL_DEL_MEMBER = "http://jlshix.com/wlife2/del_member.php";
+    public static final String URL_GET_MEMBER = "http://jlshix.com/wlife2/get_member.php";
+    public static final String URL_IS_MASTER = "http://jlshix.com/wlife2/is_su.php";
+    public static final String URL_QR_CODE = "http://qr.liantu.com/api.php";
+    public static final String URL_ADD_MEMBER = "http://jlshix.com/wlife2/add_member.php";
 
 
     /**
@@ -741,6 +745,42 @@ public class L {
             sb.append(",");
         }
         return sb.toString();
+    }
+
+    private static boolean masterFlag;
+    public static boolean isMaster() {
+        masterFlag = false;
+        RequestParams params = new RequestParams(URL_IS_MASTER);
+        params.addParameter("gate", getGateImei());
+        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+            boolean flag = false;
+            @Override
+            public void onSuccess(JSONObject result) {
+                if (result.optString("code").equals("1")) {
+                    String name = getName();
+                    String info = result.optString("info");
+                    flag = name.equals(info);
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+                masterFlag = flag;
+
+            }
+        });
+        return masterFlag;
     }
 
 
