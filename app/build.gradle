@@ -3,6 +3,9 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 24
     buildToolsVersion "23.0.2"
+    sourceSets.main {
+        jniLibs.srcDirs = ['libs']
+    }
 
     defaultConfig {
         applicationId "com.jlshix.wlife_v03"

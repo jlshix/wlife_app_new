@@ -78,6 +78,7 @@ WLife_v02 项目重构
 
 - 新增MemberActivity实现家庭成员管理
 - 新增AccountFragment实现个人账号管理
+- 新增语音识别 待增加解析规则
 
 
 ## TODO

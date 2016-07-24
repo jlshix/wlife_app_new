@@ -1,8 +1,10 @@
 package com.jlshix.wlife_v03.activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.Snackbar;
@@ -20,9 +22,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.iflytek.cloud.ErrorCode;
+import com.iflytek.cloud.InitListener;
+import com.iflytek.cloud.RecognizerResult;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechUtility;
+import com.iflytek.cloud.ui.RecognizerDialog;
+import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.data.GateData;
 import com.jlshix.wlife_v03.tool.BaseActivity;
+import com.jlshix.wlife_v03.tool.JsonParser;
 import com.jlshix.wlife_v03.tool.L;
 
 import org.json.JSONObject;
@@ -39,6 +50,7 @@ import java.text.DecimalFormat;
 public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     private static final String TAG = "MAIN_ACTIVITY";
+    private Activity activity = MainActivity.this;
 
     @ViewInject(R.id.toolbar)
     Toolbar toolbar;
@@ -92,6 +104,11 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     // 是否第一次启动 用于初始化spinner时不发命令
     private boolean isFirst = true;
 
+    // 语音听写对象
+    private com.iflytek.cloud.SpeechRecognizer recognizer;
+    // 语音听写UI
+    private RecognizerDialog recognizerDialog;
+
 
 
     // handler
@@ -123,6 +140,13 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
         line.setEnabled(false);
         swipe.setOnRefreshListener(this);
+
+        // 初始化
+        SpeechUtility.createUtility(activity, SpeechConstant.APPID + "=5794c319");
+
+        recognizer = com.iflytek.cloud.SpeechRecognizer.createRecognizer(activity, mInitListener);
+        recognizerDialog = new RecognizerDialog(activity, mInitListener);
+
 //        spinner.setAdapter(new ArrayAdapter<>(this, R.layout.spinner,
 //                getResources().getStringArray(R.array.mode)));
 //        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -163,7 +187,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      */
     @Event(R.id.menu_weather)
     private void weatherMenu(View view) {
-        final PopupMenu menu = new PopupMenu(MainActivity.this, view);
+        final PopupMenu menu = new PopupMenu(activity, view);
         menu.getMenuInflater().inflate(R.menu.menu_weather, menu.getMenu());
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -184,16 +208,16 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
              * 更改当前位置
              */
             private void changePosition() {
-                final LinearLayout layout = new LinearLayout(MainActivity.this);
+                final LinearLayout layout = new LinearLayout(activity);
                 layout.setOrientation(LinearLayout.VERTICAL);
                 layout.setPadding(16, 16, 16, 16);
-                final EditText city = new EditText(MainActivity.this);
+                final EditText city = new EditText(activity);
                 city.setHint("城市名");
-                final EditText address = new EditText(MainActivity.this);
+                final EditText address = new EditText(activity);
                 address.setHint("地址 越详细越准确");
                 layout.addView(city);
                 layout.addView(address);
-                new AlertDialog.Builder(MainActivity.this).setTitle("更改位置").setView(layout)
+                new AlertDialog.Builder(activity).setTitle("更改位置").setView(layout)
                         .setPositiveButton("更改", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -275,7 +299,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                                 "\n\n" + "位置描述:\n\t" + addr +
                                 "附近 " + describ;
 
-                        new AlertDialog.Builder(MainActivity.this).setTitle("当前位置")
+                        new AlertDialog.Builder(activity).setTitle("当前位置")
                                 .setMessage(msg).setPositiveButton("确认", null)
                                 .create().show();
 
@@ -308,7 +332,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      */
     @Event(R.id.menu_gate)
     private void gateMenu(View view) {
-        PopupMenu menu = new PopupMenu(MainActivity.this, view);
+        PopupMenu menu = new PopupMenu(activity, view);
         menu.getMenuInflater().inflate(R.menu.menu_gate, menu.getMenu());
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -331,6 +355,59 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             }
         });
         menu.show();
+    }
+
+    @Event(R.id.fab)
+    private void startRec(View view) {
+        setParam();
+        recognizerDialog.setListener(new RecognizerDialogListener() {
+            @Override
+            public void onResult(RecognizerResult recognizerResult, boolean isLast) {
+                if (!isLast) {
+                    processVoice(recognizerResult);
+                }
+            }
+
+            @Override
+            public void onError(SpeechError speechError) {
+                Log.e(TAG, "recognizerDialogListener-->onError");
+                Log.i(TAG, "onError: " + speechError.getPlainDescription(true));
+            }
+        });
+        recognizerDialog.show();
+    }
+
+    /**
+     * 处理语音识别结果
+     * @param recognizerResult result
+     */
+    private void processVoice(RecognizerResult recognizerResult) {
+        String text = JsonParser.parseIatResult(recognizerResult.getResultString());
+        L.snack(toolbar, text);
+    }
+
+    public void setParam() {
+        Log.e(TAG, "setParam");
+        // 清空参数
+        recognizer.setParameter(SpeechConstant.PARAMS, null);
+        // 设置听写引擎
+        recognizer.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
+
+        // 设置语言
+        recognizer.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
+        // 设置语言区域
+        recognizer.setParameter(SpeechConstant.ACCENT, "mandarin");
+
+        // 设置语音前端点
+        recognizer.setParameter(SpeechConstant.VAD_BOS, "4000");
+        // 设置语音后端点
+        recognizer.setParameter(SpeechConstant.VAD_EOS, "1000");
+        // 设置标点符号 1为有标点 0为没标点
+        recognizer.setParameter(SpeechConstant.ASR_PTT, "0");
+        // 设置音频保存路径
+        recognizer.setParameter(SpeechConstant.ASR_AUDIO_PATH,
+                Environment.getExternalStorageDirectory()
+                        + "/xiaobailong24/xunfeiyun");
     }
 
 
@@ -378,7 +455,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     // device OnClickListener
     @Event(R.id.device)
     private void toDeviceActivity(View v) {
-        Intent intent = new Intent(MainActivity.this, DeviceActivity.class);
+        Intent intent = new Intent(activity, DeviceActivity.class);
         startActivity(intent);
     }
 
@@ -389,11 +466,11 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      */
     @Event(value = R.id.device, type = View.OnLongClickListener.class)
     private boolean unbindGate(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage("确认解绑网关？").setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                L.unbindGate(MainActivity.this);
+                L.unbindGate(activity);
                 handler.sendEmptyMessage(REFRESH);
                 new Thread(new Runnable() {
                     @Override
@@ -446,7 +523,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add) {
             if (L.isBIND()) {
-                L.toast(MainActivity.this, "目前仅支持一台设备，可长按删除并绑定新设备");
+                L.toast(activity, "目前仅支持一台设备，可长按删除并绑定新设备");
                 return true;
             }
             Intent intent = new Intent(getApplicationContext(), GateBindActivity.class);
@@ -500,7 +577,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             @Override
             public void onSuccess(JSONObject result) {
                 if (!result.optString("status").equals("ok")) {
-                    L.toast(MainActivity.this, "CODE_ERR");
+                    L.toast(activity, "CODE_ERR");
                     return;
                 }
                 setWeatherCard(result.optJSONObject("result"));
@@ -535,7 +612,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             @Override
             public void onSuccess(JSONObject result) {
                 if (!result.optString("code").equals("1")) {
-                    L.toast(MainActivity.this, "CODE_ERR");
+                    L.toast(activity, "CODE_ERR");
                     return;
                 }
                 // 设定天气卡片 json内容太复杂，不再使用新类
@@ -544,7 +621,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                L.toast(MainActivity.this, ex.getMessage());
+                L.toast(activity, ex.getMessage());
             }
 
             @Override
@@ -643,5 +720,19 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
         }
     }
+
+
+    private InitListener mInitListener = new InitListener() {
+
+        @Override
+        public void onInit(int code) {
+            Log.d(TAG, "SpeechRecognizer init() code = " + code);
+            if (code != ErrorCode.SUCCESS) {
+                L.toast(activity, "初始化失败，错误码：" + code);
+            }
+        }
+    };
+
+
 
 }
