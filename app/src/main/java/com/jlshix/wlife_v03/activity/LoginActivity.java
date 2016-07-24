@@ -32,7 +32,7 @@ public class LoginActivity extends BaseActivity {
     /**
      * 将要写入sp的内容
      */
-    private String userMail,userName, gateImei;
+    private String userMail,userName, gateImei, gateMaster;
     private int layout;
 
     /**
@@ -200,8 +200,10 @@ public class LoginActivity extends BaseActivity {
                     userMail = content.optString("mail", null);
                     userName = content.optString("name", null);
                     gateImei = content.optString("gate_imei", null);
+                    gateMaster = content.optString("master", null);
                     layout = content.optInt("layout");
-                    Log.e(TAG, "onSuccess: " + userMail + "--" + userName + "--" + gateImei + "--" + layout);
+                    Log.e(TAG, "onSuccess: " + userMail + "-" + userName
+                            + "-" + gateImei + "-" + gateMaster + "-" + layout);
                 }
 
                 switch (code) {
@@ -250,6 +252,7 @@ public class LoginActivity extends BaseActivity {
         L.setPhone(userMail);
         L.setPw(secret.getText().toString().trim());
         L.setGateImei(gateImei);
+        L.setGateMaster(gateMaster);
         L.setLayout(layout);
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);

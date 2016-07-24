@@ -784,4 +784,11 @@ public class L {
     }
 
 
+    public static void setGateMaster(String gateMaster) {
+        App.sp.edit().putString("master", gateMaster).apply();
+    }
+
+    public static String getGateMaster() {
+        return App.sp.getString("master", "");
+    }
 }

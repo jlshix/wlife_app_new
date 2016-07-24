@@ -83,6 +83,10 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
     public void onBindViewHolder(MemberAdapter.MemberViewHolder holder, int position) {
         final String nameText = datas.get(position);
         holder.name.setText(nameText);
+        // 管理员本身不能删除自己
+        if (nameText.equals(L.getGateMaster())) {
+            holder.del.setVisibility(View.INVISIBLE);
+        }
         holder.del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,6 +95,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 delMember(nameText);
+
                             }
                         }).setNegativeButton("取消", null).create().show();
             }
