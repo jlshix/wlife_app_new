@@ -74,6 +74,11 @@ WLife_v02 项目重构
 - addDeviceActivity 完善
 - 新增添加命令的Activity 待转成Dialog
 
+## 2016-07-24
+
+- 新增MemberActivity实现家庭成员管理
+- 新增AccountFragment实现个人账号管理
+
 
 ## TODO
 
