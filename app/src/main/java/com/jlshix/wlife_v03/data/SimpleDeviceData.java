@@ -10,7 +10,7 @@ public class SimpleDeviceData {
 
     public SimpleDeviceData() {
         this.no = "00";
-        this.name = "未命名";
+        this.name = "请选择...";
     }
 
     public SimpleDeviceData(String no, String name) {

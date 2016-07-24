@@ -67,14 +67,20 @@ public class TestActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == L.DIALOG_REQUEST && resultCode == L.DIALOG_RETURN) {
-            if (data.getIntExtra("code", -1) != 1) {
-                L.snack(toolbar, "return code err");
-                return;
+            int code = data.getIntExtra("code", -1);
+            switch (code) {
+                case -1:
+                    L.snack(toolbar, "return code err");
+                    return;
+                case 0:
+                    L.snack(toolbar, "已取消");
+                    return;
+                case 1:
+                    setActions(data.getStringExtra("action"));
+                    setDes(data.getStringExtra("des"));
+                    actionsT.setText(actions);
+                    desT.setText(des);
             }
-            setActions(data.getStringExtra("action"));
-            setDes(data.getStringExtra("des"));
-            actionsT.setText(actions);
-            desT.setText(des);
         }
     }
 }

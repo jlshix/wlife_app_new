@@ -86,7 +86,9 @@ public class DialogActivity extends BaseActivity {
         typeNo.put("多级调光灯", "09");
         typeNo.put("智能插座", "0A");
 
+        // 初始化
         list = new ArrayList<>();
+        list.add(new SimpleDeviceData());
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -120,9 +122,15 @@ public class DialogActivity extends BaseActivity {
                 android.R.layout.simple_spinner_item, DialogActivity.this.getResources().getStringArray(R.array.rooms_spinner));
         placeSpinner.setAdapter(placeAdapter);
 
-        ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(DialogActivity.this,
+        ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(DialogActivity.this,
                 android.R.layout.simple_spinner_item, DialogActivity.this.getResources().getStringArray(R.array.device_list));
         typeSpinner.setAdapter(typeAdapter);
+
+        // 初始
+        String [] names = list2Names();
+        ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(DialogActivity.this,
+                android.R.layout.simple_spinner_item, names);
+        nameSpinner.setAdapter(nameAdapter);
 
         // type 显示三类之一
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -155,10 +163,6 @@ public class DialogActivity extends BaseActivity {
                 }
 
                 getNameList();
-                String [] names = list2Names(list);
-                ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(DialogActivity.this,
-                        android.R.layout.simple_spinner_item, names);
-                nameSpinner.setAdapter(nameAdapter);
             }
 
             @Override
@@ -183,16 +187,17 @@ public class DialogActivity extends BaseActivity {
         final String typeK = typeSpinner.getSelectedItem().toString();
         String type = typeNo.get(typeK);
 
+        // 生成请求参数
         RequestParams params = new RequestParams(L.URL_GET_NAME_LIST);
         params.addParameter("gate", L.getGateImei());
         params.addParameter("place", place);
         params.addParameter("type", type);
-        Log.i("DialogActivity", "getNameList: " + params.toString());
 
-        // TODO: 2016/7/24 POST无效
+        // TODO: 2016/7/24 POST无效 不要加log
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
+                // 输出结果 onSuccess有延时, 应放入内部
                 Log.i("DialogActivity", "onSuccess: " + result.toString());
                 if (!result.optString("code").equals("1")) {
                     L.toast(DialogActivity.this, "DIALOG_CODE_ERR");
@@ -204,6 +209,10 @@ public class DialogActivity extends BaseActivity {
                     JSONObject obj = info.optJSONObject(i);
                     list.add(new SimpleDeviceData(obj.optString("no"), obj.optString("name")));
                 }
+                String [] names = list2Names();
+                ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(DialogActivity.this,
+                        android.R.layout.simple_spinner_item, names);
+                nameSpinner.setAdapter(nameAdapter);
 
             }
 
@@ -224,7 +233,7 @@ public class DialogActivity extends BaseActivity {
         });
     }
 
-    private static String[] list2Names(List<SimpleDeviceData> list) {
+    private String[] list2Names() {
         String[] res = new String[list.size()];
         for (int i = 0; i < list.size(); i++) {
             res[i] = list.get(i).getName();
@@ -249,8 +258,16 @@ public class DialogActivity extends BaseActivity {
         String placeK = placeSpinner.getSelectedItem().toString();
         String typeK = typeSpinner.getSelectedItem().toString();
         String nameK = nameSpinner.getSelectedItem().toString();
-        String action = typeNo.get(typeK) + getTypeNoFromList(list, nameK) + state;
-        String des = placeK + "-" + typeK + "-" + stateK ;
+
+        String typeString = typeNo.get(typeK);
+        String noString = getTypeNoFromList(list, nameK);
+        if (noString.equals("00")) {
+            L.toast(DialogActivity.this, "请选择设备名");
+            return;
+        }
+
+        String action = typeString + noString + state;
+        String des = placeK + "-" + typeK + "-" + nameK + "-" + stateK ;
 
         Intent intent = new Intent();
         intent.putExtra("code", 1);

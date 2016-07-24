@@ -89,7 +89,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name=".activity.DialogActivity"
-            />
+            android:label="@string/choose_pls"
+            android:theme="@style/Base.V7.Theme.AppCompat.Light.Dialog"/>
     </application>
 
 </manifest>

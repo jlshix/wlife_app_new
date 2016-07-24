@@ -335,5 +335,10 @@
     <string name="test">测试</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="off">关</string>
+    <string name="choose_pls">请选择</string>
+    <string name="room_pls">请选择房间: </string>
+    <string name="type_pls">请选择类型:</string>
+    <string name="device_pls">请选择设备名:</string>
+    <string name="action_cancel">取消</string>
 
 </resources>
