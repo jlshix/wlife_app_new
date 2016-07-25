@@ -82,29 +82,31 @@ public class L {
 
     /**
      * 请求网址集中区
+     * TODO https
      */
-    public static String URL_LOGIN = "http://jlshix.com/wlife2/login.php/";
-    public static String URL_REG = "http://jlshix.com/wlife2/register.php/";
+    public static final String URL_LOGIN = "http://jlshix.com/wlife2/login.php/";
+    public static final String URL_REG = "http://jlshix.com/wlife2/register.php/";
     public static final String URL_WEATHER = "https://api.caiyunapp.com/v2/X6f3oc9bahTuV6Bv/";
     public static final String URL_TO_GPS    = "http://api.map.baidu.com/geocoder/v2/";
-    // TODO: 2016/7/12 check php
-    private static final String URL_UNBIND = "http://jlshix.com/wlife2/unbind_gate.php/";
-    public static String URL_PUSH = "http://jlshix.com/wlife2/togate.php/";
-    public static String URL_SET_GATE = "http://jlshix.com/wlife2/set_gate.php/";
+    public static final String URL_UNBIND = "http://jlshix.com/wlife2/unbind_gate.php/";
+    public static final String URL_PUSH = "http://jlshix.com/wlife2/togate.php/";
+    public static final String URL_SET_GATE = "http://jlshix.com/wlife2/set_gate.php/";
     public static final String URL_GATE = "http://jlshix.com/wlife2/get_gate.php/";
     public static final String URL_GATE_BIND = "http://jlshix.com/wlife2/bind_gate.php/";
-    public static String URL_GET_MSG = "http://jlshix.com/wlife2/get_msg.php/";
-    public static String URL_GET = "http://jlshix.com/wlife2/get.php/";
-    public static String URL_SET = "http://jlshix.com/wlife2/set.php/";
+    public static final String URL_GET_MSG = "http://jlshix.com/wlife2/get_msg.php/";
+    public static final String URL_GET = "http://jlshix.com/wlife2/get.php/";
+    public static final String URL_SET = "http://jlshix.com/wlife2/set.php/";
     public static final String URL_ADD_DEV = "http://jlshix.com/wlife2/add_dev.php/";
-    public static String URL_GET_BOARD = "http://jlshix.com/wlife2/get_board.php";
-    public static String URL_ADD_BOARD = "http://jlshix.com/wlife2/add_board.php";
+    public static final String URL_GET_BOARD = "http://jlshix.com/wlife2/get_board.php";
+    public static final String URL_ADD_BOARD = "http://jlshix.com/wlife2/add_board.php";
     public static final String URL_GET_NAME_LIST = "http://jlshix.com/wlife2/get_name_list.php";
     public static final String URL_DEL_MEMBER = "http://jlshix.com/wlife2/del_member.php";
     public static final String URL_GET_MEMBER = "http://jlshix.com/wlife2/get_member.php";
     public static final String URL_IS_MASTER = "http://jlshix.com/wlife2/is_su.php";
     public static final String URL_QR_CODE = "http://qr.liantu.com/api.php";
     public static final String URL_ADD_MEMBER = "http://jlshix.com/wlife2/add_member.php";
+    public static final String URL_DEL_ORDER = "http://jlshix.com/wlife2/del_order.php";
+    public static final String URL_GET_ORDER = "http://jlshix.com/wlife2/get_order.php";
 
 
     /**

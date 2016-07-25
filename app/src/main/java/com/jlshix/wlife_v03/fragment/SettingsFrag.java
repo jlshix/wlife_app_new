@@ -14,6 +14,7 @@ import com.jlshix.wlife_v03.App;
 import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.activity.MemberActivity;
 import com.jlshix.wlife_v03.activity.SettingsActivity;
+import com.jlshix.wlife_v03.activity.VoiceListActivity;
 import com.jlshix.wlife_v03.tool.L;
 
 import org.json.JSONObject;
@@ -30,7 +31,7 @@ public class SettingsFrag extends PreferenceFragment {
     private Handler handler;
     private CheckBoxPreference auto;
     private Preference clear, wx, share, help, about, update, quit;
-    private Preference member, account;
+    private Preference member, account, voice;
 
     public void setHandler(Handler handler) {
         this.handler = handler;
@@ -151,6 +152,17 @@ public class SettingsFrag extends PreferenceFragment {
             }
         });
 
+        // voice
+        voice = findPreference("voice");
+        voice.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                startActivity(new Intent(getActivity(), VoiceListActivity.class));
+                return false;
+            }
+        });
+
+        
 
 
     }

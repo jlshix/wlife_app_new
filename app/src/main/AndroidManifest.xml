@@ -12,8 +12,6 @@
     <!-- 读取手机信息权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-
-
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -101,7 +99,11 @@
         <activity
             android:name=".activity.MemberActivity"
             android:label="@string/title_activity_member"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.VoiceListActivity"
+            android:label="@string/title_activity_voice"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

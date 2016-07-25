@@ -733,6 +733,4 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         }
     };
 
-
-
 }
