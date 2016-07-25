@@ -85,7 +85,13 @@ WLife_v02 项目重构
 - 新增 VoiceListActivity 实现语音命令管理
 - 新增 AddOrderActivity 实现语音命令或模式的添加
 
+## 2016-07-26
+
+- 更改 colorPrimary
+- 修复 NestedScrollVIew 与 RecyclerView 嵌套时滑动不流畅的问题
 
 ## TODO
 
 - 空调 frag && item
+- mode Activity
+- schedule list and add
