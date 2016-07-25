@@ -350,7 +350,17 @@
     <string name="settings_pw">更改密码</string>
     <string name="settings_qr">账号二维码</string>
     <string name="settings_qr_summary">管理员扫一扫 加入家庭</string>
-    <string name="title_activity_voice">VoiceActivity</string>
+    <string name="title_activity_voice">语音命令管理</string>
     <string name="action_change">更改</string>
+    <string name="title_activity_add_order">AddOrderActivity</string>
+    <string name="choose_type_pls">请选择类型:</string>
+    <string name="equal">匹配</string>
+    <string name="include">包含</string>
+    <string name="action_devices">请选择响应设备:</string>
+    <string name="confirm">确认</string>
+    <string name="equal_help">
+        "匹配: 语音命令与预设命令完全相同时触发操作\n\n"
+        "包含: 语音命令包含预设命令中的文字即触发操作\n\n"
+    </string>
 
 </resources>

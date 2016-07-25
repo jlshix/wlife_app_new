@@ -107,6 +107,7 @@ public class L {
     public static final String URL_ADD_MEMBER = "http://jlshix.com/wlife2/add_member.php";
     public static final String URL_DEL_ORDER = "http://jlshix.com/wlife2/del_order.php";
     public static final String URL_GET_ORDER = "http://jlshix.com/wlife2/get_order.php";
+    public static final String URL_ADD_ORDER = "http://jlshix.com/wlife2/add_order.php";
 
 
     /**

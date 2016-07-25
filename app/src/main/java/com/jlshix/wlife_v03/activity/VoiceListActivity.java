@@ -102,7 +102,9 @@ public class VoiceListActivity extends BaseActivity implements SwipeRefreshLayou
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO: 2016/7/25 Activity
+        Intent intent = new Intent(VoiceListActivity.this, AddOrderActivity.class);
+        intent.putExtra("type", "voice");
+        startActivityForResult(intent, L.ADD_REQUEST);
         return true;
 
     }
@@ -110,9 +112,8 @@ public class VoiceListActivity extends BaseActivity implements SwipeRefreshLayou
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && result != null) {
-            String member = result.getContents();
-
+        if (requestCode == L.ADD_REQUEST && resultCode == L.ADD_RETURN) {
+            handler.sendEmptyMessage(REFRESH);
         }
     }
 

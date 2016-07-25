@@ -119,17 +119,17 @@ public class DialogActivity extends BaseActivity {
 
         // adapter们
         ArrayAdapter<String> placeAdapter = new ArrayAdapter<>(DialogActivity.this,
-                android.R.layout.simple_spinner_item, DialogActivity.this.getResources().getStringArray(R.array.rooms_spinner));
+                android.R.layout.simple_spinner_dropdown_item, DialogActivity.this.getResources().getStringArray(R.array.rooms_spinner));
         placeSpinner.setAdapter(placeAdapter);
 
         ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(DialogActivity.this,
-                android.R.layout.simple_spinner_item, DialogActivity.this.getResources().getStringArray(R.array.device_list));
+                android.R.layout.simple_spinner_dropdown_item, DialogActivity.this.getResources().getStringArray(R.array.device_list));
         typeSpinner.setAdapter(typeAdapter);
 
         // 初始
         String [] names = list2Names();
         ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(DialogActivity.this,
-                android.R.layout.simple_spinner_item, names);
+                android.R.layout.simple_spinner_dropdown_item, names);
         nameSpinner.setAdapter(nameAdapter);
 
         // type 显示三类之一
@@ -211,7 +211,7 @@ public class DialogActivity extends BaseActivity {
                 }
                 String [] names = list2Names();
                 ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(DialogActivity.this,
-                        android.R.layout.simple_spinner_item, names);
+                        android.R.layout.simple_spinner_dropdown_item, names);
                 nameSpinner.setAdapter(nameAdapter);
 
             }
@@ -293,7 +293,7 @@ public class DialogActivity extends BaseActivity {
     }
     private String getLightState(LinearLayout lightLinear) {
         AppCompatSeekBar seekBar = (AppCompatSeekBar) lightLinear.getChildAt(0);
-        return "0000" + seekBar.getProgress();
+        return "000" + seekBar.getProgress();
     }
 
 

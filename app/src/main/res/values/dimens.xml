@@ -12,4 +12,5 @@
     <dimen name="action_button_margin">12dp</dimen>
     <dimen name="circle_sign">20dp</dimen>
     <dimen name="msg_margin">16dp</dimen>
+    <dimen name="switch_compat_margin">6dp</dimen>
 </resources>
