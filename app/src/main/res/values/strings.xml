@@ -350,5 +350,7 @@
     <string name="settings_pw">更改密码</string>
     <string name="settings_qr">账号二维码</string>
     <string name="settings_qr_summary">管理员扫一扫 加入家庭</string>
+    <string name="title_activity_voice">VoiceActivity</string>
+    <string name="action_change">更改</string>
 
 </resources>
