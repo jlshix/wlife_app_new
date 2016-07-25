@@ -101,6 +101,7 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
+        recycler.setNestedScrollingEnabled(false);
         recycler.setItemAnimator(new DefaultItemAnimator());
         adapter.notifyItemRangeChanged(0, list.size());
         scroll.fullScroll(View.FOCUS_UP);

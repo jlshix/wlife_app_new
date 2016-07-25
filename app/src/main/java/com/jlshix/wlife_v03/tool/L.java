@@ -64,7 +64,7 @@ public class L {
     public static final int RESTROOM = 5;
 
     public static final int[] signs = {
-            Color.TRANSPARENT, Color.RED, Color.GREEN, Color.BLUE
+            Color.TRANSPARENT, Color.parseColor("#FF4081"), Color.parseColor("#4CAF50"), Color.parseColor("#2196F3")
     };
     public static final int RED = 1;
     public static final int GREEN = 2;
@@ -427,6 +427,8 @@ public class L {
         switch (type) {
             case "04":
                 return "烟雾监测器";
+            case "05":
+                return "红外防盗器";
             case "06":
                 return "窗帘控制器";
             default:

@@ -102,6 +102,7 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
+        recycler.setNestedScrollingEnabled(false);
         recycler.setItemAnimator(new DefaultItemAnimator());
         adapter.notifyDataSetChanged();
         scroll.fullScroll(View.FOCUS_UP);
