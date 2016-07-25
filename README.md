@@ -80,6 +80,11 @@ WLife_v02 项目重构
 - 新增AccountFragment实现个人账号管理
 - 新增语音识别 待增加解析规则
 
+## 2016-07-25
+
+- 新增 VoiceListActivity 实现语音命令管理
+- 新增 AddOrderActivity 实现语音命令或模式的添加
+
 
 ## TODO
 
