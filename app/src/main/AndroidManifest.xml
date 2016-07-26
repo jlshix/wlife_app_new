@@ -107,7 +107,7 @@
         <activity
             android:name=".activity.AddOrderActivity"
             android:label="@string/title_activity_add_order"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
