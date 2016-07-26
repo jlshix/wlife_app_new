@@ -89,7 +89,8 @@ WLife_v02 项目重构
 
 - 更改 colorPrimary
 - 修复 NestedScrollVIew 与 RecyclerView 嵌套时滑动不流畅的问题
-
+- 更改 color 新增沉浸式状态栏
+- 新增 MOdeActivity 用于快捷设置模式
 ## TODO
 
 - 空调 frag && item
