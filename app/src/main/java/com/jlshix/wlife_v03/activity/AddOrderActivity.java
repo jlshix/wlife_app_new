@@ -114,7 +114,7 @@ public class AddOrderActivity extends BaseActivity {
                 break;
             case "mode":
                 setTitle("添加模式");
-                typeLinear.setVisibility(View.VISIBLE);
+                typeLinear.setVisibility(View.GONE);
                 notice.setText("请输入模式");
                 break;
             default:
