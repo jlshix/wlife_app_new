@@ -339,7 +339,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_mode:
-                        // TODO: 2016/7/22 模式设置
+                        startActivity(new Intent(MainActivity.this, ModeActivity.class));
                         break;
                     case R.id.action_camera:
                         // TODO: 2016/7/22 环信监控

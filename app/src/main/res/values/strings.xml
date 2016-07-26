@@ -362,5 +362,9 @@
         "匹配: 语音命令与预设命令完全相同时触发操作\n\n"
         "包含: 语音命令包含预设命令中的文字即触发操作\n\n"
     </string>
+    <string name="title_activity_mode">模式设置</string>
+    <string name="action_detail">查看详情</string>
+    <string name="action_set">设定</string>
+    <string name="add_mode">添加模式</string>
 
 </resources>
