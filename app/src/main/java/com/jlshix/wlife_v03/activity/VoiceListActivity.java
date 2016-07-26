@@ -118,9 +118,13 @@ public class VoiceListActivity extends BaseActivity implements SwipeRefreshLayou
     }
 
 
+    /**
+     * VoiceList 显示全部命令包括模式
+     */
     private void getData() {
         RequestParams params = new RequestParams(L.URL_GET_ORDER);
         params.addParameter("gate", L.getGateImei());
+        params.addParameter("type", "all");
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {

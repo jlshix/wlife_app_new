@@ -1,7 +1,9 @@
 package com.jlshix.wlife_v03.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -109,9 +111,16 @@ public class VoiceListAdapter extends RecyclerView.Adapter<VoiceListAdapter.Voic
                         switch (item.getItemId()) {
                             case R.id.action_change:
                                 // TODO: 2016/7/25 更改
+                                L.toast(context, "开发中...");
                                 break;
                             case R.id.action_delete:
-                                delOrder(data.getId());
+                                new AlertDialog.Builder(context).setMessage("确认删除此命令?")
+                                        .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                delOrder(data.getId());
+                                            }
+                                        }).setNegativeButton("取消", null).create().show();
                                 break;
                         }
                         return false;
