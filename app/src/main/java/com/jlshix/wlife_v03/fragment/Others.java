@@ -74,7 +74,6 @@ public class Others extends BaseFragment implements SwipeRefreshLayout.OnRefresh
                 case REFRESH:
                     swipe.setRefreshing(true);
                     getData();
-                    scroll.fullScroll(View.FOCUS_UP);
                     swipe.setRefreshing(false);
                     break;
                 case FOCUS_UP:

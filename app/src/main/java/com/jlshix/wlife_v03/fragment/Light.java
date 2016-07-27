@@ -73,7 +73,6 @@ public class Light extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                 case REFRESH:
                     swipe.setRefreshing(true);
                     getData();
-                    scroll.fullScroll(View.FOCUS_UP);
                     swipe.setRefreshing(false);
                     break;
                 case CODE_ERR:

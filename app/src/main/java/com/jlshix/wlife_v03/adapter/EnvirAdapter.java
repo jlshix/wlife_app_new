@@ -38,7 +38,6 @@ public class EnvirAdapter extends RecyclerView.Adapter<EnvirAdapter.EnvirViewHol
 
     /**
      * 内部类 ViewHolder
-     * //TODO xUtils 关于ViewHolder的Inject
      */
     static class EnvirViewHolder extends RecyclerView.ViewHolder {
 

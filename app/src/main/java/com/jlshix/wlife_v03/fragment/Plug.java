@@ -76,7 +76,6 @@ public class Plug extends BaseFragment implements SwipeRefreshLayout.OnRefreshLi
                 case REFRESH:
                     swipe.setRefreshing(true);
                     getData();
-                    scroll.fullScroll(View.FOCUS_UP);
                     swipe.setRefreshing(false);
                     break;
                 case FOCUS_UP:

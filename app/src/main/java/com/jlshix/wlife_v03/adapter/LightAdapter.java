@@ -53,28 +53,18 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
 
     @Override
     public void onBindViewHolder(final LightViewHolder holder, final int position) {
-        LightData data = datas.get(position);
+        final LightData data = datas.get(position);
+        final String[] level = {"关", "暗", "亮"};
         String name = L.nameText(data.getPlaceNo(), data.getName());
         holder.place.setText(name);
-        holder.value.setText(String.valueOf(data.getState()));
         holder.seek.setProgress(data.getState());
-
+        holder.value.setText(level[data.getState()]);
         holder.img.setColorFilter(L.signs[data.getSign()]);
 
         holder.seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                switch (progress) {
-                    case 0:
-                        holder.value.setText("关");
-                        break;
-                    case 1:
-                        holder.value.setText("暗");
-                        break;
-                    case 2:
-                        holder.value.setText("亮");
-                        break;
-                }
+                holder.value.setText(level[data.getState()]);
             }
 
             @Override

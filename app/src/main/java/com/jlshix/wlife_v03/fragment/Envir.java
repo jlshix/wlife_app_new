@@ -73,7 +73,6 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                 case REFRESH:
                     swipe.setRefreshing(true);
                     getData();
-                    scroll.fullScroll(View.FOCUS_UP);
                     swipe.setRefreshing(false);
                     break;
                 case FOCUS_UP:
@@ -94,7 +93,6 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
     }
 
     private void initView() {
-        // TODO: 2016/7/19 滑动不流畅的问题
         scroll.setNestedScrollingEnabled(true);
         scroll.setSmoothScrollingEnabled(true);
         adapter = new EnvirAdapter(getContext(), list);
