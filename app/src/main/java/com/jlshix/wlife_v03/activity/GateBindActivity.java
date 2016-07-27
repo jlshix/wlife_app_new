@@ -107,7 +107,7 @@ public class GateBindActivity extends BaseActivity {
             L.toast(GateBindActivity.this, "信息不完整");
             return;
         }
-        // TODO: 2016/7/12 post 接口更改
+        // TODO: 2016/7/12 post 接口更改 关于 code master
         RequestParams params = new RequestParams(L.URL_GATE_BIND);
         params.addParameter("mail", L.getPhone());
         params.addParameter("gate", gateImei1);
@@ -119,8 +119,10 @@ public class GateBindActivity extends BaseActivity {
                     if (!result.getString("code").equals("1")) {
                         L.toast(GateBindActivity.this, "CODE_ERR");
                     } else {
-                        // 绑定成功后设定配置文件内容
+                        // 绑定成功后设定配置文件内容 TODO 绑定后查看 或在二维码中
                         L.setGateImei(gateImei1);
+                        L.setLayout(1);
+                        L.setGateMaster(L.getName());
                         // 结束
                         GateBindActivity.this.setResult(L.ADD_RETURN);
                         GateBindActivity.this.finish();
