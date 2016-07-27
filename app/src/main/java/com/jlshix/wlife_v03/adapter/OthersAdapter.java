@@ -85,15 +85,15 @@ public class OthersAdapter extends RecyclerView.Adapter<OthersAdapter.OthersView
         switch (data.getType()) {
             case "05":
                 // 红外
-                holder.img.setImageResource(R.drawable.ic_lightbulb_outline_blue_500_48dp);
+                holder.img.setImageResource(R.drawable.ic_highlight_blue_500_48dp);
                 break;
             case "04":
                 // 烟雾
-                holder.img.setImageResource(R.drawable.ic_portable_wifi_off_blue_500_48dp);
+                holder.img.setImageResource(R.drawable.ic_blur_on_blue_500_48dp);
                 break;
             case "06":
                 // 电机
-                holder.img.setImageResource(R.drawable.ic_settings_input_hdmi_blue_500_48dp);
+                holder.img.setImageResource(R.drawable.ic_group_work_blue_500_48dp);
                 break;
         }
         holder.img.setColorFilter(L.signs[data.getSign()]);
@@ -102,7 +102,7 @@ public class OthersAdapter extends RecyclerView.Adapter<OthersAdapter.OthersView
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // 推送
-                String last = isChecked ? "01" : "00";
+                String last = isChecked ? "0001" : "0000";
                 String order = data.getType() + data.getNo() + last;
                 L.send2Gate(L.getGateImei(), order);
                 // 数据库
@@ -113,9 +113,13 @@ public class OthersAdapter extends RecyclerView.Adapter<OthersAdapter.OthersView
     }
 
     private void uploadToServer(String type, String no, String last) {
-        RequestParams params = new RequestParams(L.URL_SET + "?gate=" + L.getGateImei() + "&type=" + type
-                        + "&no=" + no + "&state=" + last.charAt(1));
-        x.http().get(params, new Callback.CommonCallback<JSONObject>() {
+
+        RequestParams params = new RequestParams(L.URL_SET);
+        params.addParameter("gate", L.getGateImei());
+        params.addParameter("type", type);
+        params.addParameter("no", no);
+        params.addParameter("state", last.charAt(1));
+        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
                 if (result.optString("code").equals("1")) {

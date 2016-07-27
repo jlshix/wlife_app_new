@@ -64,7 +64,17 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
         holder.seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                holder.value.setText(String.valueOf(progress));
+                switch (progress) {
+                    case 0:
+                        holder.value.setText("关");
+                        break;
+                    case 1:
+                        holder.value.setText("暗");
+                        break;
+                    case 2:
+                        holder.value.setText("亮");
+                        break;
+                }
             }
 
             @Override
@@ -77,7 +87,7 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
                 // 更新数据库
                 uploadToServer(position, seekBar.getProgress());
                 // 推送
-                String msg = "090" + (position + 1) + "0" + seekBar.getProgress();
+                String msg = "090" + (position + 1) + "000" + seekBar.getProgress();
                 L.send2Gate(L.getGateImei(), msg);
             }
         });
@@ -106,11 +116,13 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
     }
 
     private void uploadToServer(int position, int progress) {
-        String URL = L.URL_SET + "?gate=4718&type=09&no=0" + (position+1) + "&state=" + progress;
-        Log.e(TAG, "uploadToServer: " + URL);
         // 数据库
-        RequestParams params = new RequestParams(URL);
-        x.http().get(params, new Callback.CommonCallback<JSONObject>() {
+        RequestParams params = new RequestParams(L.URL_SET);
+        params.addParameter("gate", L.getGateImei());
+        params.addParameter("type", "09");
+        params.addParameter("no", "0" + (position + 1));
+        params.addParameter("state", "000" + progress);
+        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
                 if (result.optString("code").equals("1")) {

@@ -160,11 +160,13 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
     }
 
     private void upload2Server(String no, String state) {
-        String URL = L.URL_SET + "?gate=4718&type=0A&no=" + no + "&state=" + state;
-        Log.e(TAG, "uploadToServer: " + URL);
-        RequestParams params = new RequestParams(URL);
-//        L.send2Gate(L.GATE_TAG, "0A" + no);
-        x.http().get(params, new Callback.CommonCallback<JSONObject>() {
+
+        RequestParams params = new RequestParams(L.URL_SET);
+        params.addParameter("gate", L.getGateImei());
+        params.addParameter("type", "0A");
+        params.addParameter("no", no);
+        params.addParameter("state", state);
+        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
                 if (result.optString("code").equals("1")) {

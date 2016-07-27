@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,12 +52,13 @@ public class ModeAdapter extends RecyclerView.Adapter<ModeAdapter.ModeViewHolder
      * 内部类 ViewHolder
      */
     static class ModeViewHolder extends RecyclerView.ViewHolder {
-
+        CardView mode;
         TextView name;
         Button menu;
 
         public ModeViewHolder(View itemView) {
             super(itemView);
+            mode = (CardView) itemView.findViewById(R.id.mode_card);
             name = (TextView) itemView.findViewById(R.id.name);
             menu = (Button) itemView.findViewById(R.id.del);
         }
@@ -86,7 +88,13 @@ public class ModeAdapter extends RecyclerView.Adapter<ModeAdapter.ModeViewHolder
         
         final OrderData data = datas.get(position);
         holder.name.setText(data.getName());
-        
+        holder.mode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 同 setMode()
+                L.toast(context, "已设定为" + data.getName());
+            }
+        });
         holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +124,7 @@ public class ModeAdapter extends RecyclerView.Adapter<ModeAdapter.ModeViewHolder
 
                     private void setMode() {
                         L.toast(context, "已设定为" + data.getName());
-                        // TODO: 2016/7/26 设定模式
+                        // TODO: 2016/7/26 设定模式 此处和 onclick
                     }
 
                     private void showDetail() {
