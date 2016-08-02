@@ -25,6 +25,12 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
+
 @ContentView(R.layout.activity_gate_bind)
 public class GateBindActivity extends BaseActivity {
 
@@ -123,6 +129,18 @@ public class GateBindActivity extends BaseActivity {
                         L.setGateImei(gateImei1);
                         L.setLayout(1);
                         L.setGateMaster(L.getName());
+
+                        //jpush
+                        HashSet<String> tag = new HashSet<>();
+                        tag.add(gateImei1);
+                        JPushInterface.setTags(GateBindActivity.this, tag, new TagAliasCallback() {
+                            @Override
+                            public void gotResult(int i, String s, Set<String> set) {
+                                Log.i(TAG, "GateBind_gotResult: " + set.toString());
+                            }
+                        });
+
+
                         // 结束
                         GateBindActivity.this.setResult(L.ADD_RETURN);
                         GateBindActivity.this.finish();

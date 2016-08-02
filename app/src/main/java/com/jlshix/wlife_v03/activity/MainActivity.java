@@ -45,6 +45,11 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.text.DecimalFormat;
+import java.util.HashSet;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 @ContentView(R.layout.activity_main)
 public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
@@ -471,6 +476,14 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 L.unbindGate(activity);
+                HashSet<String> tag = new HashSet<>();
+                tag.add("unbind");
+                JPushInterface.setTags(MainActivity.this, tag, new TagAliasCallback() {
+                    @Override
+                    public void gotResult(int i, String s, Set<String> set) {
+                        Log.i(TAG, "Unbind_gotResult: " + set.toString());
+                    }
+                });
                 handler.sendEmptyMessage(REFRESH);
                 new Thread(new Runnable() {
                     @Override

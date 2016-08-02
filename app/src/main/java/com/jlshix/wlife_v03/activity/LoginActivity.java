@@ -25,6 +25,12 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
+
 @ContentView(R.layout.activity_login)
 public class LoginActivity extends BaseActivity {
 
@@ -246,7 +252,7 @@ public class LoginActivity extends BaseActivity {
      * 跳转
      */
     private void jump() {
-        // TODO 写入数据 √ 极光推送 环信
+        // TODO 写入数据 √ 极光推送√ 环信
         L.setLogin(true);
         L.setName(userName);
         L.setPhone(userMail);
@@ -254,6 +260,16 @@ public class LoginActivity extends BaseActivity {
         L.setGateImei(gateImei);
         L.setGateMaster(gateMaster);
         L.setLayout(layout);
+
+        HashSet<String> tag = new HashSet<>();
+        tag.add(gateImei);
+        JPushInterface.setTags(this, tag, new TagAliasCallback() {
+            @Override
+            public void gotResult(int i, String s, Set<String> set) {
+                Log.i(TAG, "Login_gotResult: " + set.toString());
+            }
+        });
+
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
