@@ -19,5 +19,4 @@
         android:title="@string/settings_qr"
         android:summary="@string/settings_qr_summary"/>
 
-
 </PreferenceScreen>

@@ -22,19 +22,6 @@
             android:title="@string/settings_account"
             android:summary="@string/settings_account_summary"/>
 
-
-        <!--<EditTextPreference-->
-            <!--android:key="name"-->
-            <!--android:title="@string/usr_name"-->
-            <!--android:summary="@string/usr_name_summary"/>-->
-        <!--<EditTextPreference-->
-            <!--android:key="mail"-->
-            <!--android:title="@string/usr_mail"-->
-            <!--android:summary="@string/usr_mail_summary"/>-->
-        <!--<Preference-->
-            <!--android:key="pw"-->
-            <!--android:title="@string/usr_pw"-->
-            <!--android:summary="@string/usr_pw_summary"/>-->
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -53,6 +40,10 @@
         <Preference
             android:key="share"
             android:title="@string/share"/>
+        <Preference
+            android:key="feedback"
+            android:title="@string/title_activity_feedback"/>
+
         <!--<Preference-->
             <!--android:key="help"-->
             <!--android:title="@string/help"/>-->

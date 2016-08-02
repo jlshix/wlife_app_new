@@ -99,10 +99,12 @@
         <activity
             android:name=".activity.MemberActivity"
             android:label="@string/title_activity_member"
+            android:parentActivityName=".activity.SettingsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.VoiceListActivity"
             android:label="@string/title_activity_voice"
+            android:parentActivityName=".activity.SettingsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.AddOrderActivity"
@@ -111,7 +113,13 @@
         <activity
             android:name=".activity.ModeActivity"
             android:label="@string/title_activity_mode"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:label="@string/title_activity_feedback"
+            android:parentActivityName=".activity.SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

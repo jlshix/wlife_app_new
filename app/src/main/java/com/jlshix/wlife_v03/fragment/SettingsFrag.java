@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.jlshix.wlife_v03.App;
 import com.jlshix.wlife_v03.R;
+import com.jlshix.wlife_v03.activity.FeedbackActivity;
 import com.jlshix.wlife_v03.activity.MemberActivity;
 import com.jlshix.wlife_v03.activity.SettingsActivity;
 import com.jlshix.wlife_v03.activity.VoiceListActivity;
@@ -30,7 +31,7 @@ public class SettingsFrag extends PreferenceFragment {
 
     private Handler handler;
     private CheckBoxPreference auto;
-    private Preference clear, wx, share, help, about, update, quit;
+    private Preference clear, wx, share, help, about,  feedback, update, quit;
     private Preference member, account, voice;
 
     public void setHandler(Handler handler) {
@@ -161,6 +162,18 @@ public class SettingsFrag extends PreferenceFragment {
                 return false;
             }
         });
+        
+        // feedback
+        feedback = findPreference("feedback");
+        feedback.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                startActivity(new Intent(getActivity(), FeedbackActivity.class));
+                return false;
+            }
+        });
+        
+        
 
         
 
