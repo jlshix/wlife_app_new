@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroupManager;
 import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.tool.BaseActivity;
 import com.jlshix.wlife_v03.tool.L;
@@ -267,6 +270,29 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void gotResult(int i, String s, Set<String> set) {
                 Log.i(TAG, "Login_gotResult: " + set.toString());
+            }
+        });
+
+        EMChatManager.getInstance().login(userName, secret.getText().toString().trim(), new EMCallBack() {//回调
+            @Override
+            public void onSuccess() {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        EMGroupManager.getInstance().loadAllGroups();
+                        EMChatManager.getInstance().loadAllConversations();
+                        Log.e(TAG, "登陆聊天服务器成功！");
+                    }
+                });
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+                Log.e(TAG, "登陆聊天服务器中 " + "progress:" + progress + " status:" + status);
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                Log.e(TAG, "登陆聊天服务器失败！");
             }
         });
 

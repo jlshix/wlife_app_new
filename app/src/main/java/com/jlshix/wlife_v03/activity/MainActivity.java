@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.easemob.chat.EMChatManager;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerResult;
@@ -35,6 +37,7 @@ import com.jlshix.wlife_v03.data.GateData;
 import com.jlshix.wlife_v03.tool.BaseActivity;
 import com.jlshix.wlife_v03.tool.JsonParser;
 import com.jlshix.wlife_v03.tool.L;
+import com.jlshix.wlife_v03.tool.VideoCallActivity;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -348,6 +351,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                         break;
                     case R.id.action_camera:
                         // TODO: 2016/7/22 环信监控
+                        camera();
                         break;
                     case R.id.action_delete:
                         unbindGate(toolbar);
@@ -360,6 +364,26 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             }
         });
         menu.show();
+    }
+
+    /**
+     * 视频通话
+     */
+    private void camera() {
+        if (!EMChatManager.getInstance().isConnected()) {
+            L.snack(toolbar, "未连接到服务器");
+        }
+        else {
+            String toUser = L.getGateImei();
+            if (TextUtils.isEmpty(toUser)){
+                L.snack(toolbar, "您还未绑定设备");
+                return ;
+            }
+            Intent intent = new Intent(MainActivity.this, VideoCallActivity.class);
+            intent.putExtra("username", toUser);
+            intent.putExtra("isComingCall", false);
+            startActivity(intent);
+        }
     }
 
     @Event(R.id.fab)
