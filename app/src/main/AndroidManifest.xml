@@ -12,23 +12,25 @@
     <!-- 读取手机信息权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-
     <!-- Required -->
-    <permission android:name="com.jlshix.wlife_v03.permission.JPUSH_MESSAGE" android:protectionLevel="signature" />
+    <permission
+        android:name="com.jlshix.wlife_v03.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
 
     <!-- Required -->
     <uses-permission android:name="com.jlshix.wlife_v03.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
 
     <application
         android:name=".App"
@@ -38,14 +40,41 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- 设置环信应用的appkey -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="wlife#wlife" />
 
-        <!-- Required SDK 核心功能-->
+        <!-- 视频通话 -->
+        <activity
+            android:name=".tool.VideoCallActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"></activity>
+
+        <!-- 声明sdk所需的service -->
+        <service android:name="com.easemob.chat.EMChatService" />
+        <!-- 声明sdk所需的receiver -->
+        <receiver android:name="com.easemob.chat.EMMonitorReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required SDK 核心功能 -->
         <!-- option since 2.0.5 可配置PushService，DaemonService,PushReceiver,AlarmReceiver的android:process参数 将JPush相关组件设置为一个独立进程 -->
         <!-- 如：android:process=":remote" -->
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER" />
                 <action android:name="cn.jpush.android.intent.REPORT" />
@@ -57,10 +86,11 @@
         <!-- Required -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
-            android:enabled="true" >
+            android:enabled="true">
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
-                <category android:name="com.jlshix.wlife_v03"/>
+
+                <category android:name="com.jlshix.wlife_v03" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -70,59 +100,60 @@
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.jlshix.wlife_v03" />
             </intent-filter>
         </activity>
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false" >
-        </service>
-        <!-- Required SDK核心功能-->
+            android:exported="false"></service>
+        <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
 
-        <!-- User defined. 用户自定义的广播接收器-->
+        <!-- User defined. 用户自定义的广播接收器 -->
         <receiver
-            android:name=".tool.WReceiver"
+            android:name=".receiver.WReceiver"
             android:enabled="true">
             <intent-filter>
-                <!--Required 用户注册SDK的intent-->
+
+                <!-- Required 用户注册SDK的intent -->
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <!--Required 用户接收SDK消息的intent-->
+                <!-- Required 用户接收SDK消息的intent -->
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-                <!--Required 用户接收SDK通知栏信息的intent-->
+                <!-- Required 用户接收SDK通知栏信息的intent -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-                <!--Required 用户打开自定义通知栏的intent-->
+                <!-- Required 用户打开自定义通知栏的intent -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-                <!--Optional 用户接受Rich Push Javascript 回调函数的intent-->
+                <!-- Optional 用户接受Rich Push Javascript 回调函数的intent -->
                 <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
                 <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
+
                 <category android:name="com.jlshix.wlife_v03" />
             </intent-filter>
         </receiver>
 
-        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
         <!-- Required. AppKey copied from Portal -->
-        <meta-data android:name="JPUSH_APPKEY" android:value="0ced18ab2de140569ab0b931"/>
-
-
-
-
-
-
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="0ced18ab2de140569ab0b931" />
 
         <activity
             android:name=".activity.WelcomeActivity"
@@ -224,7 +255,16 @@
             android:name=".activity.FeedbackActivity"
             android:label="@string/title_activity_feedback"
             android:parentActivityName=".activity.SettingsActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.AddApplianceActivity"
+            android:label="@string/title_activity_add_appliance"
+            android:parentActivityName=".activity.DeviceActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jlshix.wlife_v03.activity.DeviceActivity" />
+        </activity>
     </application>
 
 </manifest>

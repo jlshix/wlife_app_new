@@ -43,6 +43,7 @@
         <item>插座</item>
         <item>灯光</item>
         <item>其它</item>
+        <item>家电</item>
     </array>
 
     <array name="msg_frag_title">
@@ -370,5 +371,31 @@
     <string name="suggest">反馈内容</string>
     <string name="suggest_con">QQ号/微信号/手机号</string>
     <string name="submit">发送</string>
+    <string name="mode_btn">模式</string>
+    <string name="wind_btn">风级</string>
+    <string name="power_btn">打开</string>
+    <string name="power_text">关</string>
+    <string name="mode_text">自动模式</string>
+    <string name="wind_text">1</string>
+    <string name="title_activity_add_appliance">AddApplianceActivity</string>
+    <string name="appliance_type_text">请选择家电类型:</string>
+    <string name="appliance_brand">请选择家电品牌:</string>
+    <string name="appliance_no">请选择家电型号:</string>
+
+    <array name="appliance_type">
+        <item>空调</item>
+    </array>
+
+    <array name="appliance_brand">
+        <item>美的</item>
+    </array>
+
+    <array name="appliance_no">
+        <item>KFR-120LW</item>
+    </array>
+
+
+
+
 
 </resources>

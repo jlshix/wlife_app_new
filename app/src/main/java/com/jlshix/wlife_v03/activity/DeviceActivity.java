@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jlshix.wlife_v03.R;
+import com.jlshix.wlife_v03.fragment.Appliance;
 import com.jlshix.wlife_v03.fragment.Envir;
 import com.jlshix.wlife_v03.fragment.Light;
 import com.jlshix.wlife_v03.fragment.Others;
@@ -41,6 +42,7 @@ public class DeviceActivity extends BaseActivity {
     private Plug plug;
     private Light light;
     private Others others;
+    private Appliance appliance;
 
 
     @Override
@@ -63,6 +65,7 @@ public class DeviceActivity extends BaseActivity {
         plug = new Plug();
         light = new Light();
         others = new Others();
+        appliance = new Appliance();
         vp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -75,13 +78,15 @@ public class DeviceActivity extends BaseActivity {
                         return light;
                     case 3:
                         return others;
+                    case 4:
+                        return appliance;
                 }
                 return null;
             }
 
             @Override
             public int getCount() {
-                return 4;
+                return 5;
             }
 
             @Override
@@ -112,6 +117,10 @@ public class DeviceActivity extends BaseActivity {
                     case 3:
                         others.getHandler().sendEmptyMessage(Others.FOCUS_UP);
                         break;
+                    case 4:
+                        appliance.getHandler().sendEmptyMessage(Appliance.FOCUS_UP);
+                        break;
+
 
                 }
             }
@@ -121,7 +130,7 @@ public class DeviceActivity extends BaseActivity {
 
             }
         });
-        vp.setOffscreenPageLimit(3);
+        vp.setOffscreenPageLimit(4);
         tabs.setupWithViewPager(vp);
     }
 
@@ -141,8 +150,14 @@ public class DeviceActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add) {
-            Intent intent = new Intent(getApplicationContext(), AddDeviceActivity.class);
-            startActivityForResult(intent, L.ADD_REQUEST);
+            // 跳转添加设备或家电
+            if (vp.getCurrentItem() == 4) {
+                Intent intent = new Intent(getApplicationContext(), AddApplianceActivity.class);
+                startActivityForResult(intent, L.ADD_REQUEST);
+            } else {
+                Intent intent = new Intent(getApplicationContext(), AddDeviceActivity.class);
+                startActivityForResult(intent, L.ADD_REQUEST);
+            }
             return true;
         }
         if (id == R.id.action_msg) {

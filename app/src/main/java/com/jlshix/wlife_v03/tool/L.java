@@ -93,6 +93,7 @@ public class L {
     public static final String URL_GET_ORDER = "http://jlshix.com/wlife2/get_order.php";
     public static final String URL_ADD_ORDER = "http://jlshix.com/wlife2/add_order.php";
     public static final String URL_FEEDBACK = "http://jlshix.com/wlife2/feedback.php";
+    public static final String URL_EASEMOB_REGISTER = "http://jlshix.com/wlife2/easemob_register.php";
 
 
     /**
@@ -312,7 +313,7 @@ public class L {
      * @param s string
      */
     public static void log (String s) {
-        Log.w("L_LOG", "log: " + s);
+        Log.w("L_LOG", s);
     }
 
 
@@ -323,14 +324,19 @@ public class L {
      */
     public static void send2Gate(final String tag, final String msg) {
 
-        RequestParams params = new RequestParams(URL_PUSH + "?tag=" + tag + "&msg=" + msg);
-        x.http().get(params, new Callback.CommonCallback<String>() {
+        RequestParams params = new RequestParams(URL_PUSH);
+        params.addParameter("tag", L.getGateImei());
+        params.addParameter("msg", msg);
+        x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                log(result);
                 try {
                     JSONObject object = new JSONObject(result);
                     if (object.optString("code").equals("1")) {
                         Log.e(TAG, msg + " to " + tag);
+                    } else {
+                        Log.e(TAG, "PUSH_CODE_ERR");
                     }
 
                 } catch (JSONException e) {
