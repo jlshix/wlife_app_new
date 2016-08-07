@@ -104,14 +104,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @ViewInject(R.id.line)
     private ImageView line;
 
-    // spinner for mode
-//    @ViewInject(R.id.mode_spinner)
-//    private Spinner spinner;
-//    // 是否主动选定 暂时未实现主动被动的选定
-    private boolean positive = true;
-    // 是否第一次启动 用于初始化spinner时不发命令
-    private boolean isFirst = true;
-
     // 语音听写对象
     private com.iflytek.cloud.SpeechRecognizer recognizer;
     // 语音听写UI
@@ -154,22 +146,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
         recognizer = com.iflytek.cloud.SpeechRecognizer.createRecognizer(activity, mInitListener);
         recognizerDialog = new RecognizerDialog(activity, mInitListener);
-
-//        spinner.setAdapter(new ArrayAdapter<>(this, R.layout.spinner,
-//                getResources().getStringArray(R.array.mode)));
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if (positive) {
-//                    changeMode(position);
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
         handler.sendEmptyMessage(REFRESH);
     }
 
@@ -357,13 +333,70 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                         unbindGate(toolbar);
                         break;
                     case R.id.action_rename:
-                        L.snack(toolbar, "开发中");
+                        rename();
                         break;
                 }
                 return false;
             }
         });
         menu.show();
+    }
+
+    /**
+     * 重命名网关
+     */
+    private void rename() {
+        LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.dialog_rename, null);
+        TextView currentName = (TextView) layout.findViewById(R.id.current_name);
+        currentName.setText(name.getText());
+        final EditText newName = (EditText) layout.findViewById(R.id.new_name);
+        new AlertDialog.Builder(MainActivity.this).setTitle("重命名").setView(layout)
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                RequestParams params = new RequestParams(L.URL_RENAME_GATE);
+                params.addParameter("imei", L.getGateImei());
+                params.addParameter("name", newName.getText().toString().trim());
+                x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        if (!result.optString("code").equals("1")) {
+                            L.snack(toolbar, "RENAME_CODE_ERR");
+                            return;
+                        }
+                        handler.sendEmptyMessage(REFRESH);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(500);
+                                    // 再刷新一次
+                                    handler.sendEmptyMessage(REFRESH);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
+
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+                        L.snack(toolbar, "GATE_RENAME_ON_ERR: " + ex.getMessage());
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+            }
+        }).setNegativeButton("取消", null).create().show();
     }
 
     /**
@@ -440,47 +473,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     }
 
 
-
-//    /**
-//     * 更改模式
-//     * @param position 模式编号
-//     */
-//    private void changeMode(int position) {
-//        if (isFirst) {
-//            isFirst = false;
-//            return;
-//        }
-//        // 推送 模式标志为1 始于1 (1 日常) (2 观影) (3 睡眠) (4 外出) (5 夜间)
-//        L.send2Gate(L.getGateImei(), "1" + (position + 1) + "0000");
-//        // 数据库
-//        RequestParams params = new RequestParams(L.URL_SET_GATE);
-//        params.addParameter("imei", L.getGateImei());
-//        params.addParameter("mode", String.valueOf(position + 1));
-//        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
-//            @Override
-//            public void onSuccess(JSONObject result) {
-//                Snackbar.make(spinner, "模式已更改", Snackbar.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onError(Throwable ex, boolean isOnCallback) {
-//                Snackbar.make(spinner, "模式更改失败，请稍候重试", Snackbar.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onCancelled(CancelledException cex) {
-//
-//            }
-//
-//            @Override
-//            public void onFinished() {
-//
-//            }
-//        });
-//        // 改回被动
-////        positive = false;
-//    }
-
     // device OnClickListener
     @Event(R.id.device)
     private void toDeviceActivity(View v) {
@@ -530,16 +522,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         }).create().show();
         return true;
     }
-
-//    /**
-//     * 查看监控
-//     * @param view view
-//     */
-//    @Event(R.id.camera)
-//    private void camera(View view) {
-//        // TODO: 2016/7/16 环信
-//        L.snack(view, "开发中...");
-//    }
 
 
 
