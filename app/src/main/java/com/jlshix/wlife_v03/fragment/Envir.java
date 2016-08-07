@@ -64,7 +64,7 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
     LinearLayout[] layouts;
 
 
-    private static final int REFRESH = 0x01;
+    public static final int REFRESH = 0x01;
     public static final int FOCUS_UP = 0x03;
     private Handler handler = new Handler() {
         @Override
@@ -95,7 +95,7 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
     private void initView() {
         scroll.setNestedScrollingEnabled(true);
         scroll.setSmoothScrollingEnabled(true);
-        adapter = new EnvirAdapter(getContext(), list);
+        adapter = new EnvirAdapter(getContext(), list, handler);
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
@@ -148,7 +148,8 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                             String state = object.optString("state");
                             int sign = object.optInt("sign");
                             int placeNo = object.optInt("place");
-                            list.add(new EnvirData(name, state, sign, placeNo));
+                            int no = object.optInt("no");
+                            list.add(new EnvirData(name, state, sign, placeNo, no));
                         }
                     }
 

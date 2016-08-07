@@ -2,14 +2,20 @@ package com.jlshix.wlife_v03.tool;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jlshix.wlife_v03.App;
@@ -94,6 +100,10 @@ public class L {
     public static final String URL_ADD_ORDER = "http://jlshix.com/wlife2/add_order.php";
     public static final String URL_FEEDBACK = "http://jlshix.com/wlife2/feedback.php";
     public static final String URL_EASEMOB_REGISTER = "http://jlshix.com/wlife2/easemob_register.php";
+    public static final String URL_RENAME_GATE = "http://jlshix.com/wlife2/rename_gate.php";
+    public static final String URL_RENAME_DEV = "http://jlshix.com/wlife2/rename_device.php";
+    public static final String URL_PLACE_DEV = "http://jlshix.com/wlife2/place_dev.php";
+    public static final String URL_DEL_DEV = "http://jlshix.com/wlife2/del_dev.php";
 
 
     /**
@@ -502,4 +512,147 @@ public class L {
     public static String getGateMaster() {
         return App.sp.getString("master", "");
     }
+
+
+    /**
+     * 删除设备
+     */
+    public static void delDev(final Context context, final Handler handler, final int msg, final String type, final String no) {
+        new AlertDialog.Builder(context)
+                .setMessage("确认删除设备?")
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                RequestParams params = new RequestParams(L.URL_DEL_DEV);
+                params.addParameter("gate", L.getGateImei());
+                params.addParameter("type", type);
+                params.addParameter("no", no);
+                x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        Log.i(TAG, "onSuccess: " + result.toString());
+                        if (!result.optString("code").equals("1")) {
+                            L.toast(context, "DEL_CODE_ERR");
+                            return;
+                        }
+                        handler.sendEmptyMessage(msg);
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+                        L.toast(context, "DEL_ON_ERR " + ex.getMessage());
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+            }
+        }).setNegativeButton("取消", null).create().show();
+
+    }
+
+    /**
+     * 更改设备位置
+     */
+    public static void placeDev(final Context context, final Handler handler, final int msg, final String type, final String no, int place) {
+        LinearLayout layout = (LinearLayout) ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_replace, null);
+        TextView currentPlace = (TextView) layout.findViewById(R.id.current_place);
+        currentPlace.setText(rooms[place]);
+        final Spinner spinner = (Spinner) layout.findViewById(R.id.new_place);
+
+        new AlertDialog.Builder(context).setTitle("更改位置").setView(layout)
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        int newPlace = spinner.getSelectedItemPosition() + 1;
+                        RequestParams params = new RequestParams(L.URL_PLACE_DEV);
+                        params.addParameter("gate", L.getGateImei());
+                        params.addParameter("type", type);
+                        params.addParameter("no", no);
+                        params.addParameter("place", String.valueOf(newPlace));
+                        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+                            @Override
+                            public void onSuccess(JSONObject result) {
+                                if (!result.optString("code").equals("1")) {
+                                    L.toast(context, "PLACE_CODE_ERR");
+                                    return;
+                                }
+                                handler.sendEmptyMessage(msg);
+
+                            }
+
+                            @Override
+                            public void onError(Throwable ex, boolean isOnCallback) {
+                                L.toast(context, "PLACE_ON_ERR " + ex.getMessage());
+                            }
+
+                            @Override
+                            public void onCancelled(CancelledException cex) {
+
+                            }
+
+                            @Override
+                            public void onFinished() {
+
+                            }
+                        });
+                    }
+                }).setNegativeButton("取消", null).create().show();
+    }
+
+    /**
+     * 重命名设备
+     */
+    public static void devRename(final Context context, final Handler handler, final int msg, final String type, final String no, String name) {
+        LinearLayout layout = (LinearLayout) ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_rename, null);
+        TextView currentName = (TextView) layout.findViewById(R.id.current_name);
+        currentName.setText(name);
+        final EditText newName = (EditText) layout.findViewById(R.id.new_name);
+        new AlertDialog.Builder(context).setTitle("重命名").setView(layout)
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        RequestParams params = new RequestParams(L.URL_RENAME_DEV);
+                        params.addParameter("gate", L.getGateImei());
+                        params.addParameter("type", type);
+                        params.addParameter("no", no);
+                        params.addParameter("name", newName.getText().toString().trim());
+                        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+                            @Override
+                            public void onSuccess(JSONObject result) {
+                                if (!result.optString("code").equals("1")) {
+                                    L.toast(context, "RENAME_CODE_ERR");
+                                    return;
+                                }
+                                handler.sendEmptyMessage(msg);
+
+                            }
+
+                            @Override
+                            public void onError(Throwable ex, boolean isOnCallback) {
+                                L.toast(context, "RENAME_ON_ERR: " + ex.getMessage());
+                            }
+
+                            @Override
+                            public void onCancelled(CancelledException cex) {
+
+                            }
+
+                            @Override
+                            public void onFinished() {
+
+                            }
+                        });
+                    }
+                }).setNegativeButton("取消", null).create().show();
+    }
+
+
 }

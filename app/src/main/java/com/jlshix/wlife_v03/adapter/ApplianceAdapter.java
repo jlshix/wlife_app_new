@@ -19,11 +19,6 @@ import com.jlshix.wlife_v03.data.ApplianceData;
 import com.jlshix.wlife_v03.fragment.Appliance;
 import com.jlshix.wlife_v03.tool.L;
 
-import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
-
 import java.util.List;
 
 /**
@@ -67,9 +62,20 @@ public class ApplianceAdapter extends RecyclerView.Adapter<ApplianceAdapter.Appl
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        Log.i(TAG, "onMenuItemClick: " + item.getTitle());
+                        switch (item.getItemId()) {
+                            case R.id.action_rename:
+                                L.devRename(context, handler, Appliance.REFRESH, "0F", data.getNo(), data.getPlace());
+                                break;
+                            case R.id.action_delete:
+                                L.delDev(context, handler, Appliance.REFRESH, "0F", data.getNo());
+                                break;
+                            case R.id.action_position:
+                                L.placeDev(context, handler, Appliance.REFRESH, "0F", data.getNo(), data.getPlaceNo());
+                                break;
+                        }
                         return false;
                     }
+
                 });
                 menu.show();
             }
@@ -193,39 +199,6 @@ public class ApplianceAdapter extends RecyclerView.Adapter<ApplianceAdapter.Appl
 
     }
 
-    private void uploadToServer(String type, String no, String last) {
-
-        RequestParams params = new RequestParams(L.URL_SET);
-        params.addParameter("gate", L.getGateImei());
-        params.addParameter("type", type);
-        params.addParameter("no", no);
-        params.addParameter("state", last.charAt(1));
-        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
-            @Override
-            public void onSuccess(JSONObject result) {
-                if (result.optString("code").equals("1")) {
-                    handler.sendEmptyMessage(Appliance.REFRESH);
-                } else {
-                    handler.sendEmptyMessage(Appliance.CODE_ERR);
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                handler.sendEmptyMessage(Appliance.HTTP_ERR);
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-    }
 
     @Override
     public int getItemCount() {

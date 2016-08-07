@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -96,7 +95,7 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
     @Override
     public void onBindViewHolder(final PlugAdapter.PlugViewHolder holder, int position) {
 
-        PlugData data = datas.get(position);
+        final PlugData data = datas.get(position);
         holder.img.setColorFilter(L.signs[data.getSign()]);
 
         // 每个单元是一个开关组 0123
@@ -115,7 +114,6 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
             holder.mSwitch[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Log.e(TAG, "onCheckedChanged: "+"mSwitch " + finalI + " " + finalPosition +" " + isChecked);
 
                     //获取编号  TODO 现在只是十个以内
                     String no = "0"+(finalPosition+1);
@@ -148,9 +146,20 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
                     menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            Log.i(TAG, "onMenuItemClick: " + item.getTitle());
+                            switch (item.getItemId()) {
+                                case R.id.action_rename:
+                                    L.devRename(context, handler, Plug.REFRESH, "0A", "0" + data.getNo(), data.getName());
+                                    break;
+                                case R.id.action_delete:
+                                    L.delDev(context, handler, Plug.REFRESH, "0A", "0" + data.getNo());
+                                    break;
+                                case R.id.action_position:
+                                    L.placeDev(context, handler, Plug.REFRESH, "0A", "0" + data.getNo(), data.getPlaceNo());
+                                    break;
+                            }
                             return false;
                         }
+
                     });
                     menu.show();
                 }

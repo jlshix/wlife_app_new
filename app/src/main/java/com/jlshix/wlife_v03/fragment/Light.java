@@ -155,7 +155,8 @@ public class Light extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                             String state = object.optString("state");
                             int sign = object.optInt("sign");
                             int placeNo = object.optInt("place");
-                            list.add(new LightData(name, Integer.parseInt(state), sign, placeNo));
+                            int no = object.optInt("no");
+                            list.add(new LightData(name, Integer.parseInt(state), sign, placeNo, no));
                         }
                     }
 

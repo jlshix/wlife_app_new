@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -91,9 +90,20 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.LightViewHol
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        Log.i(TAG, "onMenuItemClick: " + item.getTitle());
+                        switch (item.getItemId()) {
+                            case R.id.action_rename:
+                                L.devRename(context, handler, Light.REFRESH, "09", "0" + data.getNo(), data.getName());
+                                break;
+                            case R.id.action_delete:
+                                L.delDev(context, handler, Light.REFRESH, "09", "0" + data.getNo());
+                                break;
+                            case R.id.action_position:
+                                L.placeDev(context, handler, Light.REFRESH, "09", "0" + data.getNo(), data.getPlaceNo());
+                                break;
+                        }
                         return false;
                     }
+
                 });
                 menu.show();
             }

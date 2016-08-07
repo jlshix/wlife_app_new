@@ -156,7 +156,8 @@ public class Plug extends BaseFragment implements SwipeRefreshLayout.OnRefreshLi
                             String state = object.optString("state");
                             int sign = object.optInt("sign");
                             int placeNo = object.optInt("place");
-                            list.add(new PlugData(name, state, sign, placeNo));
+                            int no = object.optInt("no");
+                            list.add(new PlugData(name, state, sign, placeNo, no));
                         }
                     }
 

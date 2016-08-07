@@ -33,7 +33,7 @@ import java.util.List;
 
 /**
  * Created by Leo on 2016/6/14.
- * 环境 Fragment
+ * 其他 Fragment
  */
 
 @ContentView(R.layout.fragment_device)

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,9 +65,20 @@ public class OthersAdapter extends RecyclerView.Adapter<OthersAdapter.OthersView
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        Log.i(TAG, "onMenuItemClick: " + item.getTitle());
+                        switch (item.getItemId()) {
+                            case R.id.action_rename:
+                                L.devRename(context, handler, Others.REFRESH, data.getType(), data.getNo(), data.getPlace());
+                                break;
+                            case R.id.action_delete:
+                                L.delDev(context, handler, Others.REFRESH, data.getType(), data.getNo());
+                                break;
+                            case R.id.action_position:
+                                L.placeDev(context, handler, Others.REFRESH, data.getType(), data.getNo(), data.getPlaceNo());
+                                break;
+                        }
                         return false;
                     }
+
                 });
                 menu.show();
             }

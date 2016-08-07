@@ -13,12 +13,14 @@ public class PlugData  {
     private boolean[] state;
     private int sign;
     private int placeNo;
+    private int no;
 
     public PlugData() {
         name = "未指定";
         state = new boolean[4];
         this.sign = L.RED;
         this.placeNo = L.LIVING_ROOM;
+        this.no = 0;
     }
 
     public PlugData(String s) {
@@ -28,14 +30,16 @@ public class PlugData  {
         setState(s);
         this.sign = L.RED;
         this.placeNo = L.LIVING_ROOM;
+        this.no = 0;
     }
 
-    public PlugData(String name, String state, int sign, int placeNo){
+    public PlugData(String name, String state, int sign, int placeNo, int no){
         this.name = name;
         this.state = new boolean[state.length()];
         setState(state);
         this.sign = sign;
         this.placeNo = placeNo;
+        this.no = no;
     }
 
     public boolean[] getState() {
@@ -84,5 +88,13 @@ public class PlugData  {
 
     public void setPlaceNo(int placeNo) {
         this.placeNo = placeNo;
+    }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
     }
 }

@@ -91,8 +91,8 @@ public class ModeAdapter extends RecyclerView.Adapter<ModeAdapter.ModeViewHolder
         holder.mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 同 setMode()
                 L.toast(context, "已设定为" + data.getName());
+                L.send2Gate(L.getGateImei(), data.getActions());
             }
         });
         holder.menu.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +124,7 @@ public class ModeAdapter extends RecyclerView.Adapter<ModeAdapter.ModeViewHolder
 
                     private void setMode() {
                         L.toast(context, "已设定为" + data.getName());
-                        // TODO: 2016/7/26 设定模式 此处和 onclick
+                        L.send2Gate(L.getGateImei(), data.getActions());
                     }
 
                     private void showDetail() {

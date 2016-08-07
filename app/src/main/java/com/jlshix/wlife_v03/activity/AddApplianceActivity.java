@@ -115,7 +115,7 @@ public class AddApplianceActivity extends BaseActivity {
          * 年份4类型2编号2编号4 总计12
          */
         int currentNo = App.sp.getInt("currentNo", 0);
-        final String devImei1 = "20160f0" + (currentNo + 1) + "0001";
+        final String devImei1 = "20160F0" + (currentNo + 1) + "0001";
         App.sp.edit().putInt("currentNo", currentNo + 1).apply();
         state = "0";
         final String name1 = devName.getText().toString();

@@ -24,8 +24,9 @@ public class EnvirData {
      */
     private int sign;
     private int placeNo;
+    private int no;
 
-    public EnvirData(String place, String state, int sign, int placeNo) {
+    public EnvirData(String place, String state, int sign, int placeNo, int no) {
         // 01020304
         // 01234567
         this.place = place;
@@ -34,6 +35,7 @@ public class EnvirData {
         this.light = state.substring(4) + "lx";
         this.sign = sign;
         this.placeNo = placeNo;
+        this.no = no;
     }
 
     public EnvirData() {
@@ -43,9 +45,10 @@ public class EnvirData {
         this.light = "----lx";
         this.sign = L.RED;
         this.placeNo = L.LIVING_ROOM;
+        this.no = 0;
     }
 
-    public EnvirData(String place, String temp, String humi, String light, int sign, int placeNo) {
+    public EnvirData(String place, String temp, String humi, String light, int sign, int placeNo, int no) {
 
         this.place = place;
         this.temp = temp;
@@ -53,6 +56,7 @@ public class EnvirData {
         this.light = light;
         this.sign = sign;
         this.placeNo = placeNo;
+        this.no = no;
     }
 
 
@@ -104,4 +108,11 @@ public class EnvirData {
         this.placeNo = placeNo;
     }
 
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
+    }
 }

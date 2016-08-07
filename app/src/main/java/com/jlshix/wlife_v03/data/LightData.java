@@ -11,19 +11,22 @@ public class LightData {
     private int state;
     private int sign;
     private int placeNo;
+    private int no;
 
     public LightData() {
         this.name = "未指定";
         this.state = 0;
         this.sign = L.RED;
         this.placeNo = L.LIVING_ROOM;
+        this.no = 0;
     }
 
-    public LightData(String name, int state, int sign, int placeNo) {
+    public LightData(String name, int state, int sign, int placeNo, int no) {
         this.name = name;
         this.state = state;
         this.sign = sign;
         this.placeNo = placeNo;
+        this.no = no;
     }
 
     public String getName() {
@@ -56,5 +59,13 @@ public class LightData {
 
     public void setPlaceNo(int placeNo) {
         this.placeNo = placeNo;
+    }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
     }
 }

@@ -1,9 +1,9 @@
 package com.jlshix.wlife_v03.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.data.EnvirData;
+import com.jlshix.wlife_v03.fragment.Envir;
 import com.jlshix.wlife_v03.tool.L;
 
 import java.util.List;
@@ -28,11 +29,13 @@ public class EnvirAdapter extends RecyclerView.Adapter<EnvirAdapter.EnvirViewHol
     // 上下文 与 数据
     private Context context;
     private List<EnvirData> datas;
+    private Handler handler;
 
     // 构造函数
-    public EnvirAdapter(Context context, List<EnvirData> datas) {
+    public EnvirAdapter(Context context, List<EnvirData> datas, Handler handler) {
         this.context = context;
         this.datas = datas;
+        this.handler = handler;
     }
 
 
@@ -77,8 +80,8 @@ public class EnvirAdapter extends RecyclerView.Adapter<EnvirAdapter.EnvirViewHol
      * @param position 第几个
      */
     @Override
-    public void onBindViewHolder(EnvirAdapter.EnvirViewHolder holder, int position) {
-        EnvirData data = datas.get(position);
+    public void onBindViewHolder(final EnvirAdapter.EnvirViewHolder holder, int position) {
+        final EnvirData data = datas.get(position);
         String name = L.nameText(data.getPlaceNo(), data.getPlace());
         holder.place.setText(name);
         holder.temp.setText(data.getTemp());
@@ -93,9 +96,20 @@ public class EnvirAdapter extends RecyclerView.Adapter<EnvirAdapter.EnvirViewHol
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        Log.i(TAG, "onMenuItemClick: " + item.getTitle());
+                        switch (item.getItemId()) {
+                            case R.id.action_rename:
+                                L.devRename(context, handler, Envir.REFRESH, "02", "0" + data.getNo(), data.getPlace());
+                                break;
+                            case R.id.action_delete:
+                                L.delDev(context, handler, Envir.REFRESH, "02", "0" + data.getNo());
+                                break;
+                            case R.id.action_position:
+                                L.placeDev(context, handler, Envir.REFRESH, "02", "0" + data.getNo(), data.getPlaceNo());
+                                break;
+                        }
                         return false;
                     }
+
                 });
                 menu.show();
             }
