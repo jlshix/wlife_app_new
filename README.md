@@ -102,9 +102,13 @@ WLife_v02 项目重构
 
 - 新增用户反馈
 
+## 2016-08-07
+
+- 新增家电相关 Fragment 及 Adapter data
+- 新增 addApplianceActivity
+- 实现上下文菜单 可重命名 删除 更改位置
+
 
 ## TODO
 
-- 空调 frag && item
-- mode Activity
 - schedule list and add
