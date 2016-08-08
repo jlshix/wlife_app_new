@@ -22,6 +22,8 @@ import com.jlshix.wlife_v03.tool.L;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
+import cn.jpush.android.api.JPushInterface;
+
 @ContentView(R.layout.activity_device)
 public class DeviceActivity extends BaseActivity {
 
@@ -181,6 +183,18 @@ public class DeviceActivity extends BaseActivity {
             intent.putExtra("type", type);
             sendBroadcast(intent);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(DeviceActivity.this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(DeviceActivity.this);
     }
 }
 

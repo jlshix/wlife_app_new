@@ -149,6 +149,18 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         handler.sendEmptyMessage(REFRESH);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(MainActivity.this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(MainActivity.this);
+    }
+
     private void showCard() {
         if (!L.isBIND()) {
             noDevice.setVisibility(View.VISIBLE);

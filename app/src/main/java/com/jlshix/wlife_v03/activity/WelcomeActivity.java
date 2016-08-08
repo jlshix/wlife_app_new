@@ -2,16 +2,12 @@ package com.jlshix.wlife_v03.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.Window;
 
 import com.jlshix.wlife_v03.R;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * 欢迎界面 只有一张图
@@ -44,4 +40,15 @@ public class WelcomeActivity extends AppCompatActivity {
         }).start();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(WelcomeActivity.this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(WelcomeActivity.this);
+    }
 }
