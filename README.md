@@ -108,6 +108,9 @@ WLife_v02 项目重构
 - 新增 addApplianceActivity
 - 实现上下文菜单 可重命名 删除 更改位置
 
+## 2016-08-08
+
+- 集成环信 armeabi-v7a 问题已解决
 
 ## TODO
 
