@@ -38,7 +38,7 @@ public class App extends Application {
 
         // xUtils
         x.Ext.init(this);
-        x.Ext.setDebug(false);
+        x.Ext.setDebug(true);
 
         //sp
         sp = getSharedPreferences("conf", MODE_PRIVATE);

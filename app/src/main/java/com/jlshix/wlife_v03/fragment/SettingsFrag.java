@@ -88,6 +88,7 @@ public class SettingsFrag extends PreferenceFragment {
                 builder.setMessage("确认退出?").setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        // TODO: 2016/8/2 环信退出?
                         App.sp.edit().clear().apply();
                         getActivity().setResult(L.SETTINGS_RETURN);
                         getActivity().finish();
