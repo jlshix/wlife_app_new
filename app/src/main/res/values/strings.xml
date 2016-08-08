@@ -381,6 +381,10 @@
     <string name="appliance_type_text">请选择家电类型:</string>
     <string name="appliance_brand">请选择家电品牌:</string>
     <string name="appliance_no">请选择家电型号:</string>
+    <string name="current_name">当前名称为:</string>
+    <string name="new_name">请输入新名称:</string>
+    <string name="current_place">当前位置为:</string>
+    <string name="new_place">请选择新位置:</string>
 
     <array name="appliance_type">
         <item>空调</item>
