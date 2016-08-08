@@ -50,7 +50,6 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
 
     /**
      * 内部类 ViewHolder
-     * //TODO xUtils 关于ViewHolder的Inject
      */
     static class PlugViewHolder extends RecyclerView.ViewHolder {
 

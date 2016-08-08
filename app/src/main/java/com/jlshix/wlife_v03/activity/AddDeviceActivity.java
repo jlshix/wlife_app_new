@@ -225,8 +225,6 @@ public class AddDeviceActivity extends BaseActivity {
         params.addParameter("state", state);
         params.addParameter("sign", sign);
         params.addParameter("place", place);
-
-        // TODO: 2016/7/23 post 无效
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {

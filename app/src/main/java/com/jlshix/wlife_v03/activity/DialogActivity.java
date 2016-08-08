@@ -192,8 +192,6 @@ public class DialogActivity extends BaseActivity {
         params.addParameter("gate", L.getGateImei());
         params.addParameter("place", place);
         params.addParameter("type", type);
-
-        // TODO: 2016/7/24 POST无效 不要加log
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {

@@ -143,7 +143,6 @@ public class ModeAdapter extends RecyclerView.Adapter<ModeAdapter.ModeViewHolder
         RequestParams params = new RequestParams(L.URL_DEL_ORDER);
         params.addParameter("id", id);
         params.addParameter("gate", L.getGateImei());
-        // TODO: 2016/7/25 handler
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {

@@ -389,7 +389,6 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                         isAnswered = true;
                         isHandsfreeState = true;
                     } catch (Exception e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                         saveCallRecord(1);
                         finish();

@@ -46,7 +46,6 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
 
     /**
      * 内部类 ViewHolder
-     * //TODO xUtils 关于ViewHolder的Inject
      */
     static class MemberViewHolder extends RecyclerView.ViewHolder {
 

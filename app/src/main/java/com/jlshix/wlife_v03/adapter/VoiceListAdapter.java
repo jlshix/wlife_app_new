@@ -49,7 +49,6 @@ public class VoiceListAdapter extends RecyclerView.Adapter<VoiceListAdapter.Voic
 
     /**
      * 内部类 ViewHolder
-     * //TODO xUtils 关于ViewHolder的Inject
      */
     static class VoiceListViewHolder extends RecyclerView.ViewHolder {
 
@@ -136,7 +135,6 @@ public class VoiceListAdapter extends RecyclerView.Adapter<VoiceListAdapter.Voic
         RequestParams params = new RequestParams(L.URL_DEL_ORDER);
         params.addParameter("id", id);
         params.addParameter("gate", L.getGateImei());
-        // TODO: 2016/7/25 handler
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {

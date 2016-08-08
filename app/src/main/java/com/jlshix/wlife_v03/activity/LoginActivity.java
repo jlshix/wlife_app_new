@@ -255,7 +255,6 @@ public class LoginActivity extends BaseActivity {
      * 跳转
      */
     private void jump() {
-        // TODO 写入数据 √ 极光推送√ 环信
         L.setLogin(true);
         L.setName(userName);
         L.setPhone(userMail);
