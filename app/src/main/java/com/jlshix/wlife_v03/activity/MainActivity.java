@@ -147,6 +147,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         recognizer = com.iflytek.cloud.SpeechRecognizer.createRecognizer(activity, mInitListener);
         recognizerDialog = new RecognizerDialog(activity, mInitListener);
         handler.sendEmptyMessage(REFRESH);
+
+        L.setOnline(true);
     }
 
     @Override
@@ -159,6 +161,12 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     protected void onPause() {
         super.onPause();
         JPushInterface.onPause(MainActivity.this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        L.setOnline(false);
     }
 
     private void showCard() {

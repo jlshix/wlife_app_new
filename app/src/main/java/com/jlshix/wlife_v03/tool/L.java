@@ -99,11 +99,11 @@ public class L {
     public static final String URL_GET_ORDER = "http://jlshix.com/wlife2/get_order.php";
     public static final String URL_ADD_ORDER = "http://jlshix.com/wlife2/add_order.php";
     public static final String URL_FEEDBACK = "http://jlshix.com/wlife2/feedback.php";
-    public static final String URL_EASEMOB_REGISTER = "http://jlshix.com/wlife2/easemob_register.php";
     public static final String URL_RENAME_GATE = "http://jlshix.com/wlife2/rename_gate.php";
     public static final String URL_RENAME_DEV = "http://jlshix.com/wlife2/rename_device.php";
     public static final String URL_PLACE_DEV = "http://jlshix.com/wlife2/place_dev.php";
     public static final String URL_DEL_DEV = "http://jlshix.com/wlife2/del_dev.php";
+    public static final String URL_ONLINE = "http://jlshix.com/wlife2/account_online.php";
 
 
     /**
@@ -652,6 +652,42 @@ public class L {
                         });
                     }
                 }).setNegativeButton("取消", null).create().show();
+    }
+
+
+    /**
+     * 设定网关是否在线
+     * @param isOnline boolean
+     */
+    public static void setOnline(final boolean isOnline) {
+        RequestParams params = new RequestParams(URL_ONLINE);
+        params.addParameter("mail", getPhone());
+        params.addParameter("online", isOnline ? "1":"0");
+        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                if (!result.optString("code").equals("1")) {
+                    Log.e(TAG, "setOnline: " + "ONLINE_CODE_ERR");
+                    return;
+                }
+                Log.e(TAG, "setOnline" + isOnline);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e(TAG, "setOnlineErr" + ex.getMessage());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
 
