@@ -6,7 +6,7 @@
     <string name="title_activity_register">注册</string>
     <string name="describ">description</string>
     <string name="pw">密码</string>
-    <string name="mail">邮箱</string>
+    <string name="mail">手机号</string>
     <string name="remember">记住密码</string>
     <string name="auto_login">自动登录</string>
     <string name="login">登录</string>
@@ -170,10 +170,10 @@
 
     <string name="usr_name">更改用户名</string>
     <string name="usr_name_summary">更改您的用户名</string>
-    <string name="usr_mail">更改邮箱</string>
+    <string name="usr_mail">更改手机号</string>
     <string name="usr_name_key">settings_name</string>
     <string name="usr_mail_key">settings_mail</string>
-    <string name="usr_mail_summary">更改您的邮箱</string>
+    <string name="usr_mail_summary">更改您的手机号</string>
     <string name="usr_pw_key">settings_pw</string>
     <string name="usr_pw">更改密码</string>
     <string name="usr_pw_summary">更改您的密码</string>
@@ -325,7 +325,7 @@
     <string name="settings_schedule_summary">查看或编辑您的计划任务</string>
     <string name="settings_member">家庭成员</string>
     <string name="settings_member_summary">管理家庭成员(管理员功能)</string>
-    <string name="settings_account_summary">更改邮箱 用户名 密码</string>
+    <string name="settings_account_summary">更改手机号 用户名 密码</string>
     <string name="mode">更改模式</string>
     <string name="send">发送</string>
     <string name="msg_hint">例如: 周末一起出游吧</string>
@@ -343,8 +343,8 @@
     <string name="action_cancel">取消</string>
     <string name="title_activity_member">家庭成员管理</string>
     <string name="add_member">添加成员</string>
-    <string name="settings_mail">更改邮箱</string>
-    <string name="settings_mail_summary">更改您的验证邮箱</string>
+    <string name="settings_mail">更改手机号</string>
+    <string name="settings_mail_summary">更改您的验证手机号</string>
     <string name="settings_name">更改用户名</string>
     <string name="settings_name_summary">更改您的用户名</string>
     <string name="settings_pw_summary">更改您的登录密码</string>

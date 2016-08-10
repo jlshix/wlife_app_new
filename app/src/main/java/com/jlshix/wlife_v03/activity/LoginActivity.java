@@ -272,7 +272,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        EMChatManager.getInstance().login(userName, secret.getText().toString().trim(), new EMCallBack() {//回调
+        EMChatManager.getInstance().login(userMail, secret.getText().toString().trim(), new EMCallBack() {//回调
             @Override
             public void onSuccess() {
                 runOnUiThread(new Runnable() {
