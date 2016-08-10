@@ -112,6 +112,11 @@ WLife_v02 项目重构
 
 - 集成环信 armeabi-v7a 问题已解决
 
+## 2016-08-10
+
+- 指定部分父活动
+- 新增收到推送的跳转
+
 ## TODO
 
 - schedule list and add
