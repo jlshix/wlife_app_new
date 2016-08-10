@@ -504,7 +504,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      * @param v view
      * @return boolean
      */
-    @Event(value = R.id.device, type = View.OnLongClickListener.class)
     private boolean unbindGate(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage("确认解绑网关？").setPositiveButton("确认", new DialogInterface.OnClickListener() {

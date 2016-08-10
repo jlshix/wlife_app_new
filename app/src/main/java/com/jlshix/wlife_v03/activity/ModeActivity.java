@@ -69,6 +69,7 @@ public class ModeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         swipe.setOnRefreshListener(this);
         list = new ArrayList<>();
         list.add(new OrderData());

@@ -71,7 +71,10 @@ public class MemberActivity extends BaseActivity implements SwipeRefreshLayout.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         swipe.setOnRefreshListener(this);
+
         list = new ArrayList<>();
         list.add("未命名");
         initView();

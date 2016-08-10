@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -97,7 +98,7 @@ public class AddOrderActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initView();
 
     }
@@ -221,6 +222,21 @@ public class AddOrderActivity extends BaseActivity {
     @Event(R.id.add_device)
     private void addDevice(View view) {
         startActivityForResult(new Intent(activity, DialogActivity.class), L.DIALOG_REQUEST);
+    }
+
+    /**
+     * parentActivity
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

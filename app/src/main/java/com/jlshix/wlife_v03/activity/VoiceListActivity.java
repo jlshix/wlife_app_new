@@ -71,6 +71,7 @@ public class VoiceListActivity extends BaseActivity implements SwipeRefreshLayou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         swipe.setOnRefreshListener(this);
         list = new ArrayList<>();
         list.add(new OrderData());

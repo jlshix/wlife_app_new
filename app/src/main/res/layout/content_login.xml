@@ -19,7 +19,7 @@
             android:layout_height="wrap_content">
             <com.jlshix.wlife_v03.tool.RoundImageView
                 android:id="@+id/head"
-                android:src="@drawable/avatar"
+                android:src="@mipmap/ic_launcher"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:contentDescription="@string/describ"

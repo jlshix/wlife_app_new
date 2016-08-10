@@ -59,7 +59,7 @@
     </array>
 
 
-    <string name="title_activity_gate_bind">GateBindActivity</string>
+    <string name="title_activity_gate_bind">绑定网关</string>
     <string name="add">添加</string>
     <string name="no_gate">您还没有绑定网关，请点击 “+” 绑定网关</string>
     <string name="no_device">您还没有此类设备，请点击 “+” 添加</string>
@@ -377,7 +377,7 @@
     <string name="power_text">关</string>
     <string name="mode_text">自动模式</string>
     <string name="wind_text">1</string>
-    <string name="title_activity_add_appliance">AddApplianceActivity</string>
+    <string name="title_activity_add_appliance">添加家电</string>
     <string name="appliance_type_text">请选择家电类型:</string>
     <string name="appliance_brand">请选择家电品牌:</string>
     <string name="appliance_no">请选择家电型号:</string>
