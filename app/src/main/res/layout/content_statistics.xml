@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe"
+    tools:context="com.jlshix.wlife_v03.activity.StatisticsActivity"
+    tools:showIn="@layout/activity_statistics"
+    android:padding="@dimen/frag_padding"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
+
+            <LinearLayout
+                android:id="@+id/date_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/date_tv"
+                    android:text="@string/date"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="@dimen/item_padding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/date_btn"
+                    android:background="@null"
+                    android:drawableStart="@drawable/ic_date_range_blue_500_24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <android.support.v7.widget.CardView
+                style="@style/CardStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:padding="@dimen/card_padding"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="@string/temp_tv"
+                        android:textSize="20sp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/item_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/tmp_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                style="@style/CardStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:padding="@dimen/card_padding"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="@string/humi_tv"
+                        android:textSize="20sp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/item_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/humi_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                style="@style/CardStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:padding="@dimen/card_padding"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="@string/light_tv"
+                        android:textSize="20sp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/item_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/light_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
     sourceSets.main {
         jniLibs.srcDirs = ['libs']
     }
@@ -34,5 +34,6 @@ dependencies {
     compile 'com.journeyapps:zxing-android-embedded:3.3.0@aar'
     compile 'com.google.zxing:core:3.2.1'
     compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
     compile files('libs/easemobchat_2.2.2.jar')
 }

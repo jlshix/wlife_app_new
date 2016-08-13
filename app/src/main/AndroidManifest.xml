@@ -51,7 +51,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"></activity>
+            android:theme="@style/horizontal_slide" />
 
         <!-- 声明sdk所需的service -->
         <service android:name="com.easemob.chat.EMChatService" />
@@ -120,7 +120,7 @@
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false" />
         <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
 
@@ -262,6 +262,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jlshix.wlife_v03.activity.DeviceActivity" />
         </activity>
+        <activity
+            android:name=".activity.StatisticsActivity"
+            android:label="@string/title_activity_statistics"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

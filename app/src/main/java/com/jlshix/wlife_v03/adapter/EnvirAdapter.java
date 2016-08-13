@@ -1,6 +1,7 @@
 package com.jlshix.wlife_v03.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jlshix.wlife_v03.R;
+import com.jlshix.wlife_v03.activity.StatisticsActivity;
 import com.jlshix.wlife_v03.data.EnvirData;
 import com.jlshix.wlife_v03.fragment.Envir;
 import com.jlshix.wlife_v03.tool.L;
@@ -92,7 +94,7 @@ public class EnvirAdapter extends RecyclerView.Adapter<EnvirAdapter.EnvirViewHol
             @Override
             public void onClick(View view) {
                 PopupMenu menu = new PopupMenu(context, view);
-                menu.getMenuInflater().inflate(R.menu.menu_item, menu.getMenu());
+                menu.getMenuInflater().inflate(R.menu.menu_item_envir, menu.getMenu());
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -106,6 +108,10 @@ public class EnvirAdapter extends RecyclerView.Adapter<EnvirAdapter.EnvirViewHol
                             case R.id.action_position:
                                 L.placeDev(context, handler, Envir.REFRESH, "02", "0" + data.getNo(), data.getPlaceNo());
                                 break;
+                            case R.id.action_statistics:
+                                Intent intent = new Intent(context, StatisticsActivity.class);
+                                intent.putExtra("no", data.getNo());
+                                context.startActivity(intent);
                         }
                         return false;
                     }
