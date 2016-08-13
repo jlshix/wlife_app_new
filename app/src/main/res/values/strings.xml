@@ -51,6 +51,13 @@
         <item>家庭留言板</item>
     </array>
 
+    <array name="statistics_frag_title">
+        <item>按小时</item>
+        <item>按天</item>
+    </array>
+
+
+
     <array name="gate_msg_types">
         <item>全部</item>
         <item>系统消息</item>
@@ -397,9 +404,12 @@
     <array name="appliance_no">
         <item>KFR-120LW</item>
     </array>
-
-
-
+    <string name="title_activity_statistics">统计信息</string>
+    <string name="action_statistics">查看统计</string>
+    <string name="date">2016–08-13</string>
+    <string name="temp_tv">温度统计</string>
+    <string name="humi_tv">湿度统计</string>
+    <string name="light_tv">光照统计</string>
 
 
 </resources>

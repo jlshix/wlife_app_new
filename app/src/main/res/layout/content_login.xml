@@ -17,7 +17,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <com.jlshix.wlife_v03.tool.RoundImageView
+            <ImageView
                 android:id="@+id/head"
                 android:src="@mipmap/ic_launcher"
                 android:layout_width="100dp"

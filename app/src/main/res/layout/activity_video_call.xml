@@ -61,7 +61,7 @@
                 android:textSize="20sp" />
         </LinearLayout>
 
-        <TextView 
+        <TextView
             android:id="@+id/tv_call_monitor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,9 +99,12 @@
 
                 <LinearLayout
                     android:id="@+id/ll_voice_control"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" >
-
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp" >
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -115,16 +118,11 @@
                             android:layout_height="wrap_content"
                             android:scaleType="fitCenter"
                             android:src="@drawable/icon_mute_normal" />
-
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:gravity="center"
-                            android:text="@string/mute"
-                            android:textColor="#666167" />
                     </LinearLayout>
-
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -138,15 +136,11 @@
                             android:layout_height="wrap_content"
                             android:scaleType="fitCenter"
                             android:src="@drawable/icon_speaker_normal" />
-
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:gravity="center"
-                            android:text="@string/hands_free"
-                            android:textColor="#666167" />
                     </LinearLayout>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
                 </LinearLayout>
 
                 <FrameLayout
