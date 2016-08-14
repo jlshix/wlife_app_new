@@ -1,11 +1,13 @@
 package com.jlshix.wlife_v03.fragment;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -21,13 +23,20 @@ import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.data.StatisticsData;
 import com.jlshix.wlife_v03.tool.BarMarker;
 import com.jlshix.wlife_v03.tool.BaseFragment;
+import com.jlshix.wlife_v03.tool.L;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Leo on 2016/8/13.
@@ -37,14 +46,12 @@ import java.util.Random;
 @ContentView(R.layout.content_statistics)
 public class HourlyStatistics extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
 
+    private static final String TAG = "HourlyFragment";
     @ViewInject(R.id.swipe)
     private SwipeRefreshLayout swipe;
 
     @ViewInject(R.id.date_tv)
     private TextView dateText;
-
-    @ViewInject(R.id.date_btn)
-    private Button dateBtn;
 
     @ViewInject(R.id.tmp_chart)
     private BarChart tmpChart;
@@ -56,6 +63,15 @@ public class HourlyStatistics extends BaseFragment implements SwipeRefreshLayout
     private BarChart lightChart;
 
     private List<StatisticsData> datas;
+    private String devNo;
+
+    public String getDevNo() {
+        return devNo;
+    }
+
+    public void setDevNo(String devNo) {
+        this.devNo = devNo;
+    }
 
     public static final int REFRESH = 0x01;
     public static final int TMP = 0x02;
@@ -76,18 +92,51 @@ public class HourlyStatistics extends BaseFragment implements SwipeRefreshLayout
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        datas = new ArrayList<>();
-        datas = getRawData();
+
+        dateText.setText(getToday());
+        // 图表基本设置
         setupChart(tmpChart);
         setupChart(humiChart);
         setupChart(lightChart);
-        tmpChart.setData(getSpecData(TMP));
-        humiChart.setData(getSpecData(HUMI));
-        lightChart.setData(getSpecData(LIGHT));
-        tmpChart.animateXY(2000, 2000);
-        humiChart.animateXY(2000, 2000);
-        lightChart.animateXY(2000, 2000);
+        // Marker
+        BarMarker tmpMarker = new BarMarker(getContext(), R.layout.custom_marker_view, "℃");
+        tmpChart.setMarkerView(tmpMarker);
+        BarMarker humiMarker = new BarMarker(getContext(), R.layout.custom_marker_view, "％");
+        humiChart.setMarkerView(humiMarker);
+        BarMarker lightMarker = new BarMarker(getContext(), R.layout.custom_marker_view, "Lx");
+        lightChart.setMarkerView(lightMarker);
 
+        // data
+        datas = new ArrayList<>();
+        getRawData(devNo, getToday());
+//        tmpChart.setData(getSpecData(TMP));
+//        humiChart.setData(getSpecData(HUMI));
+//        lightChart.setData(getSpecData(LIGHT));
+//        tmpChart.animateXY(2000, 2000);
+//        humiChart.animateXY(2000, 2000);
+//        lightChart.animateXY(2000, 2000);
+
+    }
+
+    private String getToday() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.YEAR) + "-"
+                + format(calendar.get(Calendar.MONTH) + 1) + "-"
+                + format(calendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+
+    /**
+     * 格式化时间，标准两位
+     * @param x 时间int
+     * @return 时间String
+     */
+    private String format(int x) {
+        if (x >= 0 && x < 10) {
+            return "0" + x;
+        } else {
+            return String.valueOf(x);
+        }
     }
 
 
@@ -110,34 +159,86 @@ public class HourlyStatistics extends BaseFragment implements SwipeRefreshLayout
         YAxis axisRight = chart.getAxisRight();
         axisRight.setEnabled(false);
 
-//        YAxis axisLeft = chart.getAxisLeft();
-//        axisLeft.setAxisMinValue(0f);
-
-        BarMarker marker = new BarMarker(getContext(), R.layout.custom_marker_view);
-        chart.setMarkerView(marker);
-
         Legend l = chart.getLegend();
         l.setXEntrySpace(10f);
+    }
+
+    @Event(R.id.date_btn)
+    private void changeDate(View view) {
+        Calendar calendar = Calendar.getInstance();
+        new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                String date = year + "-" + format(month + 1) + "-" + format(dayOfMonth);
+                dateText.setText(date);
+                onRefresh();
+            }
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
 
     private BarData getSpecData(int type) {
         ArrayList<IBarDataSet> sets = new ArrayList<>();
         ArrayList<BarEntry> entries = new ArrayList<>();
-        for (int i = 0; i < 24; i++) {
+
+        List<StatisticsData> list = new ArrayList<>();
+//        for (int i = 0; i < datas.size(); i++) {
+//            int no = Integer.parseInt(datas.get(i).getTime().substring(0, 2));
+//            list.add(no, datas.get(i));
+//        }
+//        for (int i = 0; i < 23; i++) {
+//            if (list.get(i) == null) {
+//                list.add(i, new StatisticsData(devNo));
+//            }
+//        }
+//
+//        Log.i(TAG, "getSpecData: " + list.toString());
+
+        for (int i = 0; i < 23; i++) {
+            boolean sign = false;
+            for (int j = 0; j < datas.size(); j++) {
+                if (Integer.parseInt(datas.get(j).getTime().substring(0,2)) == i) {
+                    list.add(i, datas.get(j));
+                    sign = true;
+                }
+            }
+            if (!sign) {
+                list.add(i, new StatisticsData(devNo));
+            }
+        }
+
+
+
+        for (int i = 0; i < list.size(); i++) {
             switch (type) {
                 case TMP:
-                    entries.add(new BarEntry(i, datas.get(i).getTemp()));
+                    entries.add(new BarEntry(i, list.get(i).getTemp()));
                     break;
                 case HUMI:
-                    entries.add(new BarEntry(i, datas.get(i).getHumi()));
+                    entries.add(new BarEntry(i, list.get(i).getHumi()));
                     break;
                 case LIGHT:
-                    entries.add(new BarEntry(i, datas.get(i).getLight()));
+                    entries.add(new BarEntry(i, list.get(i).getLight()));
                     break;
             }
         }
-        BarDataSet dataSet = new BarDataSet(entries, "Values");
+
+        BarDataSet dataSet;
+        switch (type) {
+            case TMP:
+                dataSet = new BarDataSet(entries, "温度");
+                break;
+            case HUMI:
+                dataSet = new BarDataSet(entries, "湿度");
+                break;
+            case LIGHT:
+                dataSet = new BarDataSet(entries, "光照");
+                break;
+            default:
+                dataSet = new BarDataSet(entries, "Values");
+                break;
+        }
+
         dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
         sets.add(dataSet);
         BarData data = new BarData(sets);
@@ -146,34 +247,65 @@ public class HourlyStatistics extends BaseFragment implements SwipeRefreshLayout
         return new BarData(sets);
     }
 
-    private List<StatisticsData> getRawData() {
+    private void getRawData(String no, String date) {
+        datas.clear();
 
-        List<StatisticsData> datas = new ArrayList<>();
-        Random r = new Random();
-        for (int i = 0; i < 24; i++) {
-            int tmp = r.nextInt(16) + 16;
-            int humi = r.nextInt(50) + 20;
-            int light = r.nextInt() % 100 + 1000;
-            datas.add(new StatisticsData("01", tmp, humi, light, "0", "0"));
-        }
-        return datas;
+        RequestParams params = new RequestParams(L.URL_STATISTICS);
+        params.addParameter("gate", L.getGateImei());
+        params.addParameter("no", no);
+        params.addParameter("date", date);
+        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                Log.i(TAG, "onSuccess: " + result.toString());
+                if (!result.optString("code").equals("1")) {
+                    L.toast(getContext(), "STATISTICS_RAW_DATA_CODE_ERR");
+                    return;
+                }
+                JSONArray info = result.optJSONArray("info");
+                for (int i = 0; i < info.length(); i++) {
+                    JSONObject object = info.optJSONObject(i);
+                    String state = object.optString("state");
+                    String date = object.optString("date");
+                    String time = object.optString("time");
+                    datas.add(new StatisticsData(devNo, state, date, time));
+
+                }
+                // 更新图表
+                updateCharts();
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                L.toast(getContext(), "STATISTICS_RAW_DATA_ERR");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
     }
 
     @Override
     public void onRefresh() {
-        datas.clear();
-        datas = getRawData();
-        updateCharts();
         swipe.setRefreshing(false);
+        getRawData(devNo, dateText.getText().toString());
     }
 
     private void updateCharts() {
-        tmpChart.notifyDataSetChanged();
-        humiChart.notifyDataSetChanged();
-        lightChart.notifyDataSetChanged();
         tmpChart.setData(getSpecData(TMP));
         humiChart.setData(getSpecData(HUMI));
         lightChart.setData(getSpecData(LIGHT));
+        tmpChart.notifyDataSetChanged();
+        humiChart.notifyDataSetChanged();
+        lightChart.notifyDataSetChanged();
         tmpChart.animateXY(2000, 2000);
         humiChart.animateXY(2000, 2000);
         lightChart.animateXY(2000, 2000);

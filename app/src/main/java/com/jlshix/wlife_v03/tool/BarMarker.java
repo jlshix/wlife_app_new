@@ -13,6 +13,7 @@ import com.jlshix.wlife_v03.R;
  */
 public class BarMarker extends MarkerView {
     private TextView tv;
+    private String unit;
 
     /**
      * Constructor. Sets up the MarkerView with a custom layout resource.
@@ -20,14 +21,15 @@ public class BarMarker extends MarkerView {
      * @param context
      * @param layoutResource the layout resource to use for the MarkerView
      */
-    public BarMarker(Context context, int layoutResource) {
+    public BarMarker(Context context, int layoutResource, String unit) {
         super(context, layoutResource);
         tv = (TextView)findViewById(R.id.tvContent);
+        this.unit = unit;
     }
 
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        tv.setText("" + e.getY());
+        tv.setText(e.getY() + unit);
     }
 
     @Override

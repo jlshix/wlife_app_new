@@ -1,5 +1,6 @@
 package com.jlshix.wlife_v03.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -39,15 +40,18 @@ public class StatisticsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        initView();
+        Intent intent = getIntent();
+        initView(intent.getIntExtra("no", 0));
     }
 
 
     /**
      * 初始化界面
+     * @param no
      */
-    private void initView() {
+    private void initView(int no) {
         hourlyStatistics = new HourlyStatistics();
+        hourlyStatistics.setDevNo("0" + no);
         dailyStatistics = new DailyStatistics();
         vp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

@@ -21,6 +21,17 @@ public class StatisticsData {
         this.time = "11:11";
     }
 
+    public StatisticsData(String no) {
+        this.no = no;
+        this.temp = 0;
+        this.humi = 0;
+        this.light = 0;
+        this.date = "2016-01-01";
+        this.time = "00:00";
+    }
+
+
+
 
     public StatisticsData(String no, int temp, int humi, int light, String date, String time) {
         this.no = no;
