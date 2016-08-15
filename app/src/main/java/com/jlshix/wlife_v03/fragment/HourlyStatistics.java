@@ -2,12 +2,10 @@ package com.jlshix.wlife_v03.fragment;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -44,11 +42,12 @@ import java.util.List;
  */
 
 @ContentView(R.layout.content_statistics)
-public class HourlyStatistics extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class HourlyStatistics extends BaseFragment {
 
     private static final String TAG = "HourlyFragment";
-    @ViewInject(R.id.swipe)
-    private SwipeRefreshLayout swipe;
+
+    @ViewInject(R.id.count)
+    private Spinner count;
 
     @ViewInject(R.id.date_tv)
     private TextView dateText;
@@ -77,21 +76,13 @@ public class HourlyStatistics extends BaseFragment implements SwipeRefreshLayout
     public static final int TMP = 0x02;
     public static final int HUMI = 0x03;
     public static final int LIGHT = 0x04;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case REFRESH:
-                    onRefresh();
-                    break;
-            }
-        }
-    };
 
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        count.setVisibility(View.GONE);
 
         dateText.setText(getToday());
         // 图表基本设置
@@ -109,12 +100,6 @@ public class HourlyStatistics extends BaseFragment implements SwipeRefreshLayout
         // data
         datas = new ArrayList<>();
         getRawData(devNo, getToday());
-//        tmpChart.setData(getSpecData(TMP));
-//        humiChart.setData(getSpecData(HUMI));
-//        lightChart.setData(getSpecData(LIGHT));
-//        tmpChart.animateXY(2000, 2000);
-//        humiChart.animateXY(2000, 2000);
-//        lightChart.animateXY(2000, 2000);
 
     }
 
@@ -171,7 +156,7 @@ public class HourlyStatistics extends BaseFragment implements SwipeRefreshLayout
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
                 String date = year + "-" + format(month + 1) + "-" + format(dayOfMonth);
                 dateText.setText(date);
-                onRefresh();
+                getRawData(devNo, dateText.getText().toString());
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
@@ -181,7 +166,7 @@ public class HourlyStatistics extends BaseFragment implements SwipeRefreshLayout
         ArrayList<IBarDataSet> sets = new ArrayList<>();
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        List<StatisticsData> list = new ArrayList<>();
+        ArrayList<StatisticsData> list = new ArrayList<>();
 //        for (int i = 0; i < datas.size(); i++) {
 //            int no = Integer.parseInt(datas.get(i).getTime().substring(0, 2));
 //            list.add(no, datas.get(i));
@@ -194,17 +179,17 @@ public class HourlyStatistics extends BaseFragment implements SwipeRefreshLayout
 //
 //        Log.i(TAG, "getSpecData: " + list.toString());
 
-        for (int i = 0; i < 23; i++) {
-            boolean sign = false;
+        for (int i = 0; i < 24; i++) {
+//            boolean sign = false;
             for (int j = 0; j < datas.size(); j++) {
                 if (Integer.parseInt(datas.get(j).getTime().substring(0,2)) == i) {
                     list.add(i, datas.get(j));
-                    sign = true;
+//                    sign = true;
                 }
             }
-            if (!sign) {
-                list.add(i, new StatisticsData(devNo));
-            }
+//            if (!sign) {
+//                list.add(i, new StatisticsData(devNo));
+//            }
         }
 
 
@@ -291,12 +276,6 @@ public class HourlyStatistics extends BaseFragment implements SwipeRefreshLayout
             }
         });
 
-    }
-
-    @Override
-    public void onRefresh() {
-        swipe.setRefreshing(false);
-        getRawData(devNo, dateText.getText().toString());
     }
 
     private void updateCharts() {

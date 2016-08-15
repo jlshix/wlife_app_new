@@ -404,6 +404,16 @@
     <array name="appliance_no">
         <item>KFR-120LW</item>
     </array>
+
+    <array name="statistics_count">
+        <item>最近 5天</item>
+        <item>最近10天</item>
+        <item>最近20天</item>
+    </array>
+
+
+
+
     <string name="title_activity_statistics">统计信息</string>
     <string name="action_statistics">查看统计</string>
     <string name="date">2016–08-13</string>
