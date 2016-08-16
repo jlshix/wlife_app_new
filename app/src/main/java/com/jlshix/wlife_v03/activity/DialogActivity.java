@@ -93,17 +93,7 @@ public class DialogActivity extends BaseActivity {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                switch (i) {
-                    case 0:
-                        lightText.setText("关");
-                        break;
-                    case 1:
-                        lightText.setText("暗");
-                        break;
-                    case 2:
-                        lightText.setText("亮");
-                        break;
-                }
+                lightText.setText(String.valueOf(i));
             }
 
             @Override
