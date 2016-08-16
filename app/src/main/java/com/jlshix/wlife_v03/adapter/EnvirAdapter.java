@@ -88,7 +88,7 @@ public class EnvirAdapter extends RecyclerView.Adapter<EnvirAdapter.EnvirViewHol
         holder.place.setText(name);
         holder.temp.setText(data.getTemp());
         holder.humi.setText(data.getHumi());
-        holder.light.setText(data.getLight());
+        holder.light.setText(lightFormat(data.getLight()));
         // 上下文菜单
         holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +120,19 @@ public class EnvirAdapter extends RecyclerView.Adapter<EnvirAdapter.EnvirViewHol
                 menu.show();
             }
         });
+    }
+
+    private String lightFormat(String light) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            if (light.charAt(i) != '0') {
+                sb.append(light.charAt(i));
+            }
+        }
+        for (int i = 3; i < light.length(); i++) {
+            sb.append(light.charAt(i));
+        }
+        return sb.toString();
     }
 
     @Override
