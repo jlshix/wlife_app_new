@@ -100,7 +100,7 @@
                     android:id="@+id/seek"
                     android:layout_weight="5"
                     android:layout_width="0dp"
-                    android:max="15"
+                    android:max="14"
                     android:layout_height="match_parent" />
                 <TextView
                     android:id="@+id/value"

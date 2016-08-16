@@ -105,10 +105,21 @@ public class ApplianceAdapter extends RecyclerView.Adapter<ApplianceAdapter.Appl
                     holder.powerBtn.setText("关闭");
                     holder.modeText.setText(mode[0]);
                     holder.windText.setText("1");
-                    holder.tmpSeek.setProgress(0);
-                    holder.tmpText.setText(16 + "℃");
+                    holder.tmpSeek.setProgress(10);
+                    holder.tmpText.setText(26 + "℃");
 
                     L.send2Gate(L.getGateImei(), "0f010003");
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(500);
+                                L.send2Gate(L.getGateImei(), "0f010000,0f010026,0f010071");
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
 
                 } else {
 
@@ -168,15 +179,18 @@ public class ApplianceAdapter extends RecyclerView.Adapter<ApplianceAdapter.Appl
                 switch (holder.windText.getText().toString()) {
                     case "1":
                         holder.windText.setText("2");
+                        L.send2Gate(L.getGateImei(), "0f010072");
                         break;
                     case "2":
                         holder.windText.setText("3");
+                        L.send2Gate(L.getGateImei(), "0f010073");
                         break;
                     case "3":
                         holder.windText.setText("1");
+                        L.send2Gate(L.getGateImei(), "0f010071");
                         break;
                 }
-                L.send2Gate(L.getGateImei(), "0f010007");
+
             }
         });
 

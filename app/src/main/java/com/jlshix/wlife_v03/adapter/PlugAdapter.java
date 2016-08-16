@@ -129,9 +129,10 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
                     upload2Server(no, state);
 
                     // 推送
-                    String b = isChecked ? "1":"0";
-                    String order = "0A0" + (finalPosition + 1) + (finalI + 1) + b;
-                    L.send2Gate(L.getGateImei(), order);
+//                    String b = isChecked ? "1":"0";
+//                    String order = "0A0" + (finalPosition + 1) + (finalI + 1) + b;
+//                    L.send2Gate(L.getGateImei(), order);
+                    L.send2Gate(L.getGateImei(), "0A0" + (finalPosition + 1) + state);
 
                 }
             });
