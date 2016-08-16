@@ -684,7 +684,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private void setWeatherCard(JSONObject object) {
         String temp = String.valueOf((int) object.optDouble("temperature")) + "°";
         String skycon = object.optString("skycon");
-        String humidity = String.valueOf(object.optDouble("humidity") * 100) + "%";
+        String humidity = String.valueOf((int) (object.optDouble("humidity") * 100)) + "%";
 
         temperature.setText(temp);
         place.setText(humidity);
