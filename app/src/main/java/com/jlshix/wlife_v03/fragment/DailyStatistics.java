@@ -26,6 +26,7 @@ import com.jlshix.wlife_v03.tool.L;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
+import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
@@ -33,9 +34,8 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Leo on 2016/8/13.
@@ -51,6 +51,9 @@ public class DailyStatistics extends BaseFragment {
 
     @ViewInject(R.id.count)
     private Spinner spinner;
+
+    @ViewInject(R.id.count_tv)
+    TextView countText;
 
     @ViewInject(R.id.date_tv)
     private TextView dateText;
@@ -102,8 +105,6 @@ public class DailyStatistics extends BaseFragment {
 
         // data
         datas = new ArrayList<>();
-        getRawData(devNo, 5);
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -116,6 +117,7 @@ public class DailyStatistics extends BaseFragment {
                         break;
                     case 2:
                         getRawData(devNo, 20);
+                        break;
                 }
             }
 
@@ -151,7 +153,7 @@ public class DailyStatistics extends BaseFragment {
 
     private void setupChart(BarChart chart) {
         chart.setDescription("");
-        chart.setNoDataText("没有数据,请检查数据库");
+        chart.setNoDataText("没有相应数据");
         chart.setDrawGridBackground(false);
         chart.setDrawBarShadow(false);
 
@@ -168,6 +170,9 @@ public class DailyStatistics extends BaseFragment {
         YAxis axisRight = chart.getAxisRight();
         axisRight.setEnabled(false);
 
+        YAxis yAxis = chart.getAxisLeft();
+        yAxis.setAxisMinValue(0f);
+
         Legend l = chart.getLegend();
         l.setXEntrySpace(10f);
     }
@@ -178,27 +183,31 @@ public class DailyStatistics extends BaseFragment {
         ArrayList<BarEntry> entries = new ArrayList<>();
 
         ArrayList<StatisticsData> list = new ArrayList<>();
-
         Calendar calendar = Calendar.getInstance();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
-        int date = calendar.get(Calendar.DATE);
-        calendar.set(Calendar.DATE, date - count + 1);
-        ArrayList<String> xVals = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            xVals.add(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
-            calendar.add(Calendar.DATE, 1);
-        }
-
-        Map<String, StatisticsData> map = new HashMap<>();
-
-        for (int i = 0; i < datas.size(); i++) {
-            if (xVals.contains(datas.get(i).getDate().substring(8))) {
-                map.put(datas.get(i).getDate().substring(8), datas.get(i));
+        for (int i = 0; i < count; i++) {
+            boolean sign = false;
+            for (int j = 0; j < datas.size(); j++) {
+                if (Integer.parseInt(datas.get(j).getDate().substring(8)) == today) {
+//                    datas.get(j).getDate().substring(8).equals(String.valueOf(today))
+                    list.add(i, datas.get(j));
+                    sign = true;
+                }
             }
+            if (!sign) {
+                list.add(new StatisticsData(devNo));
+            }
+            // TODO 跨月有问题
+            today--;
         }
+        Collections.reverse(list);
 
-        // TODO map 放入对应 显示问题
-
+        int size = list.size();
+        list.add(size, list.get(size-1));
+        for (int k = list.size() - 2; k > 0 ; k--) {
+            list.set(k, list.get(k-1));
+        }
+        list.set(0, new StatisticsData(devNo));
 
 
 
@@ -240,14 +249,16 @@ public class DailyStatistics extends BaseFragment {
         return new BarData(sets);
     }
 
-    private void getRawData(String no, int count) {
+    private void getRawData(String no, final int count) {
         datas.clear();
-
+        countText.setText("注: 第" + count + "天为当天的数据");
         RequestParams params = new RequestParams(L.URL_STATISTICS);
+        params.addParameter("date", getToday());
         params.addParameter("gate", L.getGateImei());
         params.addParameter("no", no);
-        params.addParameter("date", getToday());
-        params.addParameter("count", count);
+        params.addParameter("count", String.valueOf(count));
+        params.setMethod(HttpMethod.POST);
+        Log.i(TAG, "getRawData: " + params.toString());
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
@@ -265,8 +276,9 @@ public class DailyStatistics extends BaseFragment {
                     datas.add(new StatisticsData(devNo, state, date, time));
 
                 }
+                Log.i(TAG, "onSuccess: " + datas.toString());
                 // 更新图表
-                updateCharts();
+                updateCharts(count);
             }
 
             @Override
@@ -287,13 +299,16 @@ public class DailyStatistics extends BaseFragment {
 
     }
 
-    private void updateCharts() {
+    private void updateCharts(int count) {
         tmpChart.setData(getSpecData(TMP, getCount()));
         humiChart.setData(getSpecData(HUMI, getCount()));
         lightChart.setData(getSpecData(LIGHT, getCount()));
         tmpChart.notifyDataSetChanged();
         humiChart.notifyDataSetChanged();
         lightChart.notifyDataSetChanged();
+        tmpChart.getXAxis().setAxisMaxValue(count+1);
+        humiChart.getXAxis().setAxisMaxValue(count+1);
+        lightChart.getXAxis().setAxisMaxValue(count+1);
         tmpChart.animateXY(2000, 2000);
         humiChart.animateXY(2000, 2000);
         lightChart.animateXY(2000, 2000);

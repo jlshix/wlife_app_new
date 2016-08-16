@@ -18,7 +18,7 @@ public class BarMarker extends MarkerView {
     /**
      * Constructor. Sets up the MarkerView with a custom layout resource.
      *
-     * @param context
+     * @param context context
      * @param layoutResource the layout resource to use for the MarkerView
      */
     public BarMarker(Context context, int layoutResource, String unit) {
@@ -29,7 +29,11 @@ public class BarMarker extends MarkerView {
 
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        tv.setText(e.getY() + unit);
+        if (e.getY() == 0f) {
+            tv.setText("无数据");
+        } else {
+            tv.setText(e.getY() + unit);
+        }
     }
 
     @Override

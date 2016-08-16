@@ -53,6 +53,7 @@ public class StatisticsActivity extends BaseActivity {
         hourlyStatistics = new HourlyStatistics();
         hourlyStatistics.setDevNo("0" + no);
         dailyStatistics = new DailyStatistics();
+        dailyStatistics.setDevNo("0" + no);
         vp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {

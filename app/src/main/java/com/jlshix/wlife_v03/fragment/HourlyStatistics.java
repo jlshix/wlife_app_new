@@ -49,6 +49,9 @@ public class HourlyStatistics extends BaseFragment {
     @ViewInject(R.id.count)
     private Spinner count;
 
+    @ViewInject(R.id.count_tv)
+    TextView countText;
+
     @ViewInject(R.id.date_tv)
     private TextView dateText;
 
@@ -83,6 +86,7 @@ public class HourlyStatistics extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         count.setVisibility(View.GONE);
+        countText.setVisibility(View.GONE);
 
         dateText.setText(getToday());
         // 图表基本设置
@@ -127,7 +131,7 @@ public class HourlyStatistics extends BaseFragment {
 
     private void setupChart(BarChart chart) {
         chart.setDescription("");
-        chart.setNoDataText("没有数据,请检查数据库");
+        chart.setNoDataText("没有相应数据");
         chart.setDrawGridBackground(false);
         chart.setDrawBarShadow(false);
 
@@ -143,6 +147,9 @@ public class HourlyStatistics extends BaseFragment {
 
         YAxis axisRight = chart.getAxisRight();
         axisRight.setEnabled(false);
+
+        YAxis yAxis = chart.getAxisLeft();
+        yAxis.setAxisMinValue(0f);
 
         Legend l = chart.getLegend();
         l.setXEntrySpace(10f);
@@ -167,29 +174,18 @@ public class HourlyStatistics extends BaseFragment {
         ArrayList<BarEntry> entries = new ArrayList<>();
 
         ArrayList<StatisticsData> list = new ArrayList<>();
-//        for (int i = 0; i < datas.size(); i++) {
-//            int no = Integer.parseInt(datas.get(i).getTime().substring(0, 2));
-//            list.add(no, datas.get(i));
-//        }
-//        for (int i = 0; i < 23; i++) {
-//            if (list.get(i) == null) {
-//                list.add(i, new StatisticsData(devNo));
-//            }
-//        }
-//
-//        Log.i(TAG, "getSpecData: " + list.toString());
 
         for (int i = 0; i < 24; i++) {
-//            boolean sign = false;
+            boolean sign = false;
             for (int j = 0; j < datas.size(); j++) {
                 if (Integer.parseInt(datas.get(j).getTime().substring(0,2)) == i) {
                     list.add(i, datas.get(j));
-//                    sign = true;
+                    sign = true;
                 }
             }
-//            if (!sign) {
-//                list.add(i, new StatisticsData(devNo));
-//            }
+            if (!sign) {
+                list.add(i, new StatisticsData(devNo));
+            }
         }
 
 
