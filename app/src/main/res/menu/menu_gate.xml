@@ -3,14 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.jlshix.test.MainActivity">
-    <item
-        android:id="@+id/action_mode"
-        android:title="@string/mode"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_camera"
-        android:title="@string/camera"
-        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_rename"

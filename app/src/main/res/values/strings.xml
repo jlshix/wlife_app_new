@@ -421,6 +421,7 @@
     <string name="humi_tv">湿度统计</string>
     <string name="light_tv">光照统计</string>
     <string name="count_tv">注: 第5天为当天的数据</string>
+    <string name="change_mode">更改模式</string>
 
 
 </resources>

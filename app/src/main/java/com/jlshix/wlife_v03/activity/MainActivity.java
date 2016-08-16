@@ -342,12 +342,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_mode:
-                        startActivity(new Intent(MainActivity.this, ModeActivity.class));
-                        break;
-                    case R.id.action_camera:
-                        camera();
-                        break;
                     case R.id.action_delete:
                         unbindGate(toolbar);
                         break;
@@ -360,6 +354,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         });
         menu.show();
     }
+
 
     /**
      * 重命名网关
@@ -421,7 +416,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     /**
      * 视频通话
      */
-    private void camera() {
+    @Event(R.id.camera)
+    private void camera(View view) {
         if (!EMChatManager.getInstance().isConnected()) {
             L.snack(toolbar, "未连接到服务器");
         }
@@ -436,6 +432,11 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             intent.putExtra("isComingCall", false);
             startActivity(intent);
         }
+    }
+
+    @Event(R.id.mode)
+    private void mode(View view) {
+        startActivity(new Intent(MainActivity.this, ModeActivity.class));
     }
 
     @Event(R.id.fab)
@@ -560,7 +561,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add) {
             if (L.isBIND()) {
-                L.toast(activity, "目前仅支持一台设备，可长按删除并绑定新设备");
+                L.toast(activity, "目前仅支持一台设备，可在菜单中删除并绑定新设备");
                 return true;
             }
             Intent intent = new Intent(getApplicationContext(), GateBindActivity.class);

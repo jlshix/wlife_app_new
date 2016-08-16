@@ -14,7 +14,7 @@
         <TextView
             android:padding="5dp"
             android:id="@+id/place"
-            android:text="@string/gate"
+            android:text="@string/device"
             android:textSize="18sp"
             android:gravity="center"
             android:textColor="@color/colorPrimary"
@@ -82,20 +82,35 @@
 
     </LinearLayout>
 
-    <!--<Spinner-->
-        <!--android:id="@+id/mode_spinner"-->
-        <!--android:layout_marginTop="3dp"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"/>-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/mode"
+            android:text="@string/change_mode"
+            style="?android:attr/buttonBarButtonStyle"
+            android:textColor="@color/colorPrimary"
+            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/action_button_margin"
+            android:layout_height="wrap_content" />
 
-    <!--<Button-->
-        <!--android:id="@+id/camera"-->
-        <!--android:layout_marginTop="@dimen/sub_margin"-->
-        <!--android:text="@string/camera"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:background="@drawable/btn_selector"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content" />-->
+        <Button
+            android:id="@+id/camera"
+            android:text="@string/camera"
+            style="?android:attr/buttonBarButtonStyle"
+            android:textColor="@color/colorPrimary"
+            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/action_button_margin"
+            android:layout_height="wrap_content" />
+
+
+
+    </LinearLayout>
 
 
 </LinearLayout>
