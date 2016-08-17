@@ -15,10 +15,6 @@
         android:id="@+id/action_position"
         android:title="@string/action_position"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_statistics"
-        android:title="@string/action_statistics"
-        app:showAsAction="never" />
 
 
 </menu>

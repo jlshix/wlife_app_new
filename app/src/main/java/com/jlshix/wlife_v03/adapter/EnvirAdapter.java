@@ -3,6 +3,7 @@ package com.jlshix.wlife_v03.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,19 +47,23 @@ public class EnvirAdapter extends RecyclerView.Adapter<EnvirAdapter.EnvirViewHol
      */
     static class EnvirViewHolder extends RecyclerView.ViewHolder {
 
+        CardView card;
         TextView place;
         TextView temp;
         TextView humi;
         TextView light;
         Button menu;
+        Button statistics;
 
         public EnvirViewHolder(View itemView) {
             super(itemView);
+            card = (CardView) itemView.findViewById(R.id.card);
             place = (TextView) itemView.findViewById(R.id.place);
             temp = (TextView) itemView.findViewById(R.id.temp);
             humi = (TextView) itemView.findViewById(R.id.humi);
             light = (TextView) itemView.findViewById(R.id.light);
             menu = (Button) itemView.findViewById(R.id.menu);
+            statistics = (Button) itemView.findViewById(R.id.statistics);
         }
     }
 
@@ -89,6 +94,21 @@ public class EnvirAdapter extends RecyclerView.Adapter<EnvirAdapter.EnvirViewHol
         holder.temp.setText(data.getTemp());
         holder.humi.setText(data.getHumi());
         holder.light.setText(lightFormat(data.getLight()));
+        holder.statistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, StatisticsActivity.class);
+                intent.putExtra("no", data.getNo());
+                context.startActivity(intent);
+            }
+        });
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handler.sendEmptyMessage(Envir.REFRESHING);
+                handler.sendEmptyMessageDelayed(Envir.REF_SINGLE, 1000);
+            }
+        });
         // 上下文菜单
         holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,10 +128,6 @@ public class EnvirAdapter extends RecyclerView.Adapter<EnvirAdapter.EnvirViewHol
                             case R.id.action_position:
                                 L.placeDev(context, handler, Envir.REFRESH, "02", "0" + data.getNo(), data.getPlaceNo());
                                 break;
-                            case R.id.action_statistics:
-                                Intent intent = new Intent(context, StatisticsActivity.class);
-                                intent.putExtra("no", data.getNo());
-                                context.startActivity(intent);
                         }
                         return false;
                     }

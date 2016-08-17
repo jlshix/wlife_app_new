@@ -66,6 +66,8 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
 
     public static final int REFRESH = 0x01;
     public static final int FOCUS_UP = 0x03;
+    public static final int REFRESHING = 0x04;
+    public static final int REF_SINGLE = 0x05;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -77,6 +79,13 @@ public class Envir extends BaseFragment implements SwipeRefreshLayout.OnRefreshL
                     break;
                 case FOCUS_UP:
                     scroll.fullScroll(View.FOCUS_UP);
+                    break;
+                case REFRESHING:
+                    swipe.setRefreshing(true);
+                    break;
+                case REF_SINGLE:
+                    getData();
+                    swipe.setRefreshing(false);
                     break;
             }
         }
