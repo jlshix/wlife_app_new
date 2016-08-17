@@ -513,7 +513,37 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      */
     private void processVoice(RecognizerResult recognizerResult) {
         String text = JsonParser.parseIatResult(recognizerResult.getResultString());
-        L.snack(toolbar, text);
+        RequestParams params = new RequestParams(L.URL_VOICE);
+        params.addParameter("gate", L.getGateImei());
+        params.addParameter("orderstr", text);
+        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                Log.i(TAG, "voiceResult: " + result.toString());
+                if (!result.optString("code").equals("1")) {
+                    L.snack(toolbar, "VOICE_CODE_ERR");
+                    return;
+                }
+                L.snack(toolbar, result.optString("info"));
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
     }
 
     public void setParam() {

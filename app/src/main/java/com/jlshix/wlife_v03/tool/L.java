@@ -105,6 +105,7 @@ public class L {
     public static final String URL_DEL_DEV = "http://jlshix.com/wlife2/del_dev.php";
     public static final String URL_ONLINE = "http://jlshix.com/wlife2/account_online.php";
     public static final String URL_STATISTICS = "http://jlshix.com/wlife2/statistics.php";
+    public static final String URL_VOICE = "http://jlshix.com/wlife2/voice.php";
 
 
     /**
