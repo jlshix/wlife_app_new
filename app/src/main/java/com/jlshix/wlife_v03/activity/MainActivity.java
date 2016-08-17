@@ -83,6 +83,9 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @ViewInject(R.id.place)
     private TextView place;
 
+    @ViewInject(R.id.name)
+    private TextView weatherTitile;
+
     // ImageView
     @ViewInject(R.id.weather_pic)
     private ImageView weatherPic;
@@ -184,6 +187,49 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         updateWeather();
         Snackbar.make(view, "实时天气已更新", Snackbar.LENGTH_SHORT).show();
     }
+
+    /**
+     * 获取当前的位置的城市名和地区
+     */
+    private void setWeaherCardTitle() {
+        RequestParams params = new RequestParams(L.URL_TO_GPS);
+        params.addParameter("output", "json");
+        params.addParameter("ak", "kBjrIu4NjUASe2BNU9DuxTHL");
+        params.addParameter("location", L.getBDLocation());
+        x.http().get(params, new Callback.CommonCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                Log.i(TAG, "onSuccess: " + result);
+                if (result.optInt("status") != 0) {
+                    L.snack(toolbar, "STATE_CODE_ERR");
+                    return;
+                }
+                JSONObject res = result.optJSONObject("result");
+                JSONObject addressComponent = res.optJSONObject("addressComponent");
+                String city = addressComponent.optString("city");
+                String district = addressComponent.optString("district");
+                weatherTitile.setText(city+district);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                L.snack(toolbar, ex.getMessage());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
+
+
 
     /**
      * 天气菜单
@@ -326,6 +372,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 });
 
             }
+
+
         });
         menu.show();
     }
@@ -750,6 +798,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 break;
 
         }
+        // 更改标题
+        setWeaherCardTitle();
     }
 
 

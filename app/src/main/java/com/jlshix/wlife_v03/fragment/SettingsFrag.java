@@ -104,7 +104,7 @@ public class SettingsFrag extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 ImageView img = new ImageView(getActivity());
-                img.setImageResource(R.drawable.clear_day);
+                img.setImageResource(R.drawable.wlife_qr);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle(R.string.settings_wx).setView(img)
                         .setPositiveButton("确认", null).create().show();
