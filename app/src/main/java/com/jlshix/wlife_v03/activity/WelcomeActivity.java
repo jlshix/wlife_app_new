@@ -1,9 +1,10 @@
 package com.jlshix.wlife_v03.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.jlshix.wlife_v03.R;
 
@@ -13,7 +14,7 @@ import cn.jpush.android.api.JPushInterface;
  * 欢迎界面 只有一张图
  * 后台判断逻辑
  */
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // 在setContentView之前
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         // 设定布局
         setContentView(R.layout.activity_welcome);
