@@ -103,10 +103,14 @@ public class VoiceListActivity extends BaseActivity implements SwipeRefreshLayou
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(VoiceListActivity.this, AddOrderActivity.class);
-        intent.putExtra("type", "voice");
-        startActivityForResult(intent, L.ADD_REQUEST);
-        return true;
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                Intent intent = new Intent(VoiceListActivity.this, AddOrderActivity.class);
+                intent.putExtra("type", "voice");
+                startActivityForResult(intent, L.ADD_REQUEST);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
 
     }
 

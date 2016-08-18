@@ -105,10 +105,15 @@ public class MemberActivity extends BaseActivity implements SwipeRefreshLayout.O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        IntentIntegrator integrator = new IntentIntegrator(MemberActivity.this);
-        integrator.setPrompt("请扫描家庭成员的二维码").setCaptureActivity(CaptureActivityAnyOrientation.class)
-                .setOrientationLocked(true).initiateScan();
-        return true;
+
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                IntentIntegrator integrator = new IntentIntegrator(MemberActivity.this);
+                integrator.setPrompt("请扫描家庭成员的二维码").setCaptureActivity(CaptureActivityAnyOrientation.class)
+                        .setOrientationLocked(true).initiateScan();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
 
     }
 
