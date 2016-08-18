@@ -57,7 +57,6 @@
     </array>
 
 
-
     <array name="gate_msg_types">
         <item>全部</item>
         <item>系统消息</item>
@@ -412,8 +411,6 @@
     </array>
 
 
-
-
     <string name="title_activity_statistics">统计信息</string>
     <string name="action_statistics">查看统计</string>
     <string name="date">2016–08-13</string>
@@ -422,6 +419,11 @@
     <string name="light_tv">光照统计</string>
     <string name="count_tv">注: 第5天为当天的数据</string>
     <string name="change_mode">更改模式</string>
+    <string name="settings_graph">分布图</string>
+    <string name="settings_graph_summary">更改您的房间分布图</string>
+    <string name="title_activity_graph">更改分布图</string>
+    <string name="graph_txt1">分布图1</string>
+    <string name="graph_more">更多分布图 敬请期待</string>
 
 
 </resources>

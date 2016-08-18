@@ -10,9 +10,9 @@
             android:title="@string/settings_voice"
             android:summary="@string/settings_voice_summary"/>
         <Preference
-            android:key="schedule"
-            android:title="@string/settings_schedule"
-            android:summary="@string/settings_schedule_summary"/>
+            android:key="graph"
+            android:title="@string/settings_graph"
+            android:summary="@string/settings_graph_summary"/>
         <Preference
             android:key="member"
             android:title="@string/settings_member"
@@ -37,9 +37,9 @@
         <Preference
             android:key="wx"
             android:title="@string/settings_wx"/>
-        <Preference
-            android:key="share"
-            android:title="@string/share"/>
+        <!--<Preference-->
+            <!--android:key="share"-->
+            <!--android:title="@string/share"/>-->
         <Preference
             android:key="feedback"
             android:title="@string/title_activity_feedback"/>

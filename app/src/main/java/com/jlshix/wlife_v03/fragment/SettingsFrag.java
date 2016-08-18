@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.jlshix.wlife_v03.App;
 import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.activity.FeedbackActivity;
+import com.jlshix.wlife_v03.activity.GraphActivity;
 import com.jlshix.wlife_v03.activity.MemberActivity;
 import com.jlshix.wlife_v03.activity.SettingsActivity;
 import com.jlshix.wlife_v03.activity.VoiceListActivity;
@@ -32,7 +33,7 @@ public class SettingsFrag extends PreferenceFragment {
     private Handler handler;
     private CheckBoxPreference auto;
     private Preference clear, wx, share, help, about,  feedback, update, quit;
-    private Preference member, account, voice;
+    private Preference member, account, voice, graph;
 
     public void setHandler(Handler handler) {
         this.handler = handler;
@@ -105,6 +106,8 @@ public class SettingsFrag extends PreferenceFragment {
             public boolean onPreferenceClick(Preference preference) {
                 ImageView img = new ImageView(getActivity());
                 img.setImageResource(R.drawable.wlife_qr);
+                img.setMaxHeight(300);
+                img.setMaxWidth(300);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle(R.string.settings_wx).setView(img)
                         .setPositiveButton("确认", null).create().show();
@@ -124,15 +127,15 @@ public class SettingsFrag extends PreferenceFragment {
             }
         });
 
-        // 分享
-        share = findPreference("share");
-        share.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                L.toast(getActivity(), "开发中...");
-                return false;
-            }
-        });
+//        // 分享
+//        share = findPreference("share");
+//        share.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//            @Override
+//            public boolean onPreferenceClick(Preference preference) {
+//                L.toast(getActivity(), "开发中...");
+//                return false;
+//            }
+//        });
 
         // 家庭组
         member = findPreference("member");
@@ -173,6 +176,18 @@ public class SettingsFrag extends PreferenceFragment {
                 return false;
             }
         });
+        
+        // graph
+        graph = findPreference("graph");
+        graph.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                startActivity(new Intent(getActivity(), GraphActivity.class));
+                return false;
+            }
+        });
+        
+        
         
         
 
