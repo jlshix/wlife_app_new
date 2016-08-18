@@ -136,7 +136,7 @@ public class AddDeviceActivity extends BaseActivity {
                     switch (type) {
                         case "02":
                             devType.setText("温湿度光照检测器");
-                            state = "--------";
+                            state = "00000000";
                             break;
                         case "04":
                             devType.setText("烟雾监测器");
