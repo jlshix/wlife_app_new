@@ -268,16 +268,11 @@ public class DialogActivity extends BaseActivity {
     private String getLightStateK(LinearLayout lightLinear) {
         AppCompatSeekBar seekBar = (AppCompatSeekBar) lightLinear.getChildAt(0);
         int progress = seekBar.getProgress();
-        switch (progress) {
-            case 0:
-                return "关";
-            case 1:
-                return "暗";
-            case 2:
-                return "亮";
-
+        if (progress == 0) {
+            return "关";
+        } else {
+            return "亮度"+progress;
         }
-        return "an";
     }
     private String getLightState(LinearLayout lightLinear) {
         AppCompatSeekBar seekBar = (AppCompatSeekBar) lightLinear.getChildAt(0);

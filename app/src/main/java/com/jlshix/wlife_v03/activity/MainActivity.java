@@ -724,7 +724,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                     L.toast(activity, "CODE_ERR");
                     return;
                 }
-                // 设定天气卡片 json内容太复杂，不再使用新类
+                // 设定网关卡片 json内容太复杂，不再使用新类
                 setGateCard(new GateData(result.optJSONObject("info")));
             }
 
@@ -754,10 +754,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             gateState.setText(R.string.offline);
             line.setEnabled(false);
         }
-        int index = Integer.valueOf(info.getMode());
-        // 不是用户主动发起
-//        positive = false;
-//        spinner.setSelection(index - 1);
+        L.setLayout(info.getLayout());
+        L.setGateMaster(info.getMaster());
     }
 
     private void setWeatherCard(JSONObject object) {

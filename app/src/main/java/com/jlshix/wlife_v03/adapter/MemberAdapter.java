@@ -83,7 +83,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
         final String nameText = datas.get(position);
         holder.name.setText(nameText);
         // 管理员本身不能删除自己
-        if (nameText.equals(L.getGateMaster())) {
+        if (nameText.equals(L.getName())) {
             holder.del.setVisibility(View.INVISIBLE);
         }
         holder.del.setOnClickListener(new View.OnClickListener() {

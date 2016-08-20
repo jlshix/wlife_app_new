@@ -129,7 +129,7 @@ public class GateBindActivity extends BaseActivity {
                         L.setGateImei(gateImei1);
                         L.setLayout(1);
                         L.setGateMaster(L.getName());
-
+                        L.setBIND(true);
                         //jpush
                         HashSet<String> tag = new HashSet<>();
                         tag.add(gateImei1);

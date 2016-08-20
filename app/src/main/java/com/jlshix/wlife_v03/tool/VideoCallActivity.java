@@ -32,6 +32,8 @@ import java.util.UUID;
 
 public class VideoCallActivity extends CallActivity implements OnClickListener {
 
+    private boolean isDebug = false;
+
     private SurfaceView localSurface;
     private SurfaceHolder localSurfaceHolder;
     private static SurfaceView oppositeSurface;
@@ -110,7 +112,12 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         username = getIntent().getStringExtra("username");
 
         // 设置通话人
-        nickTextView.setText(username);
+        if (isInComingCall) {
+            nickTextView.setText("访客来电");
+        } else {
+            nickTextView.setText("家庭网关");
+        }
+
 
         // 显示本地图像的surfaceview
         localSurface = (SurfaceView) findViewById(R.id.local_surface);
@@ -267,7 +274,11 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                                 nickTextView.setVisibility(View.INVISIBLE);
                                 callStateTextView.setText(R.string.in_the_call);
                                 callingState = CallingState.NORMAL;
-                                startMonitor();
+
+                                //monitor
+                                if (isDebug) {
+                                    startMonitor();
+                                }
                             }
 
                         });

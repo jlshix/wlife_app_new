@@ -387,8 +387,8 @@ public class L {
                 if (result.optString("code").equals("1")) {
                     L.toast(c, "已解除网关绑定， 请点击 + 按钮添加新设备");
                     // 清除本地数据
-                    setGateImei("x");
                     setBIND(false);
+                    App.sp.edit().remove("gateImei").remove("layout").remove("master").apply();
                 } else {
                     L.toast(c, "UNBIND_CODE_ERR");
                 }

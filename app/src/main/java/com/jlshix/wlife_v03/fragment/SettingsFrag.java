@@ -204,7 +204,7 @@ public class SettingsFrag extends PreferenceFragment {
             @Override
             public void onSuccess(JSONObject result) {
                 if (result.optString("code").equals("1")) {
-                    String name = L.getName();
+                    String name = L.getPhone();
                     String info = result.optString("info");
                     flag = name.equals(info);
                     if (flag) {

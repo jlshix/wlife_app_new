@@ -13,6 +13,8 @@ public class GateData {
     private String imei;
     private String online;
     private String mode;
+    private int layout;
+    private String master;
 
     public GateData(String name, String imei, String online, String mode) {
         this.name = name;
@@ -30,6 +32,8 @@ public class GateData {
         this.imei = object.optString("imei");
         this.online = object.optString("online");
         this.mode = object.optString("mode");
+        this.layout = object.optInt("layout");
+        this.master = object.optString("master");
     }
 
     public String getName() {
@@ -62,5 +66,21 @@ public class GateData {
 
     public void setMode(String mode) {
         this.mode = mode;
+    }
+
+    public int getLayout() {
+        return layout;
+    }
+
+    public void setLayout(int layout) {
+        this.layout = layout;
+    }
+
+    public String getMaster() {
+        return master;
+    }
+
+    public void setMaster(String master) {
+        this.master = master;
     }
 }
