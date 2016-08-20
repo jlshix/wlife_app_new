@@ -1,9 +1,11 @@
 package com.jlshix.wlife_v03.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.jlshix.wlife_v03.R;
+import com.jlshix.wlife_v03.activity.LockLogActivity;
 import com.jlshix.wlife_v03.data.OthersData;
 import com.jlshix.wlife_v03.fragment.Others;
 import com.jlshix.wlife_v03.tool.L;
@@ -105,6 +108,11 @@ public class OthersAdapter extends RecyclerView.Adapter<OthersAdapter.OthersView
                 // 电机
                 holder.img.setImageResource(R.drawable.ic_group_work_blue_500_48dp);
                 break;
+            case "0e":
+            case "0E":
+                holder.img.setImageResource(R.drawable.ic_lock_outline_blue_500_48dp);
+                holder.statistics.setVisibility(View.VISIBLE);
+                break;
         }
         holder.img.setColorFilter(L.signs[data.getSign()]);
 
@@ -117,6 +125,54 @@ public class OthersAdapter extends RecyclerView.Adapter<OthersAdapter.OthersView
                 L.send2Gate(L.getGateImei(), order);
                 // 数据库
                 uploadToServer(data.getType(), data.getNo(), last);
+                if (data.getType().equals("0E") || data.getType().equals("0e")) {
+                    lockLog(isChecked);
+                }
+            }
+
+            /**
+             * 门锁日志
+             * @param isChecked boolean
+             */
+            private void lockLog(final boolean isChecked) {
+                String action = isChecked ? "1":"0";
+                RequestParams params = new RequestParams(L.URL_LOCK);
+                params.addParameter("gate", L.getGateImei());
+                params.addParameter("name", L.getName());
+                params.addParameter("action", action);
+                x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        if (!result.optString("code").equals("1")) {
+                            L.toast(context, "LOCK_CODE_ERR");
+                            return;
+                        }
+                        Log.i(TAG, "Lock Log: " + isChecked);
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+                        L.toast(context, "LOCK_ERR");
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+            }
+        });
+
+        holder.statistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, LockLogActivity.class);
+                context.startActivity(intent);
             }
         });
 
@@ -169,6 +225,7 @@ public class OthersAdapter extends RecyclerView.Adapter<OthersAdapter.OthersView
         TextView imei;
         Switch power;
         Button menu;
+        Button statistics;
 
         public OthersViewHolder(View itemView) {
             super(itemView);
@@ -178,6 +235,7 @@ public class OthersAdapter extends RecyclerView.Adapter<OthersAdapter.OthersView
             imei = (TextView) itemView.findViewById(R.id.imei);
             power = (Switch) itemView.findViewById(R.id.power);
             menu = (Button) itemView.findViewById(R.id.menu);
+            statistics = (Button) itemView.findViewById(R.id.statistics);
         }
     }
 

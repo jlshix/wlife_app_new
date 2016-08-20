@@ -106,6 +106,8 @@ public class L {
     public static final String URL_ONLINE = "http://jlshix.com/wlife2/account_online.php";
     public static final String URL_STATISTICS = "http://jlshix.com/wlife2/statistics.php";
     public static final String URL_VOICE = "http://jlshix.com/wlife2/voice.php";
+    public static final String URL_LOCK = "http://jlshix.com/wlife2/lock.php";
+    public static final String URL_LOCK_LOG = "http://jlshix.com/wlife2/lock_log.php";
 
 
     /**
@@ -434,6 +436,9 @@ public class L {
                 return "红外防盗器";
             case "06":
                 return "窗帘控制器";
+            case "0e":
+            case "0E":
+                return "门磁控制器";
             default:
                 return "暂不支持";
         }

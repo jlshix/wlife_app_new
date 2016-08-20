@@ -424,6 +424,7 @@
     <string name="title_activity_graph">更改分布图</string>
     <string name="graph_txt1">分布图1</string>
     <string name="graph_more">更多分布图 敬请期待</string>
+    <string name="title_activity_lock_log">门磁日志</string>
 
 
 </resources>

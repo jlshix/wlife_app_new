@@ -237,7 +237,7 @@
             android:name=".activity.VoiceListActivity"
             android:label="@string/title_activity_voice"
             android:parentActivityName=".activity.SettingsActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jlshix.wlife_v03.activity.SettingsActivity" />
@@ -246,7 +246,7 @@
             android:name=".activity.AddOrderActivity"
             android:label="@string/title_activity_add_order"
             android:parentActivityName=".activity.SettingsActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jlshix.wlife_v03.activity.SettingsActivity" />
@@ -282,6 +282,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jlshix.wlife_v03.activity.SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".activity.LockLogActivity"
+            android:label="@string/title_activity_lock_log"
+            android:parentActivityName=".activity.DeviceActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jlshix.wlife_v03.activity.DeviceActivity" />
         </activity>
     </application>
 

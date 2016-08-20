@@ -140,23 +140,29 @@ public class AddDeviceActivity extends BaseActivity {
                             break;
                         case "04":
                             devType.setText("烟雾监测器");
-                            state = "-";
+                            state = "0";
                             break;
                         case "05":
                             devType.setText("红外防盗器");
-                            state = "-";
+                            state = "0";
                             break;
                         case "06":
                             devType.setText("窗帘控制器");
-                            state = "-";
+                            state = "0";
                             break;
                         case "09":
                             devType.setText("多级调光灯");
                             state = "0";
                             break;
                         case "0A":
+                        case "0a":
                             devType.setText("智能插座");
                             state = "0000";
+                            break;
+                        case "0E":
+                        case "0e":
+                            devType.setText("门磁控制器");
+                            state = "0";
                             break;
                         default:
                             devType.setText("暂未支持，敬请期待");
