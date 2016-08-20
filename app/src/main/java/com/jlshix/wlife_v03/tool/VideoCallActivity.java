@@ -237,6 +237,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                             @Override
                             public void run() {
                                 callStateTextView.setText(R.string.are_connected_to_each_other);
+                                localSurface.setVisibility(View.INVISIBLE);
                             }
 
                         });
@@ -247,6 +248,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                             @Override
                             public void run() {
                                 callStateTextView.setText(R.string.have_connected_with);
+                                localSurface.setVisibility(View.INVISIBLE);
                             }
 
                         });
@@ -279,6 +281,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                                 if (isDebug) {
                                     startMonitor();
                                 }
+                                localSurface.setVisibility(View.INVISIBLE);
                             }
 
                         });
