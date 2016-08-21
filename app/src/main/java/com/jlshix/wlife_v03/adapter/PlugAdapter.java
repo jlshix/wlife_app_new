@@ -97,11 +97,41 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
         final PlugData data = datas.get(position);
         holder.img.setColorFilter(L.signs[data.getSign()]);
 
+        // 从获取的数据初始化状态
+        for (int i = 0; i < holder.mSwitch.length; i++) {
+            holder.mSwitch[i].setChecked(data.getState(i));
+        }
+
+        // 上下文菜单
+        holder.menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu menu = new PopupMenu(context, view);
+                menu.getMenuInflater().inflate(R.menu.menu_item, menu.getMenu());
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_rename:
+                                L.devRename(context, handler, Plug.REFRESH, "0a", "0" + data.getNo(), data.getName());
+                                break;
+                            case R.id.action_delete:
+                                L.delDev(context, handler, Plug.REFRESH, "0a", "0" + data.getNo());
+                                break;
+                            case R.id.action_position:
+                                L.placeDev(context, handler, Plug.REFRESH, "0a", "0" + data.getNo(), data.getPlaceNo());
+                                break;
+                        }
+                        return false;
+                    }
+
+                });
+                menu.show();
+            }
+        });
+
         // 每个单元是一个开关组 0123
         for (int i = 0; i < holder.mSwitch.length; i++) {
-            // 从获取的数据初始化状态
-            holder.mSwitch[i].setChecked(data.getState(i));
-
             String name = L.nameText(data.getPlaceNo(), data.getName());
             holder.place.setText(name);
             // I为单元内计数
@@ -134,34 +164,6 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
                     L.send2Gate(L.getGateImei(), order);
 //                    L.send2Gate(L.getGateImei(), "0a0" + (finalPosition + 1) + state);
 
-                }
-            });
-
-            // 上下文菜单
-            holder.menu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    PopupMenu menu = new PopupMenu(context, view);
-                    menu.getMenuInflater().inflate(R.menu.menu_item, menu.getMenu());
-                    menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()) {
-                                case R.id.action_rename:
-                                    L.devRename(context, handler, Plug.REFRESH, "0a", "0" + data.getNo(), data.getName());
-                                    break;
-                                case R.id.action_delete:
-                                    L.delDev(context, handler, Plug.REFRESH, "0a", "0" + data.getNo());
-                                    break;
-                                case R.id.action_position:
-                                    L.placeDev(context, handler, Plug.REFRESH, "0a", "0" + data.getNo(), data.getPlaceNo());
-                                    break;
-                            }
-                            return false;
-                        }
-
-                    });
-                    menu.show();
                 }
             });
         }
