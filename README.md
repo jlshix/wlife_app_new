@@ -150,8 +150,6 @@ WLife_v02 项目重构
 - 优化 Plug 与 Others 的细节
 - 新增 家庭成员间的通话功能
 
-
-
 ## TODO
 
 - schedule list and add
