@@ -84,7 +84,7 @@ public class DialogActivity extends BaseActivity {
         typeNo.put("红外防盗器", "05");
         typeNo.put("窗帘控制器", "06");
         typeNo.put("多级调光灯", "09");
-        typeNo.put("智能插座", "0A");
+        typeNo.put("智能插座", "0a");
 
         // 初始化
         list = new ArrayList<>();
@@ -160,8 +160,6 @@ public class DialogActivity extends BaseActivity {
 
             }
         });
-
-
     }
 
     /**
@@ -282,18 +280,18 @@ public class DialogActivity extends BaseActivity {
 
     private String getPlugStateK(LinearLayout plugLinear) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < plugLinear.getChildCount(); i++) {
-            SwitchCompat compat = (SwitchCompat)plugLinear.getChildAt(i);
-            sb.append(compat.isChecked() ? "开":"关");
-        }
+        AppCompatSpinner spinner = (AppCompatSpinner) plugLinear.getChildAt(0);
+        sb.append("第").append(spinner.getSelectedItemPosition() + 1).append("个");
+        SwitchCompat compat = (SwitchCompat)plugLinear.getChildAt(1);
+        sb.append(compat.isChecked() ? "开":"关");
         return sb.toString();
     }
     private String getPlugState(LinearLayout plugLinear) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < plugLinear.getChildCount(); i++) {
-            SwitchCompat compat = (SwitchCompat)plugLinear.getChildAt(i);
-            sb.append(compat.isChecked() ? "1":"0");
-        }
+        AppCompatSpinner spinner = (AppCompatSpinner) plugLinear.getChildAt(0);
+        sb.append("0").append(spinner.getSelectedItemPosition() + 1);
+        SwitchCompat compat = (SwitchCompat)plugLinear.getChildAt(1);
+        sb.append(compat.isChecked() ? "00":"01");
         return sb.toString();
     }
 

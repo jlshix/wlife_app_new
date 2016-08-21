@@ -330,7 +330,7 @@
     <string name="settings_schedule">计划任务</string>
     <string name="settings_schedule_summary">查看或编辑您的计划任务</string>
     <string name="settings_member">家庭成员</string>
-    <string name="settings_member_summary">管理家庭成员(管理员功能)</string>
+    <string name="settings_member_summary">家庭成员查看、删除(管理员功能)与通话</string>
     <string name="settings_account_summary">更改手机号 用户名 密码</string>
     <string name="mode">更改模式</string>
     <string name="send">发送</string>
@@ -426,6 +426,13 @@
     <string name="graph_more">更多分布图 敬请期待</string>
     <string name="title_activity_lock_log">门磁日志</string>
     <string name="action_call">视频通话</string>
+
+    <string-array name="plug_1_4">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 
 
 </resources>

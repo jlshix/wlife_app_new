@@ -70,26 +70,17 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/plug_spinner"
+                android:entries="@array/plug_1_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/on_off_0"
                 android:layout_marginStart="@dimen/switch_compat_margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/on_off_1"
-                android:layout_marginStart="@dimen/switch_compat_margin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/on_off_2"
-                android:layout_marginStart="@dimen/switch_compat_margin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/on_off_3"
-                android:layout_marginStart="@dimen/switch_compat_margin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
         <LinearLayout
