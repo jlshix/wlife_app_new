@@ -19,11 +19,6 @@ import com.jlshix.wlife_v03.activity.SettingsActivity;
 import com.jlshix.wlife_v03.activity.VoiceListActivity;
 import com.jlshix.wlife_v03.tool.L;
 
-import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
-
 /**
  * Created by Leo on 2016/7/11.
  *
@@ -197,38 +192,8 @@ public class SettingsFrag extends PreferenceFragment {
     }
 
     private void memberManage() {
-        RequestParams params = new RequestParams(L.URL_IS_MASTER);
-        params.addParameter("gate", L.getGateImei());
-        x.http().post(params, new Callback.CommonCallback<JSONObject>() {
-            boolean flag = false;
-            @Override
-            public void onSuccess(JSONObject result) {
-                if (result.optString("code").equals("1")) {
-                    String name = L.getPhone();
-                    String info = result.optString("info");
-                    flag = name.equals(info);
-                    if (flag) {
-                        startActivity(new Intent(getActivity(), MemberActivity.class));
-                    } else {
-                        L.snack(getView(), "此功能仅限家庭管理员使用");
-                    }
-                }
-            }
+        // 去除管理员专属
+        startActivity(new Intent(getActivity(), MemberActivity.class));
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
     }
 }

@@ -16,6 +16,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.jlshix.wlife_v03.R;
 import com.jlshix.wlife_v03.adapter.MemberAdapter;
+import com.jlshix.wlife_v03.data.MemberData;
 import com.jlshix.wlife_v03.tool.BaseActivity;
 import com.jlshix.wlife_v03.tool.CaptureActivityAnyOrientation;
 import com.jlshix.wlife_v03.tool.L;
@@ -46,7 +47,7 @@ public class MemberActivity extends BaseActivity implements SwipeRefreshLayout.O
     @ViewInject(R.id.recycler)
     private RecyclerView recycler;
 
-    private List<String> list;
+    private List<MemberData> list;
     private MemberAdapter adapter;
 
     public static final int REFRESH = 0x01;
@@ -76,7 +77,7 @@ public class MemberActivity extends BaseActivity implements SwipeRefreshLayout.O
         swipe.setOnRefreshListener(this);
 
         list = new ArrayList<>();
-        list.add("未命名");
+        list.add(new MemberData());
         initView();
         onRefresh();
     }
@@ -182,7 +183,8 @@ public class MemberActivity extends BaseActivity implements SwipeRefreshLayout.O
                 for (int i = 0; i < info.length(); i++) {
                     JSONObject object = info.optJSONObject(i);
                     String name = object.optString("name");
-                    list.add(name);
+                    String no = object.optString("mail");
+                    list.add(new MemberData(no, name));
                 }
             }
 
