@@ -92,7 +92,7 @@ public class OthersAdapter extends RecyclerView.Adapter<OthersAdapter.OthersView
         holder.type.setText(L.typeText(data.getType()));
         String imei = data.getType() + "-" + data.getNo();
         holder.imei.setText(imei);
-        if (data.getState().equals("1")) {
+        if (Integer.parseInt(data.getState()) == 1) {
             holder.power.setChecked(true);
         }
         switch (data.getType()) {

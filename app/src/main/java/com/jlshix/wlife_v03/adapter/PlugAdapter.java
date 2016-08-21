@@ -129,10 +129,10 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
                     upload2Server(no, state);
 
                     // 推送
-//                    String b = isChecked ? "1":"0";
-//                    String order = "0A0" + (finalPosition + 1) + (finalI + 1) + b;
-//                    L.send2Gate(L.getGateImei(), order);
-                    L.send2Gate(L.getGateImei(), "0A0" + (finalPosition + 1) + state);
+                    String b = isChecked ? "01":"00";
+                    String order = "0a0" + (finalPosition + 1) + "0" +(finalI + 1) + b;
+                    L.send2Gate(L.getGateImei(), order);
+//                    L.send2Gate(L.getGateImei(), "0a0" + (finalPosition + 1) + state);
 
                 }
             });
@@ -148,13 +148,13 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
                                 case R.id.action_rename:
-                                    L.devRename(context, handler, Plug.REFRESH, "0A", "0" + data.getNo(), data.getName());
+                                    L.devRename(context, handler, Plug.REFRESH, "0a", "0" + data.getNo(), data.getName());
                                     break;
                                 case R.id.action_delete:
-                                    L.delDev(context, handler, Plug.REFRESH, "0A", "0" + data.getNo());
+                                    L.delDev(context, handler, Plug.REFRESH, "0a", "0" + data.getNo());
                                     break;
                                 case R.id.action_position:
-                                    L.placeDev(context, handler, Plug.REFRESH, "0A", "0" + data.getNo(), data.getPlaceNo());
+                                    L.placeDev(context, handler, Plug.REFRESH, "0a", "0" + data.getNo(), data.getPlaceNo());
                                     break;
                             }
                             return false;
@@ -172,7 +172,7 @@ public class PlugAdapter extends RecyclerView.Adapter<PlugAdapter.PlugViewHolder
 
         RequestParams params = new RequestParams(L.URL_SET);
         params.addParameter("gate", L.getGateImei());
-        params.addParameter("type", "0A");
+        params.addParameter("type", "0a");
         params.addParameter("no", no);
         params.addParameter("state", state);
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
