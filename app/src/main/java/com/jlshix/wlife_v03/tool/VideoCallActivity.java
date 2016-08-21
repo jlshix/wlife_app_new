@@ -1,6 +1,5 @@
 package com.jlshix.wlife_v03.tool;
 
-
 import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.media.SoundPool;
@@ -22,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.easemob.chat.EMCallStateChangeListener;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMVideoCallHelper;
@@ -31,8 +31,6 @@ import com.jlshix.wlife_v03.R;
 import java.util.UUID;
 
 public class VideoCallActivity extends CallActivity implements OnClickListener {
-
-    private boolean isDebug = false;
 
     private SurfaceView localSurface;
     private SurfaceHolder localSurfaceHolder;
@@ -112,12 +110,14 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         username = getIntent().getStringExtra("username");
 
         // 设置通话人
-        if (isInComingCall) {
-            nickTextView.setText("访客来电");
-        } else {
+        nickTextView.setText(username);
+        if (!isInComingCall && username.length() > 11) {
             nickTextView.setText("家庭网关");
         }
 
+        if (isInComingCall && username.length() > 11) {
+            nickTextView.setText("访客来电");
+        }
 
         // 显示本地图像的surfaceview
         localSurface = (SurfaceView) findViewById(R.id.local_surface);
@@ -237,7 +237,6 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                             @Override
                             public void run() {
                                 callStateTextView.setText(R.string.are_connected_to_each_other);
-                                localSurface.setVisibility(View.INVISIBLE);
                             }
 
                         });
@@ -248,7 +247,6 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                             @Override
                             public void run() {
                                 callStateTextView.setText(R.string.have_connected_with);
-                                localSurface.setVisibility(View.INVISIBLE);
                             }
 
                         });
@@ -276,12 +274,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                                 nickTextView.setVisibility(View.INVISIBLE);
                                 callStateTextView.setText(R.string.in_the_call);
                                 callingState = CallingState.NORMAL;
-
-                                //monitor
-                                if (isDebug) {
-                                    startMonitor();
-                                }
-                                localSurface.setVisibility(View.INVISIBLE);
+                                startMonitor();
                             }
 
                         });
@@ -403,6 +396,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                         isAnswered = true;
                         isHandsfreeState = true;
                     } catch (Exception e) {
+                        // TODO Auto-generated catch block
                         e.printStackTrace();
                         saveCallRecord(1);
                         finish();
@@ -530,4 +524,3 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
     }
 
 }
-
