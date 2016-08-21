@@ -184,7 +184,7 @@ public class OthersAdapter extends RecyclerView.Adapter<OthersAdapter.OthersView
         params.addParameter("gate", L.getGateImei());
         params.addParameter("type", type);
         params.addParameter("no", no);
-        params.addParameter("state", last.charAt(1));
+        params.addParameter("state", last.charAt(3));
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
